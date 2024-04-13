@@ -1,5 +1,2 @@
-net
-futex
-signal
 img
 monolithic

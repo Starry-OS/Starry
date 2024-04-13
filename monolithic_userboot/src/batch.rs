@@ -1,5 +1,5 @@
 //! To allow for batch testing, we define a list of test cases that can be run in sequence.
-
+extern crate alloc;
 use alloc::{boxed::Box, string::String, string::ToString, vec::Vec};
 
 #[allow(dead_code)]
@@ -56,7 +56,7 @@ pub const SDCARD_TESTCASES: &[&str] = &[
     // "lmbench_all bw_mmap_rd -P 1 512k open2close /var/tmp/XXX",
     // "busybox echo context switch overhead",
     // "lmbench_all lat_ctx -P 1 -s 32 2 4 8 16 24 32 64 96",
-    // "busybox sh libctest_testcode.sh",
+    "busybox sh libctest_testcode.sh",
     // "busybox sh lua_testcode.sh",
     // "libc-bench",
     // "busybox sh ./netperf_testcode.sh",
@@ -100,19 +100,9 @@ fn get_args(command_line: &[u8]) -> Vec<String> {
 }
 
 #[allow(unused)]
-pub fn run_batch_testcases(envs: &Vec<String>) {
+pub fn run_batch_testcases() {
     let mut test_iter = Box::new(SDCARD_TESTCASES.iter());
     for testcase in test_iter {
-        let args = get_args(testcase.as_bytes());
-        let user_process = axstarry::Process::init(args, envs).unwrap();
-        let now_process_id = user_process.get_process_id() as isize;
-        let mut exit_code = 0;
-        loop {
-            if unsafe { axstarry::wait_pid(now_process_id, &mut exit_code as *mut i32) }.is_ok() {
-                break;
-            }
-            axstarry::yield_now_task();
-        }
-        axstarry::recycle_user_process();
+        axstarry::run_testcase(testcase);
     }
 }
