@@ -1,7 +1,13 @@
 name: Build & Deploy docs
 
-on: [push, pull_request]
-
+on:
+  push:
+    branches-ignore:
+      - feat_one_way_dependency
+  pull_request:
+    branches-ignore:
+      - feat_one_way_dependency
+      
 env:
   rust-toolchain: nightly
 
