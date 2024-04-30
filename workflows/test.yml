@@ -1,12 +1,7 @@
 name: Test CI
 
-on:
-  push:
-    branches-ignore:
-      - feat_one_way_dependency
-  pull_request:
-    branches-ignore:
-      - feat_one_way_dependency
+on: [push, pull_request]
+
       
 env:
   qemu-version: 8.2.0
