@@ -47,26 +47,29 @@ while [ -n "$1" ]; do
 		ext4)
 			fs=ext4
 			;;
-		sdcard)
-			FILE=sdcard
+		riscv64_linux_musl)
+			FILE=riscv64_linux_musl
 			;;
-		gcc)
-			FILE=gcc
+		riscv64_gcc)
+			FILE=riscv64_gcc
 			;;
-		redis)
-			FILE=redis
+		riscv64_redis)
+			FILE=riscv64_redis
 			;;
-		testsuits-x86_64-linux-musl)
-			FILE=testsuits-x86_64-linux-musl
+		x86_64_linux_musl)
+			FILE=x86_64_linux_musl
 			;;
-		ZLM)
-			FILE=ZLM
+		x86_64_ZLM)
+			FILE=x86_64_ZLM
 			;;
-		libc-dynamic)
-			FILE=libc-dynamic
+		riscv64_libctest_dynamic)
+			FILE=riscv64_libctest_dynamic
 			;;
-		libc-static)
-			FILE=libc-static
+		riscv64_libctest_static)
+			FILE=riscv64_libctest_static
+			;;
+		aarch64-linux-musl)
+			FILE=aarch64-linux-musl
 			;;
 		*)
 			display_help
@@ -78,21 +81,19 @@ done
 
 if [ -z "$FILE" ]; then # use default testcases
 	if [ "$arch" = "riscv64" ]; then
-		FILE=sdcard
+		FILE=riscv64_linux_musl
 	elif [ "$arch" = "x86_64" ]; then
-		FILE=testsuits-x86_64-linux-musl
+		FILE=x86_64_linux_musl
 	elif [ "$arch" = "aarch64" ]; then
-		FILE=aarch64
+		FILE=aarch64-linux-musl
 	else
 		exit 1
 	fi
 fi
 
-if [ "$FILE" = "testsuits-x86_64-linux-musl" ] && [ ! -e testcases/$FILE ]; then # auto download
-	wget https://github.com/oscomp/testsuits-for-oskernel/releases/download/final-x86_64/$FILE.tgz
-	tar zxvf $FILE.tgz
-	mv $FILE testcases/$FILE -f
-	rm $FILE.tgz
+# 如果 testcases 下对应测例不存在，执行 submodules 拉取
+if [ ! -d "./testcases/$FILE" ]; then
+	git submodule update --init --recursive
 fi
 
 rm -f disk.img
