@@ -259,7 +259,7 @@ dependencies = [
 [[package]]
 name = "axconfig"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/axconfig.git#e6c1a68f3714bd425a7bd1d476dc42b5666228cb"
+source = "git+https://github.com/Starry-OS/axconfig.git#a19854cc460d85acdacc0d678dca666c8c0fc05b"
 dependencies = [
  "serde",
  "toml_edit",
