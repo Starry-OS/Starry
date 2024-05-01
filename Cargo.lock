@@ -550,7 +550,7 @@ dependencies = [
 [[package]]
 name = "axstarry"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/axstarry.git#a1b64ec2edd246b8d635c291c5770e663d09ef36"
+source = "git+https://github.com/Starry-OS/axstarry.git#06adcf0af15c9d6db05010b996fabdc0178f58da"
 dependencies = [
  "arch_boot",
  "axfeat",
@@ -1134,6 +1134,7 @@ checksum = "68354c5c6bd36d73ff3feceb05efa59b6acb7626617f4962be322a825e61f79a"
 name = "monolithic_userboot"
 version = "0.1.0"
 dependencies = [
+ "axlibc",
  "axstarry",
 ]
 
