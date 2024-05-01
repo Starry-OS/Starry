@@ -6,7 +6,7 @@ local_lib_feat := fp_simd alloc paging fs fd
 export LIBC_BUILD_TARGET_DIR=$(abspath $(local_obj_dir))
 
 ### include scripts/make/build_c.mk
-local_ulib_dir := ulib/axlibc
+local_ulib_dir := tools/axlibc
 local_src_dir := $(local_ulib_dir)/c
 local_inc_dir := $(local_ulib_dir)/include
 local_obj_dir := $(local_ulib_dir)/lwext4_libc_$(ARCH)

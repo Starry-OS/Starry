@@ -11,4 +11,4 @@ authors = ["Youjie Zheng <zyj578335934@gmail.com>"]
 batch = []
 
 [dependencies]
-axstarry = { git = "https://github.com/Starry-OS/axstarry.git", features = ["ext4fs"] }
+axstarry = { git = "https://github.com/Starry-OS/axstarry.git" }

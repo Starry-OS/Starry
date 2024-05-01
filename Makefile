@@ -127,7 +127,7 @@ export AX_IP=$(IP)
 export AX_GW=$(GW)
 # 获取当前的工作目录
 export AX_WORK_DIR=$(CURDIR)
-
+export AX_LIBC_DIR=$(CURDIR)/tools/axlibc
 
 # Binutils
 CROSS_COMPILE ?= $(ARCH)-linux-musl-
@@ -205,7 +205,7 @@ fmt:
 	cargo fmt --all
 
 fmt_c:
-	@clang-format --style=file -i $(shell find ulib/axlibc -iname '*.c' -o -iname '*.h')
+	@clang-format --style=file -i $(shell find tools/axlibc -iname '*.c' -o -iname '*.h')
 
 test:
 	$(call app_test)
@@ -225,7 +225,7 @@ clean: clean_c
 	cargo clean
 
 clean_c::
-	rm -rf ulib/axlibc/build_*
+	rm -rf tools/axlibc/build_*
 	rm -rf $(app-objs)
 
 .PHONY: all build disasm run justrun debug clippy fmt fmt_c test test_no_fail_fast clean clean_c doc disk_image make_bin

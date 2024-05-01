@@ -164,7 +164,7 @@ dependencies = [
 [[package]]
 name = "arceos_posix_api"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/arceos_posix_api.git#fcdc49fd305f8ed183211e17096d287615b14b6d"
+source = "git+https://github.com/Starry-OS/arceos_posix_api.git#af0f3447d6dc95d1d54639279d897c9bedf435ed"
 dependencies = [
  "axalloc",
  "axconfig",
@@ -174,9 +174,11 @@ dependencies = [
  "axhal",
  "axio",
  "axlog",
+ "axnet",
  "axruntime",
  "axsync",
- "bindgen 0.66.1",
+ "axtask",
+ "bindgen",
  "flatten_objects",
  "lazy_static",
  "spin 0.9.8",
@@ -318,6 +320,8 @@ dependencies = [
  "axsync",
  "axtask",
  "axtrap",
+ "spinlock",
+ "taskctx",
 ]
 
 [[package]]
@@ -341,7 +345,6 @@ dependencies = [
  "fatfs",
  "lazy_init",
  "log",
- "lwext4_rust",
 ]
 
 [[package]]
@@ -427,14 +430,13 @@ dependencies = [
 [[package]]
 name = "axlibc"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/axlibc.git#c2c46ca8e9cb386fd710d87ad2a29294ed49c35c"
 dependencies = [
  "arceos_posix_api",
  "arch_boot",
  "axerrno",
  "axfeat",
  "axio",
- "bindgen 0.66.1",
+ "bindgen",
 ]
 
 [[package]]
@@ -552,7 +554,6 @@ source = "git+https://github.com/Starry-OS/axstarry.git#a1b64ec2edd246b8d635c291
 dependencies = [
  "arch_boot",
  "axfeat",
- "axlibc",
  "axlog",
  "linux_syscall_api",
 ]
@@ -648,29 +649,6 @@ dependencies = [
  "lazycell",
  "log",
  "peeking_take_while",
- "prettyplease",
- "proc-macro2",
- "quote",
- "regex",
- "rustc-hash",
- "shlex",
- "syn 2.0.60",
- "which",
-]
-
-[[package]]
-name = "bindgen"
-version = "0.69.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a00dc851838a2120612785d195287475a3ac45514741da670b735818822129a0"
-dependencies = [
- "bitflags 2.5.0",
- "cexpr",
- "clang-sys",
- "itertools",
- "lazy_static",
- "lazycell",
- "log",
  "prettyplease",
  "proc-macro2",
  "quote",
@@ -1025,15 +1003,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "itertools"
-version = "0.12.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ba291022dbbd398a455acf126c1e341954079855bc60dfdda641363bd6922569"
-dependencies = [
- "either",
-]
-
-[[package]]
 name = "kernel_guard"
 version = "0.1.0"
 source = "git+https://github.com/Starry-OS/kernel_guard.git#72e006721a017db12ce7731fe30f56a83f330216"
@@ -1131,15 +1100,6 @@ name = "log"
 version = "0.4.19"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b06a4cde4c0f271a446782e3eff8de789548ce57dbc8eca9292c27f4a42004b4"
-
-[[package]]
-name = "lwext4_rust"
-version = "0.1.0"
-source = "git+https://github.com/elliott10/lwext4_rust.git?rev=f3048f87#f3048f8762ebf0f750ec923112e135244a153d50"
-dependencies = [
- "bindgen 0.69.4",
- "log",
-]
 
 [[package]]
 name = "managed"
