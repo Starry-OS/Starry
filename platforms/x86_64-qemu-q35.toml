@@ -1,0 +1,52 @@
+# Architecture identifier.
+arch = "x86_64"
+# Platform identifier.
+platform = "x86_64-qemu-q35"
+# Platform family.
+family = "x86-pc"
+
+# Base address of the whole physical memory.
+phys-memory-base = "0"
+# Size of the whole physical memory.
+phys-memory-size = "0x8000_0000"     # 2G
+# Base physical address of the kernel image.
+kernel-base-paddr = "0x20_0000"
+# Base virtual address of the kernel image.
+kernel-base-vaddr = "0xffff_ff80_0020_0000"
+# Linear mapping offset, for quick conversions between physical and virtual
+# addresses.
+phys-virt-offset = "0xffff_ff80_0000_0000"
+# MMIO regions with format (`base_paddr`, `size`).
+mmio-regions = [
+    ["0xb000_0000", "0x1000_0000"], # PCI config space
+    ["0xfe00_0000", "0xc0_0000"],   # PCI devices
+    ["0xfec0_0000", "0x1000"],      # IO APIC
+    ["0xfed0_0000", "0x1000"],      # HPET
+    ["0xfee0_0000", "0x1000"],      # Local APIC
+]
+# VirtIO MMIO regions with format (`base_paddr`, `size`).
+virtio-mmio-regions = []
+# Base physical address of the PCIe ECAM space (should read from ACPI 'MCFG' table).
+pci-ecam-base = "0xb000_0000"
+# End PCI bus number.
+pci-bus-end = "0xff"
+# PCI device memory ranges (not used on x86).
+pci-ranges = []
+
+# Timer interrupt frequencyin Hz.
+timer-frequency = "4_000_000_000"   # 4.0GHz
+
+# Testcase memory start address.
+testcase-memory-start = "0x1_8000_0000"
+# Testcase memory size.
+testcase-memory-size = "0x800_0000"
+# The base address of the user heap.
+user-heap-base = "0x3FA0_0000"
+# The base address of the user stack. And the stack bottom is `user-stack-top + max-user-stack-size`.
+user-stack-top = "0x3FE0_0000"
+# The size of the user heap.
+max-user-heap-size = "0x40_0000"
+# The size of the user stack.
+max-user-stack-size = "0x20_0000"
+# The base address of the signal trampoline.
+signal-trampoline = "0x4000_0000"
