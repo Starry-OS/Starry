@@ -1,0 +1,16 @@
+[workspace]
+resolver = "2"
+
+members = [
+    "apps/helloworld",
+    "apps/monolithic_userboot"
+]
+
+[profile.release]
+lto = true
+
+[profile.dev]
+lto = true
+
+[patch."https://github.com/rcore-os/smoltcp.git"]
+smoltcp = { git = "https://github.com/c0per/smoltcp", branch = "starryos" }
