@@ -11,6 +11,4 @@ arceos-fada.bin.gz
 arceos-fada.itb
 .tmp_its
 !tools/rk3588/ramdisk.img
-!tools/axlibc
 linker_*
-crates/

@@ -36,7 +36,7 @@ define cargo_clippy
   $(call run_cmd,cargo clippy,-p axlog -p percpu -p percpu_macros $(1) $(verbose))
 endef
 
-all_packages := $(wildcard $(CURDIR)/crates/*)
+all_packages := $(shell ls $(CURDIR)/crates)
 
 define cargo_doc
   $(call run_cmd,cargo doc,--no-deps --all-features --workspace --exclude "arceos-*" $(verbose))

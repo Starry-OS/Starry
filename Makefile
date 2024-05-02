@@ -34,7 +34,7 @@ SMP ?= 1
 MODE ?= release
 LOG ?= off
 V ?=
-
+LIBC_DIR = crates/axlibc
 # App options
 A ?= apps/monolithic_userboot
 APP ?= $(A)
@@ -161,12 +161,16 @@ else ifeq ($(PLATFORM_NAME), aarch64-rk3588j)
   include scripts/make/rk3588.mk
 endif
 
-make_bin: 
-  ifeq ($(STRUCT), Monolithic)
-		$(call make_bin)
-  endif
+pre_libc:
+# 如果 APP_TYPES 包含 C 或者 FEATURES 包含 ext4fs，则执行如下代码
+ifeq ($(wildcard crates/axlibc),)
+	@cargo new --lib crates/axlibc
+	@rm -rf crates/axlibc
+	@git clone https://github.com/Starry-OS/axlibc.git crates/axlibc
+	@echo Load axlibc successfully
+endif
 
-build: make_bin $(OUT_DIR) $(OUT_BIN)
+build: $(OUT_DIR) $(OUT_BIN)
 
 disasm:
 	$(OBJDUMP) $(OUT_ELF) | less
@@ -202,7 +206,7 @@ fmt:
 	cargo fmt --all
 
 fmt_c:
-	@clang-format --style=file -i $(shell find tools/axlibc -iname '*.c' -o -iname '*.h')
+	@clang-format --style=file -i $(shell find crates/axlibc -iname '*.c' -o -iname '*.h')
 
 test:
 	$(call app_test)
@@ -222,7 +226,7 @@ clean: clean_c
 	cargo clean
 
 clean_c::
-	rm -rf tools/axlibc/build_*
+	rm -rf crates/axlibc/build_*
 	rm -rf $(app-objs)
 
 .PHONY: all build disasm run justrun debug clippy fmt fmt_c test test_no_fail_fast clean clean_c doc disk_image make_bin

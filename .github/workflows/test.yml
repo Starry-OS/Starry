@@ -36,7 +36,7 @@ jobs:
     - name: Run app tests
       run: |
         make disk_img
-        make test ARCH=${{ matrix.arch }}
+        make pre_libc && make test ARCH=${{ matrix.arch }}
 
   app-test-for-monolithic:
     runs-on: ${{ matrix.os }}

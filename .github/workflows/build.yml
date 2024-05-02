@@ -32,13 +32,13 @@ jobs:
       with:
         arch: aarch64
     - name: Clippy for the default target
-      run: make clippy
+      run: make pre_libc && make clippy
     - name: Clippy for x86_64
-      run: make clippy ARCH=x86_64
+      run: make pre_libc && make clippy ARCH=x86_64
     - name: Clippy for riscv64
-      run: make clippy ARCH=riscv64
+      run: make pre_libc && make clippy ARCH=riscv64
     - name: Clippy for aarch64
-      run: make clippy ARCH=aarch64
+      run: make pre_libc && make clippy ARCH=aarch64
     - name: Check code format
       run: cargo fmt --all -- --check
 
@@ -95,21 +95,21 @@ jobs:
       with:
         arch: ${{ matrix.arch }}
     - name: Build c/helloworld
-      run: make ARCH=${{ matrix.arch }} A=apps/c/helloworld
+      run: make pre_libc && make ARCH=${{ matrix.arch }} A=apps/c/helloworld
     - name: Build c/memtest
-      run: make ARCH=${{ matrix.arch }} A=apps/c/memtest
+      run: make pre_libc && make ARCH=${{ matrix.arch }} A=apps/c/memtest
     - name: Build c/sqlite3
-      run: make ARCH=${{ matrix.arch }} A=apps/c/sqlite3
+      run: make pre_libc && make ARCH=${{ matrix.arch }} A=apps/c/sqlite3
     - name: Build c/httpclient
-      run: make ARCH=${{ matrix.arch }} A=apps/c/httpclient
+      run: make pre_libc && make ARCH=${{ matrix.arch }} A=apps/c/httpclient
     - name: Build c/httpserver
-      run: make ARCH=${{ matrix.arch }} A=apps/c/httpserver
+      run: make pre_libc && make ARCH=${{ matrix.arch }} A=apps/c/httpserver
     - name: Build c/udpserver
-      run: make ARCH=${{ matrix.arch }} A=apps/c/udpserver
+      run: make pre_libc && make ARCH=${{ matrix.arch }} A=apps/c/udpserver
     - name: Build c/iperf
-      run: make ARCH=${{ matrix.arch }} A=apps/c/iperf
+      run: make pre_libc && make ARCH=${{ matrix.arch }} A=apps/c/iperf
     - name: Build c/redis
-      run: make ARCH=${{ matrix.arch }} A=apps/c/redis SMP=4
+      run: make pre_libc && make ARCH=${{ matrix.arch }} A=apps/c/redis SMP=4
 
   build-apps-for-other-platforms:
     runs-on: ${{ matrix.os }}
@@ -139,9 +139,9 @@ jobs:
     - name: Build net/httpserver for x86_64-pc-oslab
       run: make PLATFORM=x86_64-pc-oslab A=apps/net/httpserver FEATURES=driver-ixgbe
     - name: Build c/iperf for x86_64-pc-oslab
-      run: make PLATFORM=x86_64-pc-oslab A=apps/c/iperf FEATURES=driver-ixgbe,driver-ramdisk
+      run: make pre_libc && make PLATFORM=x86_64-pc-oslab A=apps/c/iperf FEATURES=driver-ixgbe,driver-ramdisk
     - name: Build c/redis for x86_64-pc-oslab
-      run: make PLATFORM=x86_64-pc-oslab A=apps/c/redis FEATURES=driver-ixgbe,driver-ramdisk SMP=4
+      run: make pre_libc && make PLATFORM=x86_64-pc-oslab A=apps/c/redis FEATURES=driver-ixgbe,driver-ramdisk SMP=4
 
     - name: Build helloworld for aarch64-raspi4
       run: make PLATFORM=aarch64-raspi4 A=apps/helloworld
