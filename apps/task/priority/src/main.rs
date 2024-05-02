@@ -77,6 +77,7 @@ fn main() {
     for i in 0..PAYLOAD_KIND {
         let vec = data[i].clone();
         let data_len = TASK_PARAMS[i].data_len;
+        #[allow(unused_variables)]
         let nice = TASK_PARAMS[i].nice;
         tasks.push(thread::spawn(move || {
             #[cfg(feature = "axstd")]

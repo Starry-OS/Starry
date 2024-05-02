@@ -1,31 +1,13 @@
-[workspace]
-resolver = "2"
-
-members = [
-    "tools/axlibc",
-    "apps/display",
-    "apps/exception",
-    "apps/helloworld",
-    "apps/memtest",
-    "apps/fs/shell",
-    "apps/net/echoserver",
-    "apps/net/httpclient",
-    "apps/net/httpserver",
-    "apps/net/udpserver",
-    "apps/net/bwbench",
-    "apps/task/parallel",
-    "apps/task/sleep",
-    "apps/task/yield",
-    "apps/task/priority",
-    "apps/task/tls",
-    "apps/monolithic_userboot"
-]
-
-[profile.release]
-lto = true
+[patch."https://github.com/rcore-os/smoltcp.git".smoltcp]
+branch = "starryos"
+git = "https://github.com/c0per/smoltcp"
 
 [profile.dev]
 lto = true
 
-[patch."https://github.com/rcore-os/smoltcp.git"]
-smoltcp = { git = "https://github.com/c0per/smoltcp", branch = "starryos" }
+[profile.release]
+lto = true
+
+[workspace]
+members = ["tools/axlibc", "apps/display", "apps/exception", "apps/helloworld", "apps/memtest", "apps/fs/shell", "apps/net/echoserver", "apps/net/httpclient", "apps/net/httpserver", "apps/net/udpserver", "apps/net/bwbench", "apps/task/parallel", "apps/task/sleep", "apps/task/yield", "apps/task/priority", "apps/task/tls", "apps/monolithic_userboot"]
+resolver = "2"

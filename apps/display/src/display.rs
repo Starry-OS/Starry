@@ -1,7 +1,7 @@
 use embedded_graphics::pixelcolor::Rgb888;
 use embedded_graphics::prelude::{RgbColor, Size};
 use embedded_graphics::{draw_target::DrawTarget, prelude::OriginDimensions};
-
+#[cfg(feature = "axstd")]
 use std::os::arceos::api::display as api;
 
 pub struct Display {
@@ -11,14 +11,26 @@ pub struct Display {
 
 impl Display {
     pub fn new() -> Self {
-        let info = api::ax_framebuffer_info();
-        let fb =
-            unsafe { core::slice::from_raw_parts_mut(info.fb_base_vaddr as *mut u8, info.fb_size) };
-        let size = Size::new(info.width, info.height);
-        Self { size, fb }
+        #[cfg(feature = "axstd")]
+        {
+            let info = api::ax_framebuffer_info();
+            let fb = unsafe {
+                core::slice::from_raw_parts_mut(info.fb_base_vaddr as *mut u8, info.fb_size)
+            };
+            let size = Size::new(info.width, info.height);
+            Self { size, fb }
+        }
+        #[cfg(not(feature = "axstd"))]
+        {
+            Self {
+                size: Size::new(0, 0),
+                fb: &mut [],
+            }
+        }
     }
 
     pub fn flush(&self) {
+        #[cfg(feature = "axstd")]
         api::ax_framebuffer_flush();
     }
 }

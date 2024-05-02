@@ -9,7 +9,6 @@ authors = ["Youjie Zheng <zyj578335934@gmail.com>"]
 [features]
 # Use "APP_FEATURES=batch" to enable batch mode
 batch = []
-ext4fs = ["axlibc/fs"]
+
 [dependencies]
 axstarry = { git = "https://github.com/Starry-OS/axstarry.git" }
-axlibc = { path = "../../tools/axlibc", optional = true }

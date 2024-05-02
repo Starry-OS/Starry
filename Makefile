@@ -125,9 +125,6 @@ export AX_LOG=$(LOG)
 export AX_TARGET=$(TARGET)
 export AX_IP=$(IP)
 export AX_GW=$(GW)
-# 获取当前的工作目录
-export AX_WORK_DIR=$(CURDIR)
-export AX_LIBC_DIR=$(CURDIR)/tools/axlibc
 
 # Binutils
 CROSS_COMPILE ?= $(ARCH)-linux-musl-

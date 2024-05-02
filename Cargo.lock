@@ -164,7 +164,7 @@ dependencies = [
 [[package]]
 name = "arceos_posix_api"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/arceos_posix_api.git#af0f3447d6dc95d1d54639279d897c9bedf435ed"
+source = "git+https://github.com/Starry-OS/arceos_posix_api.git#45b2398e779c89e7507e03b3fe745f6ba8f75a5a"
 dependencies = [
  "axalloc",
  "axconfig",
@@ -453,7 +453,7 @@ dependencies = [
 [[package]]
 name = "axmem"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/axmem.git#41cf833bfe6180f04773348c9b78d6f437913592"
+source = "git+https://github.com/Starry-OS/axmem.git#315ef0914702cdff2726252c5971f2b358f7305e"
 dependencies = [
  "axalloc",
  "axconfig",
@@ -491,7 +491,7 @@ dependencies = [
 [[package]]
 name = "axprocess"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/axprocess.git#11482a6247cb67cc68f20a9bfff7404f32f882e3"
+source = "git+https://github.com/Starry-OS/axprocess.git#4eebad4d5d1022404b713c855d7d4cd85699e406"
 dependencies = [
  "axalloc",
  "axconfig",
@@ -539,7 +539,7 @@ dependencies = [
 [[package]]
 name = "axsignal"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/axsignal.git#438a6e8cfb1e1a469e628fc7c2fcb5b856032d26"
+source = "git+https://github.com/Starry-OS/axsignal.git#267cb5b0eb2570a0aba006c87360430b1a49e35c"
 dependencies = [
  "axhal",
  "bitflags 2.5.0",
@@ -1134,7 +1134,6 @@ checksum = "68354c5c6bd36d73ff3feceb05efa59b6acb7626617f4962be322a825e61f79a"
 name = "monolithic_userboot"
 version = "0.1.0"
 dependencies = [
- "axlibc",
  "axstarry",
 ]
 
