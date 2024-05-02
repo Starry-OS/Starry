@@ -43,6 +43,10 @@ fs = ["arceos_posix_api/fs", "fd"]
 # Networking
 net = ["arceos_posix_api/net", "fd"]
 
+# Schedule policy
+sched_rr = ["arch_boot/preempt", "axfeat/sched_rr"]
+sched_cfs = ["arch_boot/preempt", "axfeat/sched_cfs"]
+
 # Libc features
 fd = []
 pipe = ["arceos_posix_api/pipe"]
