@@ -22,11 +22,13 @@ crate-type = ["lib", "staticlib"]
 [features]
 default = []
 
+irq = ["axfeat/irq", "arch_boot/irq"]
+
 # Multicore
-smp = ["arceos_posix_api/smp"]
+smp = ["arceos_posix_api/smp", "arch_boot/smp"]
 
 # Floating point/SIMD
-fp_simd = ["axfeat/fp_simd"]
+fp_simd = ["axfeat/fp_simd", "arch_boot/fp_simd"]
 
 # Memory
 alloc = ["arceos_posix_api/alloc"]

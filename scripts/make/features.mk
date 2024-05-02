@@ -14,7 +14,7 @@
 ifeq ($(APP_TYPE),c)
   ax_feat_prefix := axfeat/
   lib_feat_prefix := axlibc/
-  lib_features := fp_simd alloc multitask fs net fd pipe select epoll
+  lib_features := fp_simd alloc multitask fs net fd pipe select epoll irq
 else
   ifneq ($(findstring monolithic,$(APP)),)
     ax_feat_prefix := axstarry/

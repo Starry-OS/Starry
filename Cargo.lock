@@ -164,7 +164,7 @@ dependencies = [
 [[package]]
 name = "arceos_posix_api"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/arceos_posix_api.git#45b2398e779c89e7507e03b3fe745f6ba8f75a5a"
+source = "git+https://github.com/Starry-OS/arceos_posix_api.git#0949faae5bc4e892035f8c327678c49bfa59f0b5"
 dependencies = [
  "axalloc",
  "axconfig",
@@ -188,10 +188,9 @@ dependencies = [
 [[package]]
 name = "arch_boot"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/arch_boot.git#4ca202a2d51f6c298f983dbcfa14731070e6e65f"
+source = "git+https://github.com/Starry-OS/arch_boot.git#d20152579c65b7546090b67fc2dbc972e543859c"
 dependencies = [
  "aarch64-cpu",
- "axalloc",
  "axconfig",
  "axhal",
  "axlog",
@@ -305,9 +304,8 @@ dependencies = [
 [[package]]
 name = "axfeat"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/axfeat.git#a438882def42ce1793c53927c74aa0e1764d1a67"
+source = "git+https://github.com/Starry-OS/axfeat.git#f0a469a46630dc0c8ba2bcdfd864b4e0439bab2a"
 dependencies = [
- "arch_boot",
  "axalloc",
  "axdisplay",
  "axdriver",
@@ -319,7 +317,6 @@ dependencies = [
  "axruntime",
  "axsync",
  "axtask",
- "axtrap",
  "spinlock",
  "taskctx",
 ]
@@ -516,7 +513,7 @@ dependencies = [
 [[package]]
 name = "axruntime"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/axruntime.git#91db99c6ce7f557f0d55047d8e7733d4644192b8"
+source = "git+https://github.com/Starry-OS/axruntime.git#3dbaf5eef9605d263932079aebd4a4e6cbc888a9"
 dependencies = [
  "axalloc",
  "axconfig",
@@ -550,7 +547,7 @@ dependencies = [
 [[package]]
 name = "axstarry"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/axstarry.git#06adcf0af15c9d6db05010b996fabdc0178f58da"
+source = "git+https://github.com/Starry-OS/axstarry.git#ed3c90b8e10d9bdd92583833dd5a90d149f13d59"
 dependencies = [
  "arch_boot",
  "axfeat",
@@ -561,7 +558,7 @@ dependencies = [
 [[package]]
 name = "axstd"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/axstd.git#d3e780c6ca6250940ab6f558039761f65895b1ec"
+source = "git+https://github.com/Starry-OS/axstd.git#ab0f305b84e8473e55f6daa5a00cc31c5e6a2fb6"
 dependencies = [
  "arceos_api",
  "arch_boot",
