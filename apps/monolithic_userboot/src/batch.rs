@@ -1,6 +1,6 @@
 //! To allow for batch testing, we define a list of test cases that can be run in sequence.
 extern crate alloc;
-use alloc::{boxed::Box, string::String, string::ToString, vec::Vec};
+use alloc::boxed::Box;
 
 #[allow(dead_code)]
 pub const SDCARD_TESTCASES: &[&str] = &[
@@ -56,48 +56,12 @@ pub const SDCARD_TESTCASES: &[&str] = &[
     // "lmbench_all bw_mmap_rd -P 1 512k open2close /var/tmp/XXX",
     // "busybox echo context switch overhead",
     // "lmbench_all lat_ctx -P 1 -s 32 2 4 8 16 24 32 64 96",
-    "busybox sh libctest_testcode.sh",
+    // "busybox sh libctest_testcode.sh",
     // "busybox sh lua_testcode.sh",
     // "libc-bench",
-    // "busybox sh ./netperf_testcode.sh",
+    "busybox sh ./netperf_testcode.sh",
     // "busybox sh ./cyclictest_testcode.sh",
 ];
-
-#[allow(unused)]
-/// 分割命令行参数
-fn get_args(command_line: &[u8]) -> Vec<String> {
-    let mut args = Vec::new();
-    // 需要判断是否存在引号，如busybox_cmd.txt的第一条echo指令便有引号
-    // 若有引号时，不能把引号加进去，同时要注意引号内的空格不算是分割的标志
-    let mut in_quote = false;
-    let mut arg_start = 0; // 一个新的参数的开始位置
-    for pos in 0..command_line.len() {
-        if command_line[pos] == b'\"' {
-            in_quote = !in_quote;
-        }
-        if command_line[pos] == b' ' && !in_quote {
-            // 代表要进行分割
-            // 首先要防止是否有空串
-            if arg_start != pos {
-                args.push(
-                    core::str::from_utf8(&command_line[arg_start..pos])
-                        .unwrap()
-                        .to_string(),
-                );
-            }
-            arg_start = pos + 1;
-        }
-    }
-    // 最后一个参数
-    if arg_start != command_line.len() {
-        args.push(
-            core::str::from_utf8(&command_line[arg_start..])
-                .unwrap()
-                .to_string(),
-        );
-    }
-    args
-}
 
 #[allow(unused)]
 pub fn run_batch_testcases() {

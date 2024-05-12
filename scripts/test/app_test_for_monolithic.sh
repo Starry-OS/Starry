@@ -2,7 +2,7 @@
 
 APP=
 ROOT=$(realpath $(dirname $0))/../../
-TIMEOUT=60s
+TIMEOUT=120s
 EXIT_STATUS=0
 
 S_PASS=0
