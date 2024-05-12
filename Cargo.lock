@@ -155,6 +155,7 @@ dependencies = [
 [[package]]
 name = "arch_boot"
 version = "0.1.0"
+source = "git+https://github.com/Starry-OS/arch_boot.git#c17c32ac1c5c491a702b25144061dfc54cb8fd8c"
 dependencies = [
  "aarch64-cpu",
  "axconfig",
@@ -279,6 +280,7 @@ dependencies = [
 [[package]]
 name = "axfs"
 version = "0.1.0"
+source = "git+https://github.com/Starry-OS/axfs.git#defa32aad1fd0fbd9aca43411d5459603a821550"
 dependencies = [
  "axconfig",
  "axdriver",
@@ -334,6 +336,7 @@ dependencies = [
 [[package]]
 name = "axhal"
 version = "0.1.0"
+source = "git+https://github.com/Starry-OS/axhal.git#bb7589fe64aa14fa53deb285b79a4f24fe47006d"
 dependencies = [
  "aarch64-cpu",
  "arm_gic",
@@ -391,6 +394,7 @@ dependencies = [
 [[package]]
 name = "axmem"
 version = "0.1.0"
+source = "git+https://github.com/Starry-OS/axmem.git#b5923a1445bf34a26342b4f82c72ebba4ac4b1e4"
 dependencies = [
  "axalloc",
  "axconfig",
@@ -409,6 +413,7 @@ dependencies = [
 [[package]]
 name = "axnet"
 version = "0.1.0"
+source = "git+https://github.com/Starry-OS/axnet.git#2aa071b1f90fe1e85691d42e90a11e4d8fa25eb0"
 dependencies = [
  "axdriver",
  "axerrno",
@@ -428,6 +433,7 @@ dependencies = [
 [[package]]
 name = "axprocess"
 version = "0.1.0"
+source = "git+https://github.com/Starry-OS/axprocess.git#a3aef2d47c3f6dcabf067a032c3193fb760ee248"
 dependencies = [
  "axalloc",
  "axconfig",
@@ -452,6 +458,7 @@ dependencies = [
 [[package]]
 name = "axruntime"
 version = "0.1.0"
+source = "git+https://github.com/Starry-OS/axruntime.git#3dbaf5eef9605d263932079aebd4a4e6cbc888a9"
 dependencies = [
  "axalloc",
  "axconfig",
@@ -485,6 +492,7 @@ dependencies = [
 [[package]]
 name = "axstarry"
 version = "0.1.0"
+source = "git+https://github.com/Starry-OS/axstarry.git#ed3c90b8e10d9bdd92583833dd5a90d149f13d59"
 dependencies = [
  "arch_boot",
  "axfeat",
@@ -888,6 +896,7 @@ source = "git+https://github.com/Starry-OS/linked_list.git#3238ef86e8b27bfe13634
 [[package]]
 name = "linux_syscall_api"
 version = "0.1.0"
+source = "git+https://github.com/Starry-OS/linux_syscall_api.git#dbebb22c6703fa64cd7fa0f0dbb701747261b013"
 dependencies = [
  "axconfig",
  "axerrno",

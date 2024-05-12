@@ -43,3 +43,27 @@ $ make pre_libc
 $ make A=apps/c/helloworld ARCH=x86_64 build
 ```
 
+## Pull crates to local workspace
+
+```sh
+# To download the tool
+$ cargo install kbuild
+
+$ mkdir crates
+
+# Load crates
+
+$ kbuild patch add linux_syscall_api
+
+$ kbuild patch add axstarry
+
+# Then crates will be downloaded to the crates/ folder
+
+# To remove the crates
+$ kbuild patch remove linux_syscall_api
+
+$ kbuild patch remove axstarry
+
+# Please verify that crates don't have any uncommitted changes before removing them.
+
+```
