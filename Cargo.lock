@@ -896,7 +896,7 @@ source = "git+https://github.com/Starry-OS/linked_list.git#3238ef86e8b27bfe13634
 [[package]]
 name = "linux_syscall_api"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/linux_syscall_api.git#dbebb22c6703fa64cd7fa0f0dbb701747261b013"
+source = "git+https://github.com/Starry-OS/linux_syscall_api.git#c5fa130381d6b3d9cb40b6351253ae237759179d"
 dependencies = [
  "axconfig",
  "axerrno",

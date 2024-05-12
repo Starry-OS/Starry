@@ -52,7 +52,6 @@ $ cargo install kbuild
 $ mkdir crates
 
 # Load crates
-
 $ kbuild patch add linux_syscall_api
 
 $ kbuild patch add axstarry
@@ -67,3 +66,9 @@ $ kbuild patch remove axstarry
 # Please verify that crates don't have any uncommitted changes before removing them.
 
 ```
+
+## Notes
+
+- Please remove unnecessary dependencies in `Cargo.toml` before your commit.
+- After pulling a new crate to the local workspace, maybe you need to execute `make clean` to update the cache.
+

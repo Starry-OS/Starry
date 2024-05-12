@@ -25,13 +25,20 @@ if [ "$ARCH" != "x86_64" ] && [ "$ARCH" != "riscv64" ] && [ "$ARCH" != "aarch64"
     exit $S_FAILED
 fi
 
+# TODO: add iozone, unixbench, cycle, etc.
+testcase_list=(
+    "busybox"
+    "libc"
+    "net"
+)
+
 function run_and_compare() {
     local args=$1
     local actual=$2
 
     echo -ne "    run with \"${BLOD_C}$args${END_C}\": "
     # if the app contain "apps/monolithic_userboot", then make disk img
-    sh ./build_img.sh $ARCH
+    sh ./build_img.sh -m $ARCH
 
     make -C "$ROOT" A="$APP" $args > "$actual" 2>&1
     if [ $? -ne 0 ]; then
@@ -64,27 +71,33 @@ function test_one() {
     rm -f "$actual"
 
     MSG=
-    run_and_compare "$args" "$actual"
-    local res=$?
+    # 遍历 testcase_list，进行多次测试
+    for testcase in ${testcase_list[@]}; do
+        # 重置 MONOLITHIC_TESTCASE
+        echo -e "    Monolithic testcase: $testcase"
+        export MONOLITHIC_TESTCASE=$testcase
+        run_and_compare "$args" "$actual"
+        local res=$?
 
-    if [ $res -ne $S_PASS ]; then
-        EXIT_STATUS=$res
-        if [ $res == $S_FAILED ]; then
-            echo -e "${RED_C}failed!${END_C} $RUN_TIME"
-        elif [ $res == $S_TIMEOUT ]; then
-            echo -e "${YELLOW_C}timeout!${END_C} $RUN_TIME"
-        elif [ $res == $S_BUILD_FAILED ]; then
-            echo -e "${RED_C}build failed!${END_C}"
+        if [ $res -ne $S_PASS ]; then
+            EXIT_STATUS=$res
+            if [ $res == $S_FAILED ]; then
+                echo -e "${RED_C}failed!${END_C} $RUN_TIME"
+            elif [ $res == $S_TIMEOUT ]; then
+                echo -e "${YELLOW_C}timeout!${END_C} $RUN_TIME"
+            elif [ $res == $S_BUILD_FAILED ]; then
+                echo -e "${RED_C}build failed!${END_C}"
+            fi
+            if [ ! -z "$MSG" ]; then
+                echo -e "        $MSG"
+            fi
+            echo -e "${RED_C}actual output${END_C}:"
+            cat "$actual"
+        else
+            echo -e "${GREEN_C}passed!${END_C} $RUN_TIME"
+            # rm -f "$actual"
         fi
-        if [ ! -z "$MSG" ]; then
-            echo -e "        $MSG"
-        fi
-        echo -e "${RED_C}actual output${END_C}:"
-        cat "$actual"
-    else
-        echo -e "${GREEN_C}passed!${END_C} $RUN_TIME"
-        # rm -f "$actual"
-    fi
+    done
 }
 
 if [ -z "$1" ]; then

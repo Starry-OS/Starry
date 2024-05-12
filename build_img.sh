@@ -14,70 +14,40 @@ display_help()
 {
 	echo ""
 	echo "./build_img.sh -m [arch] -fs [filesystem] -file [testcast]"
+	# 若不指定参数，则使用默认的测例
+	echo "  -m | --arch		architecture: x86_64|riscv64|aarch64"
+	echo "  -fs | --filesystem	filesystem: ext4|fat32"
+	echo "  -file | --testcase  If not specified, use the default testcases"
+	echo "  default testcases:"
+	echo "    x86_64: x86_64_linux_musl"
+	echo "    riscv64: riscv64_linux_musl"
+	echo "    aarch64: aarch64-linux-musl"
+	echo "  -h | --help		display help"
 	echo ""
 	exit 1
 }
 
-while [ -n "$1" ]; do
+# 可能接受三类参数 -m [arch] -fs [filesystem] -file [testcast]
+# 但是不一定只有一个参数，所以使用 while 循环
+while [ "$1" != "" ]; do
 	case $1 in
-		-m)
-			shift
-			arch="$1"
-			;;
-		-fs)
-			shift
-			fs="$1"
-			;;
-		-file)
-			shift
-			FILE="$1"
-			;;
-		riscv64)
-			arch=riscv64
-			;;
-		x86_64)
-			arch=x86_64
-			;;
-		aarch64)
-			arch=aarch64
-			;;
-		fat32)
-			fs=fat32
-			;;
-		ext4)
-			fs=ext4
-			;;
-		riscv64_linux_musl)
-			FILE=riscv64_linux_musl
-			;;
-		riscv64_gcc)
-			FILE=riscv64_gcc
-			;;
-		riscv64_redis)
-			FILE=riscv64_redis
-			;;
-		x86_64_linux_musl)
-			FILE=x86_64_linux_musl
-			;;
-		x86_64_ZLM)
-			FILE=x86_64_ZLM
-			;;
-		riscv64_libctest_dynamic)
-			FILE=riscv64_libctest_dynamic
-			;;
-		riscv64_libctest_static)
-			FILE=riscv64_libctest_static
-			;;
-		aarch64-linux-musl)
-			FILE=aarch64-linux-musl
-			;;
-		*)
-			display_help
-			;;
+		-m | --arch )	shift
+						arch=$1
+						;;
+		-fs | --filesystem )	shift
+						fs=$1
+						;;
+		-file | --testcase )	shift
+						FILE=$1
+						;;
+		-h | --help )		display_help
+						exit
+						;;
+		* )					display_help
+						exit 1
 	esac
 	shift
 done
-
 
 if [ -z "$FILE" ]; then # use default testcases
 	if [ "$arch" = "riscv64" ]; then
@@ -87,6 +57,7 @@ if [ -z "$FILE" ]; then # use default testcases
 	elif [ "$arch" = "aarch64" ]; then
 		FILE=aarch64-linux-musl
 	else
+		echo "Unknown architecture: $arch"
 		exit 1
 	fi
 fi
@@ -101,9 +72,13 @@ dd if=/dev/zero of=disk.img bs=4M count=30
 
 if [ "$fs" = "ext4" ]; then
 	mkfs.ext4 -t ext4 disk.img
-else
+else if [ "$fs" = "fat32" ]; then
 	fs=fat32
 	mkfs.vfat -F 32 disk.img
+else
+	echo "Unknown filesystem: $fs"
+	exit 1
+fi
 fi
 
 mkdir -p mnt

@@ -36,7 +36,8 @@ jobs:
     - name: Run app tests
       run: |
         make disk_img
-        make pre_libc && make test ARCH=${{ matrix.arch }}
+        make pre_libc
+        make test ARCH=${{ matrix.arch }}
 
   app-test-for-monolithic:
     runs-on: ${{ matrix.os }}
@@ -67,3 +68,34 @@ jobs:
       run: |
         make disk_img
         make test_monolithic ARCH=${{ matrix.arch }}
+  app-test-for-ext4fs:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        arch: [x86_64, riscv64, aarch64]
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions-rs/toolchain@v1
+      with:
+        profile: minimal
+        toolchain: ${{ env.rust-toolchain }}
+        components: rust-src
+    - uses: actions-rs/install@v0.1
+      with:
+        crate: cargo-binutils
+        version: latest
+        use-tool-cache: true
+    - uses: ./.github/workflows/actions/setup-qemu
+      with:
+        qemu-version: ${{ env.qemu-version }}
+    - uses: ./.github/workflows/actions/setup-musl
+      with:
+        arch: ${{ matrix.arch }}
+    - name: Run app tests
+      run: |
+        sh ./build_img.sh -m ${{ matrix.arch }} -fs ext4
+        make pre_libc
+        export MONOLITHIC_TESTCASE=other
+        make A=apps/monolithic_userboot APP_FEATURES=batch FEATURES="ext4fs" LOG=off run
