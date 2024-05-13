@@ -5,7 +5,7 @@ on: [push, pull_request]
       
 env:
   qemu-version: 8.2.0
-  rust-toolchain: nightly-2024-01-19
+  rust-toolchain: nightly-2024-05-02
 
 jobs:
   app-test-for-unikernel:
@@ -16,17 +16,13 @@ jobs:
         os: [ubuntu-latest]
         arch: [x86_64, riscv64, aarch64]
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions-rs/toolchain@v1
+    - uses: actions/checkout@v4
+    - uses: dtolnay/rust-toolchain@stable
       with:
-        profile: minimal
         toolchain: ${{ env.rust-toolchain }}
         components: rust-src
-    - uses: actions-rs/install@v0.1
-      with:
-        crate: cargo-binutils
-        version: latest
-        use-tool-cache: true
+    - uses: Swatinem/rust-cache@v2
+    - run: cargo install cargo-binutils
     - uses: ./.github/workflows/actions/setup-qemu
       with:
         qemu-version: ${{ env.qemu-version }}
@@ -36,7 +32,6 @@ jobs:
     - name: Run app tests
       run: |
         make disk_img
-        make pre_libc
         make test ARCH=${{ matrix.arch }}
 
   app-test-for-monolithic:
@@ -47,17 +42,13 @@ jobs:
         os: [ubuntu-latest]
         arch: [x86_64, riscv64, aarch64]
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions-rs/toolchain@v1
+    - uses: actions/checkout@v4
+    - uses: dtolnay/rust-toolchain@stable
       with:
-        profile: minimal
         toolchain: ${{ env.rust-toolchain }}
         components: rust-src
-    - uses: actions-rs/install@v0.1
-      with:
-        crate: cargo-binutils
-        version: latest
-        use-tool-cache: true
+    - uses: Swatinem/rust-cache@v2
+    - run: cargo install cargo-binutils
     - uses: ./.github/workflows/actions/setup-qemu
       with:
         qemu-version: ${{ env.qemu-version }}
@@ -76,17 +67,13 @@ jobs:
         os: [ubuntu-latest]
         arch: [x86_64, riscv64, aarch64]
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions-rs/toolchain@v1
+    - uses: actions/checkout@v4
+    - uses: dtolnay/rust-toolchain@stable
       with:
-        profile: minimal
         toolchain: ${{ env.rust-toolchain }}
         components: rust-src
-    - uses: actions-rs/install@v0.1
-      with:
-        crate: cargo-binutils
-        version: latest
-        use-tool-cache: true
+    - uses: Swatinem/rust-cache@v2
+    - run: cargo install cargo-binutils
     - uses: ./.github/workflows/actions/setup-qemu
       with:
         qemu-version: ${{ env.qemu-version }}
@@ -96,6 +83,5 @@ jobs:
     - name: Run app tests
       run: |
         sh ./build_img.sh -m ${{ matrix.arch }} -fs ext4
-        make pre_libc
         export MONOLITHIC_TESTCASE=other
         make ARCH=${{ matrix.arch }} A=apps/monolithic_userboot APP_FEATURES=batch FEATURES="ext4fs" LOG=off run

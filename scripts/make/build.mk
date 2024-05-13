@@ -1,7 +1,6 @@
 # Main building script
 
 include scripts/make/cargo.mk
-include scripts/make/features.mk
 
 ifeq ($(APP_TYPE), c)
   include scripts/make/build_c.mk
@@ -34,17 +33,11 @@ endif
 _cargo_build: $(build_deplibs)
 	@printf "    $(GREEN_C)Building$(END_C) App: $(APP_NAME), Arch: $(ARCH), Platform: $(PLATFORM_NAME), App type: $(APP_TYPE)\n"
 ifneq ($(filter ext4fs,$(FEATURES)),)
-ifeq ($(wildcard $(LIBC_DIR)/include),)
-	$(error "libc" is not built, please build it first by run the command `make pre_libc`)
-endif
 endif
 ifeq ($(APP_TYPE), rust)
 	$(call cargo_build,--manifest-path $(APP)/Cargo.toml,$(AX_FEAT) $(LIB_FEAT) $(APP_FEAT))
 	@cp $(rust_elf) $(OUT_ELF)
 else ifeq ($(APP_TYPE), c)
-ifeq ($(wildcard $(LIBC_DIR)/include),)
-	$(error "libc" is not built, please build it first by run the command `make pre_libc`)
-endif
 	$(call cargo_build,-p axlibc,$(AX_FEAT) $(LIB_FEAT))
 endif
 

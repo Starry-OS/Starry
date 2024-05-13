@@ -34,7 +34,7 @@ SMP ?= 1
 MODE ?= release
 LOG ?= off
 V ?=
-LIBC_DIR = crates/axlibc
+LIBC_DIR = tools/axlibc
 # App options
 A ?= apps/monolithic_userboot
 APP ?= $(A)
@@ -73,7 +73,7 @@ else
   APP_TYPE := c
 endif
 
-# Architecture, platform and target
+# Architecture and platform
 ifneq ($(filter $(MAKECMDGOALS),unittest unittest_no_fail_fast),)
   PLATFORM_NAME :=
 else ifneq ($(PLATFORM),)
@@ -100,21 +100,33 @@ endif
 
 ifeq ($(ARCH), x86_64)
   # Don't enable kvm for WSL/WSL2.
-  # ACCEL ?= $(if $(findstring -microsoft, $(shell uname -r | tr '[:upper:]' '[:lower:]')),n,y)
-  ACCEL ?= n # TODO: 开启 kvm 会导致一些异常，以后再去追踪
+  ACCEL ?= $(if $(findstring -microsoft, $(shell uname -r | tr '[:upper:]' '[:lower:]')),n,y)
   PLATFORM_NAME ?= x86_64-qemu-q35
-  TARGET := x86_64-unknown-none
   BUS := pci
 else ifeq ($(ARCH), riscv64)
   ACCEL ?= n
   PLATFORM_NAME ?= riscv64-qemu-virt
-  TARGET := riscv64gc-unknown-none-elf
 else ifeq ($(ARCH), aarch64)
   ACCEL ?= n
   PLATFORM_NAME ?= aarch64-qemu-virt
-  TARGET := aarch64-unknown-none-softfloat
 else
   $(error "ARCH" must be one of "x86_64", "riscv64", or "aarch64")
+endif
+
+# Feature parsing
+include scripts/make/features.mk
+
+# Target
+ifeq ($(ARCH), x86_64)
+  TARGET := x86_64-unknown-none
+else ifeq ($(ARCH), riscv64)
+  TARGET := riscv64gc-unknown-none-elf
+else ifeq ($(ARCH), aarch64)
+  ifeq ($(findstring fp_simd,$(FEATURES)),)
+    TARGET := aarch64-unknown-none-softfloat
+  else
+    TARGET := aarch64-unknown-none
+  endif
 endif
 
 export AX_ARCH=$(ARCH)
@@ -161,15 +173,6 @@ else ifeq ($(PLATFORM_NAME), aarch64-rk3588j)
   include scripts/make/rk3588.mk
 endif
 
-pre_libc:
-# 如果 APP_TYPES 包含 C 或者 FEATURES 包含 ext4fs，则执行如下代码
-ifeq ($(wildcard crates/axlibc),)
-	@cargo new --lib crates/axlibc
-	@rm -rf crates/axlibc
-	@git clone https://github.com/Starry-OS/axlibc.git crates/axlibc
-	@echo Load axlibc successfully
-endif
-
 build: $(OUT_DIR) $(OUT_BIN)
 
 disasm:
@@ -206,7 +209,7 @@ fmt:
 	cargo fmt --all
 
 fmt_c:
-	@clang-format --style=file -i $(shell find crates/axlibc -iname '*.c' -o -iname '*.h')
+	@clang-format --style=file -i $(shell find tools/axlibc -iname '*.c' -o -iname '*.h')
 
 test:
 	$(call app_test)
@@ -226,7 +229,7 @@ clean: clean_c
 	cargo clean
 
 clean_c::
-	rm -rf crates/axlibc/build_*
+	rm -rf tools/axlibc/build_*
 	rm -rf $(app-objs)
 
 .PHONY: all build disasm run justrun debug clippy fmt fmt_c test test_no_fail_fast clean clean_c doc disk_image make_bin
