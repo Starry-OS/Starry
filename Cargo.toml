@@ -1,3 +1,5 @@
+[patch]
+
 [profile.dev]
 lto = true
 

@@ -188,7 +188,6 @@ dependencies = [
 [[package]]
 name = "arch_boot"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/arch_boot.git#c17c32ac1c5c491a702b25144061dfc54cb8fd8c"
 dependencies = [
  "aarch64-cpu",
  "axconfig",
@@ -816,7 +815,7 @@ dependencies = [
 [[package]]
 name = "driver_virtio"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/driver_virtio.git#9a5f486d2081db87976a6b8c25dddc05dc880bf6"
+source = "git+https://github.com/Starry-OS/driver_virtio.git#55e907a956acc48af0a64fa1b13b5eefb132c12b"
 dependencies = [
  "driver_block",
  "driver_common",
@@ -1644,8 +1643,9 @@ checksum = "49874b5167b65d7193b8aba1567f5c7d93d001cafc34600cee003eda787e483f"
 
 [[package]]
 name = "virtio-drivers"
-version = "0.7.1"
-source = "git+https://github.com/rcore-os/virtio-drivers.git?rev=4b60f5d#4b60f5d341a7211dfec7382062f965c5433c51c2"
+version = "0.7.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ff69e69ff755c004bb027891b58f951225832c84f6a734f9e1fdf0118aa91f91"
 dependencies = [
  "bitflags 2.5.0",
  "log",
