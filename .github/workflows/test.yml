@@ -98,4 +98,4 @@ jobs:
         sh ./build_img.sh -m ${{ matrix.arch }} -fs ext4
         make pre_libc
         export MONOLITHIC_TESTCASE=other
-        make A=apps/monolithic_userboot APP_FEATURES=batch FEATURES="ext4fs" LOG=off run
+        make ARCH=${{ matrix.arch }} A=apps/monolithic_userboot APP_FEATURES=batch FEATURES="ext4fs" LOG=off run

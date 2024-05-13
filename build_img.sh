@@ -15,9 +15,9 @@ display_help()
 	echo ""
 	echo "./build_img.sh -m [arch] -fs [filesystem] -file [testcast]"
 	# 若不指定参数，则使用默认的测例
-	echo "  -m | --arch		architecture: x86_64|riscv64|aarch64"
-	echo "  -fs | --filesystem	filesystem: ext4|fat32"
-	echo "  -file | --testcase  If not specified, use the default testcases"
+	echo "  -m | --arch		architecture: x86_64|riscv64|aarch64", default is x86_64
+	echo "  -fs | --filesystem	filesystem: ext4|fat32", default is fat32
+	echo "  -file | --testcase  If not specified, use the default testcases for different architectures."
 	echo "  default testcases:"
 	echo "    x86_64: x86_64_linux_musl"
 	echo "    riscv64: riscv64_linux_musl"
