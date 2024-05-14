@@ -11,7 +11,6 @@ on:
     
 env:
   rust-toolchain: nightly-2024-05-02
-  repository: Starry-OS/Starry
 
 jobs:
   prepare_for_external_test:
@@ -19,11 +18,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - id: step1
-        if: github.repository != ${{ env.repository }}
+        if: github.repository != 'Starry-OS/Starry'
         # 输出的值可以在后续的job中使用
         run: echo "TopTestDirectory=${{ inputs.ToptestDirectory }}" >> $GITHUB_OUTPUT
       - id: step2
-        if: github.repository == ${{ env.repository }}
+        if: github.repository == 'Starry-OS/Starry'
         run: echo "ToptTestDirectory=./" >> $GITHUB_OUTPUT
     outputs:
       TopTestDirectory: ${{ steps.step1.outputs.ToptTestDirectory || steps.step2.outputs.ToptTestDirectory }}
@@ -53,14 +52,14 @@ jobs:
       with:
         arch: aarch64
     - name: Clone Top Repository
-      if: github.repository != ${{ env.repository }}
-      run: git clone https://github.com/${{ env.repository }}.git ${{ env.WORKING_DIRECTORY }}
+      if: github.repository != 'Starry-OS/Starry'
+      run: git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }}
     - name: Build docs
       working-directory: ${{ env.WORKING_DIRECTORY }}
       continue-on-error: ${{ github.ref != env.default-branch && github.event_name != 'pull_request' }}
       run: make doc_check_missing
     - name: Deploy to Github Pages
-      if: ${{ github.ref == env.default-branch }} && ${{ github.repository == env.repository }}
+      if: ${{ github.ref == env.default-branch }} && github.repository == 'Starry-OS/Starry'
       uses: JamesIves/github-pages-deploy-action@v4
       with:
         single-commit: true
