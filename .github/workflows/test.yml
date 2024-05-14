@@ -1,20 +1,44 @@
 name: Test CI
 
-on: [push, pull_request]
-
-      
+on: 
+  push:
+  pull_request:
+  workflow_call:
+    inputs:
+      TopTestDirectory:
+        required: true
+        type: string
+    
 env:
   qemu-version: 8.2.0
   rust-toolchain: nightly-2024-05-02
 
 jobs:
+  prepare_for_external_test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - id: step1
+        if: github.repository != 'Starry-OS/Starry'
+        # 输出的值可以在后续的job中使用
+        run: echo "TopTestDirectory=${{ inputs.TopTestDirectory }}" >> $GITHUB_OUTPUT
+      - id: step2
+        if: github.repository == 'Starry-OS/Starry'
+        run: echo "ToptTestDirectory=./" >> $GITHUB_OUTPUT
+    outputs:
+      TopTestDirectory: ${{ steps.step1.outputs.TopTestDirectory || steps.step2.outputs.TopTestDirectory }}
+
+
   app-test-for-unikernel:
+    needs: prepare_for_external_test
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
         arch: [x86_64, riscv64, aarch64]
+    env:
+      WORKING_DIRECTORY: ${{ needs.prepare_for_external_test.outputs.TopTestDirectory }} 
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
@@ -23,6 +47,13 @@ jobs:
         components: rust-src
     - uses: Swatinem/rust-cache@v2
     - run: cargo install cargo-binutils
+    - name: Clone Top Repository
+      if: github.repository != 'Starry-OS/Starry'
+      run: |
+        git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }}
+        mkdir .github/workflows/actions
+        mv ${{ env.WORKING_DIRECTORY }}/.github/workflows/actions/setup-musl .github/workflows/actions/setup-musl
+        mv ${{ env.WORKING_DIRECTORY }}/.github/workflows/actions/setup-qemu .github/workflows/actions/setup-qemu
     - uses: ./.github/workflows/actions/setup-qemu
       with:
         qemu-version: ${{ env.qemu-version }}
@@ -30,17 +61,21 @@ jobs:
       with:
         arch: ${{ matrix.arch }}
     - name: Run app tests
+      working-directory: ${{ env.WORKING_DIRECTORY }}
       run: |
         make disk_img
         make test ARCH=${{ matrix.arch }}
 
   app-test-for-monolithic:
+    needs: prepare_for_external_test
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
         arch: [x86_64, riscv64, aarch64]
+    env:
+      WORKING_DIRECTORY: ${{ needs.prepare_for_external_test.outputs.TopTestDirectory }}
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
@@ -49,6 +84,13 @@ jobs:
         components: rust-src
     - uses: Swatinem/rust-cache@v2
     - run: cargo install cargo-binutils
+    - name: Clone Top Repository
+      if: github.repository != 'Starry-OS/Starry'
+      run: |
+        git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }}
+        mkdir .github/workflows/actions
+        mv ${{ env.WORKING_DIRECTORY }}/.github/workflows/actions/setup-musl .github/workflows/actions/setup-musl
+        mv ${{ env.WORKING_DIRECTORY }}/.github/workflows/actions/setup-qemu .github/workflows/actions/setup-qemu
     - uses: ./.github/workflows/actions/setup-qemu
       with:
         qemu-version: ${{ env.qemu-version }}
@@ -56,16 +98,20 @@ jobs:
       with:
         arch: ${{ matrix.arch }}
     - name: Run app tests
+      working-directory: ${{ env.WORKING_DIRECTORY }}
       run: |
         make disk_img
         make test_monolithic ARCH=${{ matrix.arch }}
   app-test-for-ext4fs:
+    needs: prepare_for_external_test
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
         arch: [x86_64, riscv64, aarch64]
+    env:
+      WORKING_DIRECTORY: ${{ needs.prepare_for_external_test.outputs.TopTestDirectory }}    
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
@@ -74,6 +120,13 @@ jobs:
         components: rust-src
     - uses: Swatinem/rust-cache@v2
     - run: cargo install cargo-binutils
+    - name: Clone Top Repository
+      if: github.repository != 'Starry-OS/Starry'
+      run: |
+        git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }}
+        mkdir .github/workflows/actions
+        mv ${{ env.WORKING_DIRECTORY }}/.github/workflows/actions/setup-musl .github/workflows/actions/setup-musl
+        mv ${{ env.WORKING_DIRECTORY }}/.github/workflows/actions/setup-qemu .github/workflows/actions/setup-qemu
     - uses: ./.github/workflows/actions/setup-qemu
       with:
         qemu-version: ${{ env.qemu-version }}
@@ -81,6 +134,7 @@ jobs:
       with:
         arch: ${{ matrix.arch }}
     - name: Run app tests
+      working-directory: ${{ needs.prepare_for_external_test.outputs.TopTestDirectory }}
       run: |
         sh ./build_img.sh -m ${{ matrix.arch }} -fs ext4
         export MONOLITHIC_TESTCASE=other
