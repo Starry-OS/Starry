@@ -1,12 +1,35 @@
 name: Build & Deploy docs
 
-on: [push, pull_request]
-
+on: 
+  push:
+  pull_request:
+  workflow_call:
+    inputs:
+      ToptestDirectory:
+        required: true
+        type: string
+    
 env:
   rust-toolchain: nightly-2024-05-02
+  repository: Starry-OS/Starry
 
 jobs:
+  prepare_for_external_test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - id: step1
+        if: github.repository != ${{ env.repository }}
+        # 输出的值可以在后续的job中使用
+        run: echo "TopTestDirectory=${{ inputs.ToptestDirectory }}" >> $GITHUB_OUTPUT
+      - id: step2
+        if: github.repository == ${{ env.repository }}
+        run: echo "ToptTestDirectory=./" >> $GITHUB_OUTPUT
+    outputs:
+      TopTestDirectory: ${{ steps.step1.outputs.ToptTestDirectory || steps.step2.outputs.ToptTestDirectory }}
+  
   doc:
+    needs: prepare_for_external_test
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -14,6 +37,7 @@ jobs:
       contents: write
     env:
       default-branch: ${{ format('refs/heads/{0}', github.event.repository.default_branch) }}
+      WORKING_DIRECTORY: ${{ needs.prepare_for_external_test.outputs.TopTestDirectory }}
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
@@ -28,11 +52,15 @@ jobs:
     - uses: ./.github/workflows/actions/setup-musl
       with:
         arch: aarch64
+    - name: Clone Top Repository
+      if: github.repository != ${{ env.repository }}
+      run: git clone https://github.com/${{ env.repository }}.git ${{ env.WORKING_DIRECTORY }}
     - name: Build docs
+      working-directory: ${{ env.WORKING_DIRECTORY }}
       continue-on-error: ${{ github.ref != env.default-branch && github.event_name != 'pull_request' }}
       run: make doc_check_missing
     - name: Deploy to Github Pages
-      if: ${{ github.ref == env.default-branch }}
+      if: ${{ github.ref == env.default-branch }} && ${{ github.repository == env.repository }}
       uses: JamesIves/github-pages-deploy-action@v4
       with:
         single-commit: true
