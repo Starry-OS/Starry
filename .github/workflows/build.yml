@@ -23,7 +23,7 @@ jobs:
         if: github.repository == 'Starry-OS/Starry'
         run: echo "ToptTestDirectory=./" >> $GITHUB_OUTPUT
     outputs:
-      TopTestDirectory: ${{ steps.step1.outputs.ToptTestDirectory || steps.step2.outputs.ToptTestDirectory }}
+      TopTestDirectory: ${{ steps.step1.outputs.TopTestDirectory || steps.step2.outputs.TopTestDirectory }}
   
   clippy:
     needs: prepare_for_external_test
