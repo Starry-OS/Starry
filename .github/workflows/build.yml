@@ -5,7 +5,7 @@ on:
   pull_request:
   workflow_call:
     inputs:
-      ToptestDirectory:
+      TopTestDirectory:
         required: true
         type: string
     
@@ -21,7 +21,7 @@ jobs:
       - id: step1
         if: github.repository != ${{ env.repository }}
         # 输出的值可以在后续的job中使用
-        run: echo "TopTestDirectory=${{ inputs.ToptestDirectory }}" >> $GITHUB_OUTPUT
+        run: echo "TopTestDirectory=${{ inputs.TopTestDirectory }}" >> $GITHUB_OUTPUT
       - id: step2
         if: github.repository == ${{ env.repository }}
         run: echo "ToptTestDirectory=./" >> $GITHUB_OUTPUT
