@@ -24,7 +24,7 @@ jobs:
         run: echo "ToptTestDirectory=./" >> $GITHUB_OUTPUT
     outputs:
       TopTestDirectory: ${{ steps.step1.outputs.TopTestDirectory || steps.step2.outputs.TopTestDirectory }}
-  
+
   clippy:
     needs: prepare_for_external_test
     runs-on: ubuntu-latest
@@ -44,13 +44,28 @@ jobs:
         targets: x86_64-unknown-none, riscv64gc-unknown-none-elf, aarch64-unknown-none, aarch64-unknown-none-softfloat
     - name: Setup C++ environment
       run: sudo apt-get update && sudo apt-get install -y build-essential
+    - uses: Starry-OS/Starry/.github/workflows/actions/setup-musl@main
+      if: github.repository != 'Starry-OS/Starry'
+      with:
+        arch: x86_64
+    - uses: Starry-OS/Starry/.github/workflows/actions/setup-musl@main
+      if: github.repository != 'Starry-OS/Starry'
+      with:
+        arch: riscv64
+    - uses: Starry-OS/Starry/.github/workflows/actions/setup-musl@main
+      if: github.repository != 'Starry-OS/Starry'
+      with:
+        arch: aarch64
     - uses: ./.github/workflows/actions/setup-musl
+      if: github.repository == 'Starry-OS/Starry'
       with:
         arch: x86_64
     - uses: ./.github/workflows/actions/setup-musl
+      if: github.repository == 'Starry-OS/Starry'
       with:
         arch: riscv64
     - uses: ./.github/workflows/actions/setup-musl
+      if: github.repository == 'Starry-OS/Starry'
       with:
         arch: aarch64
     - name: Clone Top Repository
@@ -143,6 +158,11 @@ jobs:
       run: make ARCH=${{ matrix.arch }} A=apps/net/udpserver
 
     - uses: ./.github/workflows/actions/setup-musl
+      if: github.repository == 'Starry-OS/Starry'
+      with:
+        arch: ${{ matrix.arch }}
+    - uses: Starry-OS/Starry/.github/workflows/actions/setup-musl@main
+      if: github.repository != 'Starry-OS/Starry'
       with:
         arch: ${{ matrix.arch }}
     - name: Build c/helloworld
@@ -191,6 +211,11 @@ jobs:
     - uses: Swatinem/rust-cache@v2
     - run: cargo install cargo-binutils
     - uses: ./.github/workflows/actions/setup-musl
+      if: github.repository == 'Starry-OS/Starry'
+      with:
+        arch: x86_64
+    - uses: Starry-OS/Starry/.github/workflows/actions/setup-musl@main
+      if: github.repository != 'Starry-OS/Starry'
       with:
         arch: x86_64
     - name: Clone Top Repository
