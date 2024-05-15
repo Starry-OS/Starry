@@ -42,32 +42,6 @@ jobs:
         toolchain: ${{ matrix.rust-toolchain }}
         components: rust-src, clippy, rustfmt
         targets: x86_64-unknown-none, riscv64gc-unknown-none-elf, aarch64-unknown-none, aarch64-unknown-none-softfloat
-    - name: Setup C++ environment
-      run: sudo apt-get update && sudo apt-get install -y build-essential
-    - uses: Starry-OS/Starry/.github/workflows/actions/setup-musl@main
-      if: github.repository != 'Starry-OS/Starry'
-      with:
-        arch: x86_64
-    - uses: Starry-OS/Starry/.github/workflows/actions/setup-musl@main
-      if: github.repository != 'Starry-OS/Starry'
-      with:
-        arch: riscv64
-    - uses: Starry-OS/Starry/.github/workflows/actions/setup-musl@main
-      if: github.repository != 'Starry-OS/Starry'
-      with:
-        arch: aarch64
-    - uses: ./.github/workflows/actions/setup-musl
-      if: github.repository == 'Starry-OS/Starry'
-      with:
-        arch: x86_64
-    - uses: ./.github/workflows/actions/setup-musl
-      if: github.repository == 'Starry-OS/Starry'
-      with:
-        arch: riscv64
-    - uses: ./.github/workflows/actions/setup-musl
-      if: github.repository == 'Starry-OS/Starry'
-      with:
-        arch: aarch64
     - name: Clone Top Repository
       if: github.repository != 'Starry-OS/Starry'
       run: git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }}
@@ -113,7 +87,10 @@ jobs:
     - run: cargo install cargo-binutils
     - name: Clone Top Repository
       if: github.repository != 'Starry-OS/Starry'
-      run: git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }}
+      run: |
+        git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }}
+        mkdir .github/workflows/actions
+        mv ${{ env.WORKING_DIRECTORY }}/.github/workflows/actions/setup-musl .github/workflows/actions/setup-musl
     - name: Build helloworld
       working-directory: ${{ env.WORKING_DIRECTORY }}
       run: make ARCH=${{ matrix.arch }} A=apps/helloworld
@@ -158,11 +135,6 @@ jobs:
       run: make ARCH=${{ matrix.arch }} A=apps/net/udpserver
 
     - uses: ./.github/workflows/actions/setup-musl
-      if: github.repository == 'Starry-OS/Starry'
-      with:
-        arch: ${{ matrix.arch }}
-    - uses: Starry-OS/Starry/.github/workflows/actions/setup-musl@main
-      if: github.repository != 'Starry-OS/Starry'
       with:
         arch: ${{ matrix.arch }}
     - name: Build c/helloworld
@@ -210,17 +182,17 @@ jobs:
         targets: x86_64-unknown-none, riscv64gc-unknown-none-elf, aarch64-unknown-none, aarch64-unknown-none-softfloat
     - uses: Swatinem/rust-cache@v2
     - run: cargo install cargo-binutils
+
+    - name: Clone Top Repository
+      if: github.repository != 'Starry-OS/Starry'
+      run: |
+        git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }}
+        mkdir .github/workflows/actions
+        mv ${{ env.WORKING_DIRECTORY }}/.github/workflows/actions/setup-musl .github/workflows/actions/setup-musl
     - uses: ./.github/workflows/actions/setup-musl
       if: github.repository == 'Starry-OS/Starry'
       with:
         arch: x86_64
-    - uses: Starry-OS/Starry/.github/workflows/actions/setup-musl@main
-      if: github.repository != 'Starry-OS/Starry'
-      with:
-        arch: x86_64
-    - name: Clone Top Repository
-      if: github.repository != 'Starry-OS/Starry'
-      run: git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }}
     - name: Build helloworld for x86_64-pc-oslab
       working-directory: ${{ env.WORKING_DIRECTORY }}
       run: make PLATFORM=x86_64-pc-oslab A=apps/helloworld
