@@ -190,7 +190,6 @@ jobs:
         mkdir .github/workflows/actions
         mv ${{ env.WORKING_DIRECTORY }}/.github/workflows/actions/setup-musl .github/workflows/actions/setup-musl
     - uses: ./.github/workflows/actions/setup-musl
-      if: github.repository == 'Starry-OS/Starry'
       with:
         arch: x86_64
     - name: Build helloworld for x86_64-pc-oslab
