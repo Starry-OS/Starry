@@ -6,6 +6,19 @@ on:
   workflow_call:
     inputs:
       TopTestDirectory:
+        description: 'The directory where the main repository will be placed'
+        required: true
+        type: string
+      CallerPackage:
+        description: 'The package to call the workflow'
+        required: true
+        type: string
+      CallerRepository:
+        description: 'The repository to call the workflow'
+        required: true
+        type: string
+      CallerCommit:
+        description: 'The commit of the repository to call the workflow'
         required: true
         type: string
     
@@ -51,9 +64,7 @@ jobs:
       if: github.repository != 'Starry-OS/Starry'
       run: |
         git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }}
-        mkdir .github/workflows/actions
-        mv ${{ env.WORKING_DIRECTORY }}/.github/workflows/actions/setup-musl .github/workflows/actions/setup-musl
-        mv ${{ env.WORKING_DIRECTORY }}/.github/workflows/actions/setup-qemu .github/workflows/actions/setup-qemu
+        sh ${{ env.WORKING_DIRECTORY }}/scripts/test/external_test.sh ${{ env.WORKING_DIRECTORY }} ${{ inputs.CallerPackage }} ${{ inputs.CallerRepository }} ${{ inputs.CallerCommit }}
     - uses: ./.github/workflows/actions/setup-qemu
       with:
         qemu-version: ${{ env.qemu-version }}
@@ -88,9 +99,7 @@ jobs:
       if: github.repository != 'Starry-OS/Starry'
       run: |
         git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }}
-        mkdir .github/workflows/actions
-        mv ${{ env.WORKING_DIRECTORY }}/.github/workflows/actions/setup-musl .github/workflows/actions/setup-musl
-        mv ${{ env.WORKING_DIRECTORY }}/.github/workflows/actions/setup-qemu .github/workflows/actions/setup-qemu
+        sh ${{ env.WORKING_DIRECTORY }}/scripts/test/external_test.sh ${{ env.WORKING_DIRECTORY }} ${{ inputs.CallerPackage }} ${{ inputs.CallerRepository }} ${{ inputs.CallerCommit }}
     - uses: ./.github/workflows/actions/setup-qemu
       with:
         qemu-version: ${{ env.qemu-version }}
@@ -124,9 +133,7 @@ jobs:
       if: github.repository != 'Starry-OS/Starry'
       run: |
         git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }}
-        mkdir .github/workflows/actions
-        mv ${{ env.WORKING_DIRECTORY }}/.github/workflows/actions/setup-musl .github/workflows/actions/setup-musl
-        mv ${{ env.WORKING_DIRECTORY }}/.github/workflows/actions/setup-qemu .github/workflows/actions/setup-qemu
+        sh ${{ env.WORKING_DIRECTORY }}/scripts/test/external_test.sh ${{ env.WORKING_DIRECTORY }} ${{ inputs.CallerPackage }} ${{ inputs.CallerRepository }} ${{ inputs.CallerCommit }}
     - uses: ./.github/workflows/actions/setup-qemu
       with:
         qemu-version: ${{ env.qemu-version }}
