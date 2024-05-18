@@ -33,7 +33,8 @@ jobs:
         run: echo "TopTestDirectory=${{ inputs.TopTestDirectory }}" >> $GITHUB_OUTPUT
       - id: step2
         if: github.repository == 'Starry-OS/Starry'
-        run: echo "ToptTestDirectory=./" >> $GITHUB_OUTPUT
+        # 工作目录为当前目录
+        run: echo "TopTestDirectory=." >> $GITHUB_OUTPUT
     outputs:
       TopTestDirectory: ${{ steps.step1.outputs.TopTestDirectory || steps.step2.outputs.TopTestDirectory }}
 
