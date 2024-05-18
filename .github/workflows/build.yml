@@ -102,6 +102,9 @@ jobs:
       run: |
         git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }}
         sh ${{ env.WORKING_DIRECTORY }}/scripts/test/external_test.sh ${{ env.WORKING_DIRECTORY }} ${{ inputs.CallerPackage }} ${{ inputs.CallerRepository }} ${{ inputs.CallerCommit }}
+    - name: Update Top Repository
+      working-directory: ${{ env.WORKING_DIRECTORY }}
+      run: make pre_update
     - name: Build helloworld
       working-directory: ${{ env.WORKING_DIRECTORY }}
       run: make ARCH=${{ matrix.arch }} A=apps/helloworld
@@ -199,6 +202,9 @@ jobs:
       run: |
         git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }}
         sh ${{ env.WORKING_DIRECTORY }}/scripts/test/external_test.sh ${{ env.WORKING_DIRECTORY }} ${{ inputs.CallerPackage }} ${{ inputs.CallerRepository }} ${{ inputs.CallerCommit }}
+    - name: Update Top Repository
+      working-directory: ${{ env.WORKING_DIRECTORY }}
+      run: make pre_update
     - uses: ./.github/workflows/actions/setup-musl
       with:
         arch: x86_64
@@ -248,6 +254,9 @@ jobs:
       run: |
         git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }}
         sh ${{ env.WORKING_DIRECTORY }}/scripts/test/external_test.sh ${{ env.WORKING_DIRECTORY }} ${{ inputs.CallerPackage }} ${{ inputs.CallerRepository }} ${{ inputs.CallerCommit }}
+    - name: Update Top Repository
+      working-directory: ${{ env.WORKING_DIRECTORY }}
+      run: make pre_update
     - name: Build helloworld
       working-directory: ${{ env.WORKING_DIRECTORY }}
       run: cargo build -p arceos-helloworld
@@ -314,6 +323,9 @@ jobs:
       run: |
         git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }}
         sh ${{ env.WORKING_DIRECTORY }}/scripts/test/external_test.sh ${{ env.WORKING_DIRECTORY }} ${{ inputs.CallerPackage }} ${{ inputs.CallerRepository }} ${{ inputs.CallerCommit }}
+    - name: Update Top Repository
+      working-directory: ${{ env.WORKING_DIRECTORY }}
+      run: make pre_update
     - name: Bulld monolithic-userboot
       working-directory: ${{ env.WORKING_DIRECTORY }}
       run: |

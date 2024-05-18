@@ -173,6 +173,10 @@ else ifeq ($(PLATFORM_NAME), aarch64-rk3588j)
   include scripts/make/rk3588.mk
 endif
 
+pre_update:
+	cargo update
+	cargo update --precise 0.4.19 log
+
 build: $(OUT_DIR) $(OUT_BIN)
 
 disasm:

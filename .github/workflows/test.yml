@@ -65,6 +65,9 @@ jobs:
       run: |
         git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }}
         sh ${{ env.WORKING_DIRECTORY }}/scripts/test/external_test.sh ${{ env.WORKING_DIRECTORY }} ${{ inputs.CallerPackage }} ${{ inputs.CallerRepository }} ${{ inputs.CallerCommit }}
+    - name: Update Top Repository
+      working-directory: ${{ env.WORKING_DIRECTORY }}
+      run: make pre_update
     - uses: ./.github/workflows/actions/setup-qemu
       with:
         qemu-version: ${{ env.qemu-version }}
@@ -100,6 +103,9 @@ jobs:
       run: |
         git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }}
         sh ${{ env.WORKING_DIRECTORY }}/scripts/test/external_test.sh ${{ env.WORKING_DIRECTORY }} ${{ inputs.CallerPackage }} ${{ inputs.CallerRepository }} ${{ inputs.CallerCommit }}
+    - name: Update Top Repository
+      working-directory: ${{ env.WORKING_DIRECTORY }}
+      run: make pre_update
     - uses: ./.github/workflows/actions/setup-qemu
       with:
         qemu-version: ${{ env.qemu-version }}
@@ -134,6 +140,9 @@ jobs:
       run: |
         git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }}
         sh ${{ env.WORKING_DIRECTORY }}/scripts/test/external_test.sh ${{ env.WORKING_DIRECTORY }} ${{ inputs.CallerPackage }} ${{ inputs.CallerRepository }} ${{ inputs.CallerCommit }}
+    - name: Update Top Repository
+      working-directory: ${{ env.WORKING_DIRECTORY }}
+      run: make pre_update
     - uses: ./.github/workflows/actions/setup-qemu
       with:
         qemu-version: ${{ env.qemu-version }}
