@@ -18,4 +18,4 @@ mv $WORK_DIR/.github/workflows/actions/* .github/workflows/actions
 # To do the patch for current commit
 cargo install dependencies-patch
 # cargo run -- ../../ $PATCH_PACKAGE $PATCH_TARGET_URL $PATCH_COMMIT_HASH
-dependencies-patch -c $WORK_DIR -n $PATCH_PACKAGE --git-repo $PATCH_TARGET_URL --commit $PATCH_COMMIT_HASH
+dependencies-patch -c $WORK_DIR -n $PATCH_PACKAGE -t git --git-repo $PATCH_TARGET_URL --commit $PATCH_COMMIT_HASH
