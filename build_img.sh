@@ -68,7 +68,7 @@ if [ ! -d "./testcases/$FILE" ]; then
 fi
 
 rm -f disk.img
-dd if=/dev/zero of=disk.img bs=4M count=30
+dd if=/dev/zero of=disk.img bs=4M count=1024
 
 if [ "$fs" = "ext4" ]; then
 	mkfs.ext4 -t ext4 disk.img
