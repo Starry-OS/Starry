@@ -8,7 +8,7 @@
 # default setting
 arch=x86_64
 fs=fat32
-size=128
+size=30
 FILE=
 
 display_help()
@@ -19,7 +19,7 @@ display_help()
 	echo "  -a | --arch		architecture: x86_64|riscv64|aarch64", default is x86_64
 	echo "  -fs | --filesystem	filesystem: ext4|fat32", default is fat32
 	echo "  -file | --testcase  If not specified, use the default testcases for different architectures."
-	echi "  -s | --size		size of the disk image in MB, default is 128MB"
+	echi "  -s | --size		size of the disk image in 4MB batch size, default is set to 30, which means 120MB disk image"
 	echo "  default testcases:"
 	echo "    x86_64: x86_64_linux_musl"
 	echo "    riscv64: riscv64_linux_musl"
@@ -73,7 +73,7 @@ if [ ! -d "./testcases/$FILE" ]; then
 fi
 
 rm -f disk.img
-dd if=/dev/zero of=disk.img bs=1M count=$size
+dd if=/dev/zero of=disk.img bs=4M count=$size
 
 if [ "$fs" = "ext4" ]; then
 	mkfs.ext4 -t ext4 disk.img
