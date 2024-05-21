@@ -21,7 +21,11 @@ on:
         description: 'The commit of the repository to call the workflow'
         required: true
         type: string
-    
+      TopBranch:
+        description: 'The branch of the main repository'
+        required: true
+        type: string
+        default: 'main'
 env:
   qemu-version: 8.2.0
   rust-toolchain: nightly-2024-05-02
@@ -63,7 +67,7 @@ jobs:
     - name: Clone Top Repository
       if: github.repository != 'Starry-OS/Starry'
       run: |
-        git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }}
+        git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }} && cd ${{ env.WORKING_DIRECTORY }} && git checkout ${{ inputs.TopBranch }} && cd ..
         sh ${{ env.WORKING_DIRECTORY }}/scripts/test/external_test.sh ${{ env.WORKING_DIRECTORY }} ${{ inputs.CallerPackage }} ${{ inputs.CallerRepository }} ${{ inputs.CallerCommit }}
     - name: Update Top Repository
       working-directory: ${{ env.WORKING_DIRECTORY }}
@@ -101,7 +105,7 @@ jobs:
     - name: Clone Top Repository
       if: github.repository != 'Starry-OS/Starry'
       run: |
-        git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }}
+        git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }} && cd ${{ env.WORKING_DIRECTORY }} && git checkout ${{ inputs.TopBranch }} && cd ..
         sh ${{ env.WORKING_DIRECTORY }}/scripts/test/external_test.sh ${{ env.WORKING_DIRECTORY }} ${{ inputs.CallerPackage }} ${{ inputs.CallerRepository }} ${{ inputs.CallerCommit }}
     - name: Update Top Repository
       working-directory: ${{ env.WORKING_DIRECTORY }}
@@ -138,7 +142,7 @@ jobs:
     - name: Clone Top Repository
       if: github.repository != 'Starry-OS/Starry'
       run: |
-        git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }}
+        git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }} && cd ${{ env.WORKING_DIRECTORY }} && git checkout ${{ inputs.TopBranch }} && cd ..
         sh ${{ env.WORKING_DIRECTORY }}/scripts/test/external_test.sh ${{ env.WORKING_DIRECTORY }} ${{ inputs.CallerPackage }} ${{ inputs.CallerRepository }} ${{ inputs.CallerCommit }}
     - name: Update Top Repository
       working-directory: ${{ env.WORKING_DIRECTORY }}

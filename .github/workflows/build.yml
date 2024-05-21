@@ -21,6 +21,11 @@ on:
         description: 'The commit of the repository to call the workflow'
         required: true
         type: string
+      TopBranch:
+        description: 'The branch of the main repository'
+        required: true
+        type: string
+        default: 'main'
 
 jobs:
   prepare_for_external_test:
@@ -57,7 +62,7 @@ jobs:
         targets: x86_64-unknown-none, riscv64gc-unknown-none-elf, aarch64-unknown-none, aarch64-unknown-none-softfloat
     - name: Clone Top Repository
       if: github.repository != 'Starry-OS/Starry'
-      run: git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }}
+      run: git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }} && cd ${{ env.WORKING_DIRECTORY }} && git checkout ${{ inputs.TopBranch }}
     - name: Check rust version
       working-directory: ${{ env.WORKING_DIRECTORY }}
       run: rustc --version --verbose      
@@ -101,7 +106,7 @@ jobs:
     - name: Clone Top Repository
       if: github.repository != 'Starry-OS/Starry'
       run: |
-        git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }}
+        git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }} && cd ${{ env.WORKING_DIRECTORY }} && git checkout ${{ inputs.TopBranch }} && cd ..
         sh ${{ env.WORKING_DIRECTORY }}/scripts/test/external_test.sh ${{ env.WORKING_DIRECTORY }} ${{ inputs.CallerPackage }} ${{ inputs.CallerRepository }} ${{ inputs.CallerCommit }}
     - name: Update Top Repository
       working-directory: ${{ env.WORKING_DIRECTORY }}
@@ -201,7 +206,7 @@ jobs:
     - name: Clone Top Repository
       if: github.repository != 'Starry-OS/Starry'
       run: |
-        git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }}
+        git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }} && cd ${{ env.WORKING_DIRECTORY }} && git checkout ${{ inputs.TopBranch }} && cd ..
         sh ${{ env.WORKING_DIRECTORY }}/scripts/test/external_test.sh ${{ env.WORKING_DIRECTORY }} ${{ inputs.CallerPackage }} ${{ inputs.CallerRepository }} ${{ inputs.CallerCommit }}
     - name: Update Top Repository
       working-directory: ${{ env.WORKING_DIRECTORY }}
@@ -253,7 +258,7 @@ jobs:
     - name: Clone Top Repository
       if: github.repository != 'Starry-OS/Starry'
       run: |
-        git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }}
+        git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }} && cd ${{ env.WORKING_DIRECTORY }} && git checkout ${{ inputs.TopBranch }} && cd ..
         sh ${{ env.WORKING_DIRECTORY }}/scripts/test/external_test.sh ${{ env.WORKING_DIRECTORY }} ${{ inputs.CallerPackage }} ${{ inputs.CallerRepository }} ${{ inputs.CallerCommit }}
     - name: Update Top Repository
       working-directory: ${{ env.WORKING_DIRECTORY }}
@@ -322,7 +327,7 @@ jobs:
     - name: Clone Top Repository
       if: github.repository != 'Starry-OS/Starry'
       run: |
-        git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }}
+        git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }} && cd ${{ env.WORKING_DIRECTORY }} && git checkout ${{ inputs.TopBranch }} && cd ..
         sh ${{ env.WORKING_DIRECTORY }}/scripts/test/external_test.sh ${{ env.WORKING_DIRECTORY }} ${{ inputs.CallerPackage }} ${{ inputs.CallerRepository }} ${{ inputs.CallerCommit }}
     - name: Update Top Repository
       working-directory: ${{ env.WORKING_DIRECTORY }}
