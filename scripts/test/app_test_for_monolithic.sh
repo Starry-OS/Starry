@@ -38,7 +38,7 @@ function run_and_compare() {
 
     echo -ne "    run with \"${BLOD_C}$args${END_C}\": "
     # if the app contain "apps/monolithic_userboot", then make disk img
-    sh ./build_img.sh -m $ARCH
+    sh ./build_img.sh -a $ARCH
 
     make -C "$ROOT" A="$APP" $args > "$actual" 2>&1
     if [ $? -ne 0 ]; then

@@ -3,21 +3,23 @@
 # 	MacOS  : brew install dosfstools
 # 	Ubuntu : apt-get install dosfstools
 #	Usage:
-# 		build_img.sh -m [arch] -fs [ext4|fat32] -file [testcast]
+# 		build_img.sh -a [arch] -fs [ext4|fat32] -file [testcast] -s [size]
 ################################################################
 # default setting
 arch=x86_64
 fs=fat32
+size=128
 FILE=
 
 display_help()
 {
 	echo ""
-	echo "./build_img.sh -m [arch] -fs [filesystem] -file [testcast]"
+	echo "./build_img.sh -a [arch] -fs [filesystem] -file [testcast]"
 	# 若不指定参数，则使用默认的测例
-	echo "  -m | --arch		architecture: x86_64|riscv64|aarch64", default is x86_64
+	echo "  -a | --arch		architecture: x86_64|riscv64|aarch64", default is x86_64
 	echo "  -fs | --filesystem	filesystem: ext4|fat32", default is fat32
 	echo "  -file | --testcase  If not specified, use the default testcases for different architectures."
+	echi "  -s | --size		size of the disk image in MB, default is 128MB"
 	echo "  default testcases:"
 	echo "    x86_64: x86_64_linux_musl"
 	echo "    riscv64: riscv64_linux_musl"
@@ -27,11 +29,11 @@ display_help()
 	exit 1
 }
 
-# 可能接受三类参数 -m [arch] -fs [filesystem] -file [testcast]
+# 可能接受四类参数 -a [arch] -fs [filesystem] -file [testcast] -s [size]
 # 但是不一定只有一个参数，所以使用 while 循环
 while [ "$1" != "" ]; do
 	case $1 in
-		-m | --arch )	shift
+		-a | --arch )	shift
 						arch=$1
 						;;
 		-fs | --filesystem )	shift
@@ -39,6 +41,9 @@ while [ "$1" != "" ]; do
 						;;
 		-file | --testcase )	shift
 						FILE=$1
+						;;
+		-s | --size )		shift
+						size=$1
 						;;
 		-h | --help )		display_help
 						exit
@@ -68,7 +73,7 @@ if [ ! -d "./testcases/$FILE" ]; then
 fi
 
 rm -f disk.img
-dd if=/dev/zero of=disk.img bs=4M count=1024
+dd if=/dev/zero of=disk.img bs=1M count=$size
 
 if [ "$fs" = "ext4" ]; then
 	mkfs.ext4 -t ext4 disk.img

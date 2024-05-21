@@ -156,6 +156,6 @@ jobs:
     - name: Run app tests
       working-directory: ${{ needs.prepare_for_external_test.outputs.TopTestDirectory }}
       run: |
-        sh ./build_img.sh -m ${{ matrix.arch }} -fs ext4
+        sh ./build_img.sh -a ${{ matrix.arch }} -fs ext4
         export MONOLITHIC_TESTCASE=other
         make ARCH=${{ matrix.arch }} A=apps/monolithic_userboot APP_FEATURES=batch FEATURES="ext4fs" LOG=off ACCEL=n run

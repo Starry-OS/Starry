@@ -1,1 +1,1 @@
-test_one "LOG=off"
+test_one "LOG=off FEATURES=img"

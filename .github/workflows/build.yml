@@ -335,5 +335,5 @@ jobs:
     - name: Bulld monolithic-userboot
       working-directory: ${{ env.WORKING_DIRECTORY }}
       run: |
-        sh ./build_img.sh -m ${{ matrix.arch }}
+        sh ./build_img.sh -a ${{ matrix.arch }}
         make ARCH=${{ matrix.arch }} A=apps/monolithic_userboot
