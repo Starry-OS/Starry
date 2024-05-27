@@ -19,7 +19,7 @@ display_help()
 	echo "  -a | --arch		architecture: x86_64|riscv64|aarch64", default is x86_64
 	echo "  -fs | --filesystem	filesystem: ext4|fat32", default is fat32
 	echo "  -file | --testcase  If not specified, use the default testcases for different architectures."
-	echi "  -s | --size		size of the disk image in 4MB batch size, default is set to 30, which means 120MB disk image"
+	echo "  -s | --size		size of the disk image in 4MB batch size, default is set to 30, which means 120MB disk image"
 	echo "  default testcases:"
 	echo "    x86_64: x86_64_linux_musl"
 	echo "    riscv64: riscv64_linux_musl"
