@@ -1,0 +1,14 @@
+{
+	"name": "Starry",
+	"description": "The main repository of Starry-OS, which will assemble all kernel components into a kernel according to a certain configuration.",
+	"authors": [
+		{
+			"name": "Youjie Zheng",
+			"email": "azure_stars@126.com"
+		}
+	],
+	"keywords": [
+		"Starry"
+	],
+	"repo": "Starry-OS/Starry"
+}
