@@ -23,7 +23,7 @@ on:
         type: string
       TopBranch:
         description: 'The branch of the main repository'
-        required: true
+        required: false
         type: string
         default: 'main'
 env:
