@@ -27,20 +27,9 @@ $ make A=apps/helloworld ARCH=x86_64 run
 
 # $ ./build_img.sh <arch>
 
-$ ./build_img.sh x86_64
+$ ./build_img.sh -m x86_64
 
 $ make A=apps/monolithic_userboot ARCH=x86_64 run
-```
-
-## Build C applications
-
-```sh
-# Load axlibc
-$ make pre_libc
-
-# Build the application
-# $ make A=apps/<app_name> ARCH=<arch> build
-$ make A=apps/c/helloworld ARCH=x86_64 build
 ```
 
 ## Pull crates to local workspace
