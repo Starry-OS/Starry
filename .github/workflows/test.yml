@@ -158,4 +158,6 @@ jobs:
       run: |
         sh ./build_img.sh -a ${{ matrix.arch }} -fs ext4
         export MONOLITHIC_TESTCASE=other
-        make ARCH=${{ matrix.arch }} A=apps/monolithic_userboot APP_FEATURES=batch FEATURES="ext4fs" LOG=off ACCEL=n run
+        make ARCH=${{ matrix.arch }} A=apps/monolithic_userboot APP_FEATURES=batch FEATURES="lwext4_rust" LOG=off ACCEL=n run
+        make clean
+        make ARCH=${{ matrix.arch }} A=apps/monolithic_userboot APP_FEATURES=batch FEATURES="ext4_rs" LOG=off ACCEL=n run

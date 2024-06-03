@@ -39,7 +39,7 @@ timer-frequency = "4_000_000_000"   # 4.0GHz
 # Testcase memory start address.
 testcase-memory-start = "0x1_8000_0000"
 # Testcase memory size.
-testcase-memory-size = "0x800_0000"
+testcase-memory-size = "0x1700_0000"
 # The base address of the user heap.
 user-heap-base = "0x3FA0_0000"
 # The base address of the user stack. And the stack bottom is `user-stack-top + max-user-stack-size`.
