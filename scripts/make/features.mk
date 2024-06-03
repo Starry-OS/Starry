@@ -43,10 +43,10 @@ else ifneq ($(findstring monolithic,$(APP)),)
   ifneq ($(filter fs net pipe select epoll,$(FEATURES)),)
     override FEATURES += fd
   endif
-  ifeq ($(filter lwext4_rust,$(FEATURES)),)
+  ifneq ($(filter lwext4_rust,$(FEATURES)),)
     override FEATURES += lwext4_rust
   endif
-  ifeq ($(filter ext4_rs,$(FEATURES)),)
+  ifneq ($(filter ext4_rs,$(FEATURES)),)
     override FEATURES += ext4_rs
   endif
 endif

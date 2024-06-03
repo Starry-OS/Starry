@@ -40,6 +40,7 @@ $ make A=apps/monolithic_userboot APP_FEATURES=batch ARCH=x86_64 run
 ```
 
 ## Build and run testcases with ext4fs
+The document of the ext4fs is [here](./doc/ext4fs.md).
 ```sh
 # Run in the lwext4fs with Rust interface, whose url is https://github.com/elliott10/lwext4_rust.
 make A=apps/monolithic_userboot FEATURES=lwext4_rust LOG=off ACCEL=n run
