@@ -1,22 +1,28 @@
-# ArceOS Architecture Overview
+# Starry Architecture Overview
 
-## Rustdoc
-
-* https://rcore-os.github.io/arceos/
-
-## ArceOS Modules
+## Starry Modules
 
 * [axalloc](../modules/axalloc): ArceOS global memory allocator.
 * [axconfig](../modules/axconfig): Platform-specific constants and parameters for ArceOS.
 * [axdisplay](../modules/axdisplay): ArceOS graphics module.
 * [axdriver](../modules/axdriver): ArceOS device drivers.
-* [axfs](../modules/axfs): ArceOS filesystem module.
-* [axhal](../modules/axhal): ArceOS hardware abstraction layer, provides unified APIs for platform-specific operations.
+* [axfs](../modules/axfs): Starry filesystem module.
+* [axhal](../modules/axhal): Starry hardware abstraction layer, provides unified APIs for platform-specific operations.
 * [axlog](../modules/axlog): Macros for multi-level formatted logging used by ArceOS.
 * [axnet](../modules/axnet): ArceOS network module.
 * [axruntime](../modules/axruntime): Runtime library of ArceOS.
 * [axsync](../modules/axsync): ArceOS synchronization primitives.
 * [axtask](../modules/axtask): ArceOS task management module.
+* [axprocess]: ArceOS process management module.
+* [axmem]: ArceOS memory management module.
+
+## Starry kernel entry
+* [arch_boot]: The entry point of the kernel, which is the first function called by the bootloader.
+* [axtrap]: The trap handler of the kernel, which is called when an exception occurs.
+
+## Starry kernel library
+* [axstd]: Rust standard library implementation by ArceOS.
+* [linux_syscall_api]: A compatibility layer for linux syscalls on different operating systems.
 
 ## Crates
 
