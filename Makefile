@@ -122,11 +122,7 @@ ifeq ($(ARCH), x86_64)
 else ifeq ($(ARCH), riscv64)
   TARGET := riscv64gc-unknown-none-elf
 else ifeq ($(ARCH), aarch64)
-  ifeq ($(findstring fp_simd,$(FEATURES)),)
-    TARGET := aarch64-unknown-none-softfloat
-  else
-    TARGET := aarch64-unknown-none
-  endif
+   TARGET := aarch64-unknown-none-softfloat
 endif
 
 export AX_ARCH=$(ARCH)

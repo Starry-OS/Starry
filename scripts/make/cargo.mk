@@ -39,9 +39,6 @@ all_packages := $(shell ls $(CURDIR)/crates)
 define cargo_doc
   $(call run_cmd,cargo doc,--no-deps --all-features --workspace --exclude "arceos-*" $(verbose))
   @# run twice to fix broken hyperlinks
-  $(foreach p,$(all_packages), \
-    $(call run_cmd,cargo rustdoc,--all-features -p $(p) $(verbose))
-  )
   @# for some crates, re-generate without `--all-features`
   $(call run_cmd,cargo doc,--no-deps -p percpu $(verbose))
 endef
