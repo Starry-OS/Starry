@@ -188,7 +188,7 @@ dependencies = [
 [[package]]
 name = "arch_boot"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/arch_boot.git#e6c5ebc7b86222df161ef81c3fd49272b1b3bac1"
+source = "git+https://github.com/Starry-OS/arch_boot.git#d707f25b51bffac402dd22b3d5cd3efe7bef6c91"
 dependencies = [
  "aarch64-cpu",
  "axconfig",
@@ -315,7 +315,7 @@ dependencies = [
 [[package]]
 name = "axfs"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/axfs.git#62a4e8420adce878006584fee95d21d4b9d28dde"
+source = "git+https://github.com/Starry-OS/axfs.git#d8d15f66b29b08bd1f3a1637ec5d035b71087ab2"
 dependencies = [
  "axconfig",
  "axdriver",
@@ -371,7 +371,7 @@ dependencies = [
 [[package]]
 name = "axhal"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/axhal.git#112ee12352d3cf528089f16fbf79d8089e624d14"
+source = "git+https://github.com/Starry-OS/axhal.git#5ac7c72e7a1d2de9219c1fda5a929c90cda59460"
 dependencies = [
  "aarch64-cpu",
  "arm_gic",
@@ -441,7 +441,7 @@ dependencies = [
 [[package]]
 name = "axmem"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/axmem.git#b18d276941b6528661884765ad727c7acc87c76b"
+source = "git+https://github.com/Starry-OS/axmem.git#2e66a8ad1a4f14f629d2a07e67abcf21f5216012"
 dependencies = [
  "axalloc",
  "axconfig",
@@ -449,6 +449,7 @@ dependencies = [
  "axfs",
  "axhal",
  "axio",
+ "axsync",
  "elf_parser",
  "log",
  "page_table_entry",
@@ -460,7 +461,7 @@ dependencies = [
 [[package]]
 name = "axnet"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/axnet.git#bb6ae599087c0e99c309f221902a9de41c9519ae"
+source = "git+https://github.com/Starry-OS/axnet.git#030bc1b15b72b599bde80763d85676f279cab15b"
 dependencies = [
  "axdriver",
  "axerrno",
@@ -480,7 +481,7 @@ dependencies = [
 [[package]]
 name = "axprocess"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/axprocess.git#33bfcda7a1bfa2c3cb682d2fc5f05089032bb61f"
+source = "git+https://github.com/Starry-OS/axprocess.git#f566f8270bac529ef572d3e1128369e966052e3d"
 dependencies = [
  "axalloc",
  "axconfig",
@@ -528,7 +529,7 @@ dependencies = [
 [[package]]
 name = "axsignal"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/axsignal.git#17ab26ee99ae94894729f143300f3721ce457629"
+source = "git+https://github.com/Starry-OS/axsignal.git#f2e2c4bdea9d903229bbbe7bc93c34cf9a376249"
 dependencies = [
  "axhal",
  "bitflags 2.6.0",
@@ -539,10 +540,11 @@ dependencies = [
 [[package]]
 name = "axstarry"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/axstarry.git#2e54460903acf3268c0494fcdd6995e86b7ecc75"
+source = "git+https://github.com/Starry-OS/axstarry.git#a7f3b2b7be95c4029b418650265c3a07420e8747"
 dependencies = [
  "arch_boot",
  "axfeat",
+ "axfs",
  "axlog",
  "linux_syscall_api",
 ]
@@ -574,7 +576,7 @@ dependencies = [
 [[package]]
 name = "axtask"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/axtask.git#58b1e4c07348ac8e67aec952f2ef12d100732dc6"
+source = "git+https://github.com/Starry-OS/axtask.git#f8d203f3b99699b64562870cf087a142c3aaec8b"
 dependencies = [
  "axconfig",
  "axhal",
@@ -597,7 +599,7 @@ dependencies = [
 [[package]]
 name = "axtrap"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/axtrap.git#ae5b2813145842029c354829e19afe8a8deb4256"
+source = "git+https://github.com/Starry-OS/axtrap.git#eaa8ee76ff87639ae4df884bb8efe9cc114d629e"
 dependencies = [
  "aarch64-cpu",
  "axhal",
@@ -647,7 +649,7 @@ dependencies = [
  "regex",
  "rustc-hash",
  "shlex",
- "syn 2.0.68",
+ "syn 2.0.70",
  "which",
 ]
 
@@ -743,7 +745,7 @@ source = "git+https://github.com/Starry-OS/crate_interface.git#d27dd9608dbf04b31
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.68",
+ "syn 2.0.70",
 ]
 
 [[package]]
@@ -772,7 +774,7 @@ dependencies = [
  "proc-macro-error",
  "proc-macro2",
  "quote",
- "syn 2.0.68",
+ "syn 2.0.70",
 ]
 
 [[package]]
@@ -1050,7 +1052,7 @@ checksum = "78b3ae25bc7c8c38cec158d1f2757ee79e9b3740fbc7ccf0e59e4b08d793fa89"
 [[package]]
 name = "linux_syscall_api"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/linux_syscall_api.git#b7df0522c079b0232cb8ba2a9338cf4a06534abe"
+source = "git+https://github.com/Starry-OS/linux_syscall_api.git#58d5773d3fd36a28de85e584859002447ae5e4b5"
 dependencies = [
  "axconfig",
  "axerrno",
@@ -1188,7 +1190,7 @@ source = "git+https://github.com/mexus/numeric-enum-macro#20aef288b2ecd2381ab662
 [[package]]
 name = "of"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/of.git#331a8ab1b51a55b2974d5021fb2334e145192b70"
+source = "git+https://github.com/Starry-OS/of.git#a929cf979d9f3dce1547c7ea534bd626fd2f2eda"
 dependencies = [
  "fdt",
  "lazy_static",
@@ -1252,7 +1254,7 @@ source = "git+https://github.com/Starry-OS/percpu_macros.git#b785b814c5489ac7043
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.68",
+ "syn 2.0.70",
 ]
 
 [[package]]
@@ -1262,7 +1264,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5f12335488a2f3b0a83b14edad48dca9879ce89b2edd10e80237e4e852dd645e"
 dependencies = [
  "proc-macro2",
- "syn 2.0.68",
+ "syn 2.0.70",
 ]
 
 [[package]]
@@ -1456,22 +1458,22 @@ checksum = "94143f37725109f92c262ed2cf5e59bce7498c01bcc1502d7b9afe439a4e9f49"
 
 [[package]]
 name = "serde"
-version = "1.0.203"
+version = "1.0.204"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7253ab4de971e72fb7be983802300c30b5a7f0c2e56fab8abfc6a214307c0094"
+checksum = "bc76f558e0cbb2a839d37354c575f1dc3fdc6546b5be373ba43d95f231bf7c12"
 dependencies = [
  "serde_derive",
 ]
 
 [[package]]
 name = "serde_derive"
-version = "1.0.203"
+version = "1.0.204"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "500cbc0ebeb6f46627f50f3f5811ccf6bf00643be300b4c3eabc0ef55dc5b5ba"
+checksum = "e0cd7e117be63d3c3678776753929474f3b04a43a080c744d6b0ae2a8c28e222"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.68",
+ "syn 2.0.70",
 ]
 
 [[package]]
@@ -1550,9 +1552,9 @@ dependencies = [
 
 [[package]]
 name = "syn"
-version = "2.0.68"
+version = "2.0.70"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "901fa70d88b9d6c98022e23b4136f9f3e54e4662c3bc1bd1d84a42a9a0f0c1e9"
+checksum = "2f0209b68b3613b093e0ec905354eccaedcfe83b8cb37cbdeae64026c3064c16"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -1562,7 +1564,7 @@ dependencies = [
 [[package]]
 name = "taskctx"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/taskctx.git#f8899f7ce2738c4d38ccb47e534e4013331019bc"
+source = "git+https://github.com/Starry-OS/taskctx.git#86561d9659f294328350d0235e8f5d285fd6e766"
 dependencies = [
  "aarch64-cpu",
  "cfg-if",
@@ -1591,7 +1593,7 @@ checksum = "46c3384250002a6d5af4d114f2845d37b57521033f30d5c3f46c4d70e1197533"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.68",
+ "syn 2.0.70",
 ]
 
 [[package]]
@@ -1642,9 +1644,9 @@ checksum = "49874b5167b65d7193b8aba1567f5c7d93d001cafc34600cee003eda787e483f"
 
 [[package]]
 name = "virtio-drivers"
-version = "0.7.3"
+version = "0.7.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0e7f49914233c1d3b612f891e986b0c1e0e8a54d7076a0f2501a5e8a53e7054f"
+checksum = "aa40e09453618c7a927c08c5a990497a2954da7c2aaa6c65e0d4f0fc975f6114"
 dependencies = [
  "bitflags 2.6.0",
  "log",
@@ -1686,9 +1688,9 @@ dependencies = [
 
 [[package]]
 name = "windows-targets"
-version = "0.52.5"
+version = "0.52.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6f0713a46559409d202e70e28227288446bf7841d3211583a4b53e3f6d96e7eb"
+checksum = "9b724f72796e036ab90c1021d4780d4d3d648aca59e491e6b98e725b84e99973"
 dependencies = [
  "windows_aarch64_gnullvm",
  "windows_aarch64_msvc",
@@ -1702,51 +1704,51 @@ dependencies = [
 
 [[package]]
 name = "windows_aarch64_gnullvm"
-version = "0.52.5"
+version = "0.52.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7088eed71e8b8dda258ecc8bac5fb1153c5cffaf2578fc8ff5d61e23578d3263"
+checksum = "32a4622180e7a0ec044bb555404c800bc9fd9ec262ec147edd5989ccd0c02cd3"
 
 [[package]]
 name = "windows_aarch64_msvc"
-version = "0.52.5"
+version = "0.52.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9985fd1504e250c615ca5f281c3f7a6da76213ebd5ccc9561496568a2752afb6"
+checksum = "09ec2a7bb152e2252b53fa7803150007879548bc709c039df7627cabbd05d469"
 
 [[package]]
 name = "windows_i686_gnu"
-version = "0.52.5"
+version = "0.52.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "88ba073cf16d5372720ec942a8ccbf61626074c6d4dd2e745299726ce8b89670"
+checksum = "8e9b5ad5ab802e97eb8e295ac6720e509ee4c243f69d781394014ebfe8bbfa0b"
 
 [[package]]
 name = "windows_i686_gnullvm"
-version = "0.52.5"
+version = "0.52.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "87f4261229030a858f36b459e748ae97545d6f1ec60e5e0d6a3d32e0dc232ee9"
+checksum = "0eee52d38c090b3caa76c563b86c3a4bd71ef1a819287c19d586d7334ae8ed66"
 
 [[package]]
 name = "windows_i686_msvc"
-version = "0.52.5"
+version = "0.52.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "db3c2bf3d13d5b658be73463284eaf12830ac9a26a90c717b7f771dfe97487bf"
+checksum = "240948bc05c5e7c6dabba28bf89d89ffce3e303022809e73deaefe4f6ec56c66"
 
 [[package]]
 name = "windows_x86_64_gnu"
-version = "0.52.5"
+version = "0.52.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4e4246f76bdeff09eb48875a0fd3e2af6aada79d409d33011886d3e1581517d9"
+checksum = "147a5c80aabfbf0c7d901cb5895d1de30ef2907eb21fbbab29ca94c5b08b1a78"
 
 [[package]]
 name = "windows_x86_64_gnullvm"
-version = "0.52.5"
+version = "0.52.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "852298e482cd67c356ddd9570386e2862b5673c85bd5f88df9ab6802b334c596"
+checksum = "24d5b23dc417412679681396f2b49f3de8c1473deb516bd34410872eff51ed0d"
 
 [[package]]
 name = "windows_x86_64_msvc"
-version = "0.52.5"
+version = "0.52.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bec47e5bfd1bff0eeaf6d8b485cc1074891a197ab4225d504cb7a1ab88b02bf0"
+checksum = "589f6da84c646204747d1270a2a5661ea66ed1cced2631d546fdfb155959f9ec"
 
 [[package]]
 name = "winnow"
@@ -1810,9 +1812,9 @@ checksum = "2fe21bcc34ca7fe6dd56cc2cb1261ea59d6b93620215aefb5ea6032265527784"
 
 [[package]]
 name = "zerocopy"
-version = "0.7.34"
+version = "0.7.35"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ae87e3fcd617500e5d106f0380cf7b77f3c6092aae37191433159dda23cfb087"
+checksum = "1b9b4fd18abc82b8136838da5d50bae7bdea537c574d8dc1a34ed098d6c166f0"
 dependencies = [
  "byteorder",
  "zerocopy-derive",
@@ -1820,11 +1822,11 @@ dependencies = [
 
 [[package]]
 name = "zerocopy-derive"
-version = "0.7.34"
+version = "0.7.35"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "15e934569e47891f7d9411f1a451d947a60e000ab3bd24fbb970f000387d1b3b"
+checksum = "fa4f8080344d4671fb4e831a13ad1e68092748387dfc4f55e356242fae12ce3e"
 dependencies = [
  "proc-macro2",
  "quote",
- "syn 2.0.68",
+ "syn 2.0.70",
 ]
