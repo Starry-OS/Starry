@@ -49,7 +49,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix: 
-        rust-toolchain: [nightly, nightly-2024-05-02]
+        rust-toolchain: [nightly-2024-05-02]
     env:
       RUSTUP_TOOLCHAIN: ${{ matrix.rust-toolchain }}
       WORKING_DIRECTORY: ${{ needs.prepare_for_external_test.outputs.TopTestDirectory }}
@@ -90,7 +90,7 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         arch: [x86_64, riscv64, aarch64]
-        rust-toolchain: [nightly, nightly-2024-05-02]
+        rust-toolchain: [nightly-2024-05-02]
     env:
       RUSTUP_TOOLCHAIN: ${{ matrix.rust-toolchain }}
       WORKING_DIRECTORY: ${{ needs.prepare_for_external_test.outputs.TopTestDirectory }}
@@ -189,7 +189,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        rust-toolchain: [nightly, nightly-2024-05-02]
+        rust-toolchain: [nightly-2024-05-02]
     env:
       RUSTUP_TOOLCHAIN: ${{ matrix.rust-toolchain }}
       WORKING_DIRECTORY: ${{ needs.prepare_for_external_test.outputs.TopTestDirectory }}
@@ -246,7 +246,7 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         arch: [x86_64]
-        rust-toolchain: [nightly, nightly-2024-05-02]
+        rust-toolchain: [nightly-2024-05-02]
     env:
       RUSTUP_TOOLCHAIN: ${{ matrix.rust-toolchain }}
       WORKING_DIRECTORY: ${{ needs.prepare_for_external_test.outputs.TopTestDirectory }}
@@ -311,7 +311,7 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         arch: [x86_64, riscv64, aarch64]
-        rust-toolchain: [nightly, nightly-2024-05-02]
+        rust-toolchain: [nightly-2024-05-02]
     env:
       RUSTUP_TOOLCHAIN: ${{ matrix.rust-toolchain }}
       WORKING_DIRECTORY: ${{ needs.prepare_for_external_test.outputs.TopTestDirectory }}
