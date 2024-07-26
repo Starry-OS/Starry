@@ -63,6 +63,9 @@ jobs:
     - name: Clone Top Repository
       if: github.repository != 'Starry-OS/Starry'
       run: git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }} && cd ${{ env.WORKING_DIRECTORY }} && git checkout ${{ inputs.TopBranch }}
+    - name: Update Top Repository
+      working-directory: ${{ env.WORKING_DIRECTORY }}
+      run: make pre_update
     - name: Check rust version
       working-directory: ${{ env.WORKING_DIRECTORY }}
       run: rustc --version --verbose      

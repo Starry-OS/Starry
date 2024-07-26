@@ -46,8 +46,8 @@ STRUCT ?= Unikernel
 override FEATURES += fp_simd
 
 # QEMU options
-BLK ?= y
-NET ?= y
+BLK ?= n
+NET ?= n
 GRAPHIC ?= n
 BUS ?= pci
 
