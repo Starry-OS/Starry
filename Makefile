@@ -33,7 +33,7 @@ PLATFORM ?=
 SMP ?= 1
 MODE ?= release
 LOG ?= off
-V ?=1
+V ?=
 LIBC_DIR = tools/axlibc
 # App options
 A ?= apps/monolithic_userboot
