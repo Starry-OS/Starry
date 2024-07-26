@@ -49,7 +49,7 @@ override FEATURES += fp_simd
 BLK ?= y
 NET ?= y
 GRAPHIC ?= n
-BUS ?= mmio
+BUS ?= pci
 
 DISK_IMG ?= disk.img
 QEMU_LOG ?= n
