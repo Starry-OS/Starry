@@ -49,7 +49,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix: 
-        rust-toolchain: [nightly-2024-05-02]
+        rust-toolchain: [nightly, nightly-2024-05-02]
     env:
       RUSTUP_TOOLCHAIN: ${{ matrix.rust-toolchain }}
       WORKING_DIRECTORY: ${{ needs.prepare_for_external_test.outputs.TopTestDirectory }}
@@ -63,6 +63,9 @@ jobs:
     - name: Clone Top Repository
       if: github.repository != 'Starry-OS/Starry'
       run: git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }} && cd ${{ env.WORKING_DIRECTORY }} && git checkout ${{ inputs.TopBranch }}
+    - name: Update Top Repository
+      working-directory: ${{ env.WORKING_DIRECTORY }}
+      run: make pre_update
     - name: Check rust version
       working-directory: ${{ env.WORKING_DIRECTORY }}
       run: rustc --version --verbose      
@@ -90,7 +93,7 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         arch: [x86_64, riscv64, aarch64]
-        rust-toolchain: [nightly-2024-05-02]
+        rust-toolchain: [nightly, nightly-2024-05-02]
     env:
       RUSTUP_TOOLCHAIN: ${{ matrix.rust-toolchain }}
       WORKING_DIRECTORY: ${{ needs.prepare_for_external_test.outputs.TopTestDirectory }}
@@ -189,7 +192,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        rust-toolchain: [nightly-2024-05-02]
+        rust-toolchain: [nightly, nightly-2024-05-02]
     env:
       RUSTUP_TOOLCHAIN: ${{ matrix.rust-toolchain }}
       WORKING_DIRECTORY: ${{ needs.prepare_for_external_test.outputs.TopTestDirectory }}
@@ -311,7 +314,7 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         arch: [x86_64, riscv64, aarch64]
-        rust-toolchain: [nightly-2024-05-02]
+        rust-toolchain: [nightly, nightly-2024-05-02]
     env:
       RUSTUP_TOOLCHAIN: ${{ matrix.rust-toolchain }}
       WORKING_DIRECTORY: ${{ needs.prepare_for_external_test.outputs.TopTestDirectory }}

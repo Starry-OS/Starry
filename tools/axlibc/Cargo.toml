@@ -22,7 +22,7 @@ crate-type = ["lib", "staticlib"]
 [features]
 default = []
 
-irq = ["axfeat/irq", "arch_boot/irq"]
+irq = ["arceos_posix_api/irq", "arch_boot/irq"]
 
 # Multicore
 smp = ["arceos_posix_api/smp", "arch_boot/smp"]
@@ -61,4 +61,4 @@ axerrno = { git = "https://github.com/Starry-OS/axerrno.git" }
 arch_boot = { git = "https://github.com/Starry-OS/arch_boot.git" }
 
 [build-dependencies]
-bindgen ={ version = "0.66" }
+bindgen ={ version = "0.69" }

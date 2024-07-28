@@ -163,9 +163,9 @@ pub unsafe extern "C" fn longjmp(_buf: *mut ctypes::__jmp_buf_tag, _val: c_int) 
     core::arch::asm!(
         "mov rax,rsi
         test rax,rax
-        jnz 1f
+        jnz 2f
         inc rax
-    1:
+    2:
         mov rbx, [rdi]
         mov rbp, [rdi + 8]
         mov r12, [rdi + 16]
