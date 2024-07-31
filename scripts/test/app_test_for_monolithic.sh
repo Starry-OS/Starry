@@ -67,7 +67,7 @@ function test_one() {
     local args=$1
     local actual="$APP/actual.out"
     # 默认要用批量测试模式
-    args="$args ARCH=$ARCH APP_FEATURES=batch ACCEL=n NET=y BLK=y"
+    
     rm -f "$actual"
 
     MSG=
@@ -75,8 +75,14 @@ function test_one() {
     for testcase in ${testcase_list[@]}; do
         # 重置 MONOLITHIC_TESTCASE
         echo -e "    Monolithic testcase: $testcase"
+        # 如果测例是 libc，则 features 带上 sched_rr
+        local real_args=$args
+        if [ "$testcase" == "libc" ]; then
+            real_args="$real_args,sched_rr"
+        fi
+        real_args="$real_args ARCH=$ARCH APP_FEATURES=batch ACCEL=n NET=y BLK=y"
         export MONOLITHIC_TESTCASE=$testcase
-        run_and_compare "$args" "$actual"
+        run_and_compare "$real_args" "$actual"
         local res=$?
 
         if [ $res -ne $S_PASS ]; then

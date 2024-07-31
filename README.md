@@ -29,30 +29,33 @@ $ make A=apps/helloworld ARCH=x86_64 run
 
 # $ ./build_img.sh <arch>
 
-$ ./build_img.sh -m x86_64
+$ ./build_img.sh -a x86_64
 
 $ make A=apps/monolithic_userboot ARCH=x86_64 run
 
 
 # Run the testcases in the monolithic architecture
 
-$ make A=apps/monolithic_userboot APP_FEATURES=batch ARCH=x86_64 run
+$ make A=apps/monolithic_userboot APP_FEATURES=batch ARCH=x86_64 NET=y BLK=y run
 ```
 
 ## Build and run testcases with ext4fs
 The document of the ext4fs is [here](./doc/ext4fs.md).
 ```sh
+# Build the image in ext4fs
+$ ./build_img.sh -a x86_64 -fs ext4
+
 # Run in the lwext4fs with Rust interface, whose url is https://github.com/elliott10/lwext4_rust.
-make A=apps/monolithic_userboot FEATURES=lwext4_rust LOG=off ACCEL=n run
+$ make A=apps/monolithic_userboot FEATURES=lwext4_rust LOG=off NET=y BLK=y ACCEL=n run
 
 # Run in a new ext4fs written in Rust, whose url is https://github.com/yuoo655/ext4_rs.
-make A=apps/monolithic_userboot FEATURES=ext4_rs LOG=off ACCEL=n run
+$ make A=apps/monolithic_userboot FEATURES=ext4_rs LOG=off NET=y BLK=y ACCEL=n run
 
 # Replace virt-io with ram-disk
-make A=apps/monolithic_userboot FEATURES=ext4_rs,img LOG=error ARCH=x86_64 ACCEL=n run
+$ make A=apps/monolithic_userboot FEATURES=ext4_rs,img LOG=error NET=y BLK=y ARCH=x86_64 ACCEL=n run
 
 # Run testcases for OSCOMP
-make A=apps/monolithic_userboot FEATURES=ext4_rs,img LOG=off ACCEL=n run APP_FEATURES=batch
+$ make A=apps/monolithic_userboot FEATURES=ext4_rs,img LOG=off NET=y BLK=y ACCEL=n run APP_FEATURES=batch
 ```
 
 ## Pull crates to local workspace
