@@ -82,6 +82,11 @@ $ kbuild patch remove axstarry
 
 ```
 
+## Build kernel image which will run on Intel I219
+```sh
+$ make A=apps/monolithic_userboot FEATURES=img,sched_rr,e1000_net LOG=debug ACCEL=n APP_FEATURES=batch NET=y BLK=y PLATFORM=x86_64-pc-oslab build
+```
+
 ## Notes
 
 - Please remove unnecessary dependencies in `Cargo.toml` before your commit.
