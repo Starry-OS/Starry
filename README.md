@@ -82,6 +82,11 @@ $ kbuild patch remove axstarry
 
 ```
 
+## Run with e1000 driver
+```sh
+$ make A=apps/monolithic_userboot FEATURES=img,sched_rr,e1000_net LOG=off ACCEL=n APP_FEATURES=batch NET=y BLK=y run 
+```
+
 ## Notes
 
 - Please remove unnecessary dependencies in `Cargo.toml` before your commit.

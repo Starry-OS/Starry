@@ -31,8 +31,14 @@ qemu_args-$(BLK) += \
   -device virtio-blk-$(vdev-suffix),drive=disk0 \
   -drive id=disk0,if=none,format=raw,file=$(DISK_IMG)
 
-qemu_args-$(NET) += \
+# 如果 FEATURES 包括 e1000_net，则添加 -device e1000,netdev=net0 -netdev user,id=net0,hostfwd=tcp::5555-:5555,hostfwd=udp::5555-:5555
+ifeq ($(findstring e1000_net,$(FEATURES)),e1000_net)
+  qemu_args-$(NET) += \
+  -device e1000,netdev=net0 -object filter-dump,id=net0,netdev=net0,file=packets.pcap
+else
+  qemu_args-$(NET) += \
   -device virtio-net-$(vdev-suffix),netdev=net0
+endif
 
 ifeq ($(NET_DEV), user)
   qemu_args-$(NET) += -netdev user,id=net0,hostfwd=tcp::5555-:5555,hostfwd=udp::5555-:5555
@@ -41,7 +47,6 @@ else ifeq ($(NET_DEV), tap)
   QEMU := sudo $(QEMU)
 else ifeq ($(NET_DEV), bridge)
   qemu_args-$(NET) += -netdev bridge,id=net0,br=virbr0
-  QEMU := sudo $(QEMU)
 else
   $(error "NET_DEV" must be one of "user", "tap", or "bridge")
 endif

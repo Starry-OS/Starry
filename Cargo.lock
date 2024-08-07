@@ -281,7 +281,7 @@ dependencies = [
 [[package]]
 name = "axdriver"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/axdriver.git#a23bd2759c396edd9dbae5c25ff858ec516e3579"
+source = "git+https://github.com/Starry-OS/axdriver.git#fdf9d5efb411cfecfe4cc06bc9517a1fc8f3f7d3"
 dependencies = [
  "axalloc",
  "axconfig",
@@ -307,7 +307,7 @@ dependencies = [
 [[package]]
 name = "axfeat"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/axfeat.git#d3aa838e286f0e029fcd0aec7bac7bf6932dba8a"
+source = "git+https://github.com/Starry-OS/axfeat.git#a0d5a4813397aae6ce84a749a1c16955f4e9a874"
 dependencies = [
  "axalloc",
  "axdisplay",
@@ -489,7 +489,7 @@ dependencies = [
 [[package]]
 name = "axnet"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/axnet.git#aef12b88809570901cedca1a996594ab009169da"
+source = "git+https://github.com/Starry-OS/axnet.git#48d68eb8c32bfb1bb89977fbe19ca42a0d1fb7a9"
 dependencies = [
  "axdriver",
  "axerrno",
@@ -509,7 +509,7 @@ dependencies = [
 [[package]]
 name = "axprocess"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/axprocess.git#8590f91900011f097ee636804166ecba4586ede7"
+source = "git+https://github.com/Starry-OS/axprocess.git#6ab9c7a7d41f43ecebcd6ee329bd9fa7edc763b8"
 dependencies = [
  "axalloc",
  "axconfig",
@@ -569,7 +569,7 @@ dependencies = [
 [[package]]
 name = "axstarry"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/axstarry.git#7c109e729ceacbc72d456d76b1536751ff806328"
+source = "git+https://github.com/Starry-OS/axstarry.git#a60752d10eb805a820436b86c429d621a95384ce"
 dependencies = [
  "arch_boot",
  "axfeat",
@@ -840,7 +840,7 @@ dependencies = [
 [[package]]
 name = "driver_net"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/driver_net.git#942a7f6a44420aa01c8bff6e56924949f7acf805"
+source = "git+https://github.com/Starry-OS/driver_net.git#5d16bf2fe6eae2aa3b7d4f929162c07d949a6955"
 dependencies = [
  "driver_common",
  "log",
@@ -1135,7 +1135,7 @@ checksum = "78b3ae25bc7c8c38cec158d1f2757ee79e9b3740fbc7ccf0e59e4b08d793fa89"
 [[package]]
 name = "linux_syscall_api"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/linux_syscall_api.git#98d50d86df87c3d09f4b8115d1ae6c127a1e8701"
+source = "git+https://github.com/Starry-OS/linux_syscall_api.git#bc828f3316e6b4560f5e79602b679c7d9d31d5ff"
 dependencies = [
  "axconfig",
  "axerrno",
@@ -1667,7 +1667,7 @@ dependencies = [
 [[package]]
 name = "taskctx"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/taskctx.git#86561d9659f294328350d0235e8f5d285fd6e766"
+source = "git+https://github.com/Starry-OS/taskctx.git#d7d646ca1f4cc2bd0466563b0563b2c321fb0929"
 dependencies = [
  "aarch64-cpu",
  "cfg-if",
