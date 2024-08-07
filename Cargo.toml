@@ -1,4 +1,6 @@
-[patch]
+[patch."https://github.com/Starry-OS/axdriver.git".axdriver]
+git = "https://github.com/Starry-OS//axdriver.git"
+branch = "support_intel_i219"
 
 [profile.dev]
 lto = true
