@@ -63,7 +63,7 @@ const UNIX_TESTCASES: &[&str] = &["busybox sh ./unixbench_testcode.sh"];
 const CYCLE_TESTCASES: &[&str] = &["busybox sh ./cyclictest_testcode.sh"];
 
 #[allow(dead_code)]
-const OTHER_TESTCASES: &[&str] = &["./time-test"];
+const OTHER_TESTCASES: &[&str] = &["./dora up", "./dora start lebai_dataflow.yml"];
 
 #[allow(unused)]
 pub fn run_batch_testcases() {
@@ -77,7 +77,7 @@ pub fn run_batch_testcases() {
         "unixbench" => Box::new(UNIX_TESTCASES.iter()),
         "cycle" => Box::new(CYCLE_TESTCASES.iter()),
         "other" => Box::new(OTHER_TESTCASES.iter()),
-        _ => Box::new(LIBC_TESTCASES.iter()),
+        _ => Box::new(OTHER_TESTCASES.iter()),
     };
 
     for testcase in test_iter {

@@ -84,6 +84,7 @@ $ kbuild patch remove axstarry
 
 ## Build kernel image which will run on Intel I219
 ```sh
+$ ./build_img.sh -a x86_64 -file x86_64_dora_musl
 $ make A=apps/monolithic_userboot FEATURES=img,sched_rr,e1000_net LOG=debug ACCEL=n APP_FEATURES=batch NET=y BLK=y PLATFORM=x86_64-pc-oslab build
 ```
 
