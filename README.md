@@ -87,6 +87,19 @@ $ kbuild patch remove axstarry
 $ make A=apps/monolithic_userboot FEATURES=img,sched_rr,e1000_net LOG=off ACCEL=n APP_FEATURES=batch NET=y BLK=y run 
 ```
 
+## Run with bigger physical memory
+Now it only supports aarch64 architecture.
+```sh
+$ ./build_img.sh -a aarch64 -s 240
+$ make A=apps/monolithic_userboot ACCEL=n FEATURES=img NET=y BLK=y ARCH=aarch64 APP_FEATURES=batch run
+```
+
+The ramdisk size is set in [platform](./platforms/aarch64-qemu-virt.toml). The `testcase-memory-size` is the size of the ramdisk.
+And the `testcase-memory-start` is the start virtual address of the ramdisk. 
+
+Notes: The start address should not overlap with the kernel image, which contains the image of testcases.If the size of the ramdisk is too big, it may need
+to expand the physical memory provided by the qemu.
+
 ## Notes
 
 - Please remove unnecessary dependencies in `Cargo.toml` before your commit.
