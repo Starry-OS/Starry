@@ -1,4 +1,20 @@
-[patch]
+[patch."https://github.com/Starry-OS/axfeat.git".axfeat]
+path = "crates/axfeat"
+
+[patch."https://github.com/Starry-OS/axfs.git".axfs]
+path = "crates/axfs"
+
+[patch."https://github.com/Starry-OS/axstarry.git".axstarry]
+path = "crates/axstarry"
+
+[patch."https://github.com/Starry-OS/axtask.git".axtask]
+path = "crates/axtask"
+
+[patch."https://github.com/Starry-OS/linux_syscall_api.git".linux_syscall_api]
+path = "crates/linux_syscall_api"
+
+[patch."https://github.com/Starry-OS/taskctx.git".taskctx]
+path = "crates/taskctx"
 
 [profile.dev]
 lto = true
