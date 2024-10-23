@@ -10,6 +10,15 @@ This repository is based on [Starry](https://github.com/Arceos-monolithic/Starry
 
 ![avatar](./doc/figures/Starry.svg)
 
+## Run ZLMediaKit
+```sh
+# add crates to the local
+$ ./add_crates.sh
+
+# Run in a new another_ext4 written in Rust
+$ ./zlm_start.sh
+```
+
 ## Build and run
 
 ```sh
