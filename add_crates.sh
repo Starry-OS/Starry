@@ -1,0 +1,13 @@
+git clone https://github.com/Josen-B/axfeat.git
+git clone https://github.com/Josen-B/axfs.git
+git clone https://github.com/Josen-B/axstarry.git
+git clone https://github.com/Josen-B/axtask.git
+git clone https://github.com/Josen-B/linux_syscall_api.git
+git clone https://github.com/Josen-B/taskctx.git
+git clone https://github.com/Josen-B/testcases.git
+mv axfeat ./crates
+mv axfs ./crates
+mv axstarry ./crates
+mv axtask ./crates
+mv linux_syscall_api ./crates
+mv taskctx ./crates
