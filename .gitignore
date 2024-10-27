@@ -13,3 +13,5 @@ arceos-fada.itb
 !tools/rk3588/ramdisk.img
 linker_*
 crates/
+minicom_output.log
+.errorviz*

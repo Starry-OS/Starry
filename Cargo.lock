@@ -199,6 +199,7 @@ dependencies = [
 [[package]]
 name = "arch_boot"
 version = "0.1.0"
+source = "git+https://github.com/Starry-OS/arch_boot.git#03cb86283f3bbc3d85c88e37dfc561fe80d24210"
 dependencies = [
  "aarch64-cpu",
  "axconfig",
@@ -268,6 +269,7 @@ dependencies = [
 [[package]]
 name = "axconfig"
 version = "0.1.0"
+source = "git+https://github.com/Starry-OS/axconfig.git#ecfc417015a36450abb514092fb8c811512205ea"
 dependencies = [
  "serde",
  "toml_edit",
@@ -406,6 +408,7 @@ dependencies = [
 [[package]]
 name = "axhal"
 version = "0.1.0"
+source = "git+https://github.com/Starry-OS/axhal.git#769caa8b8749b324a1370a8da11c0e6a7597eedf"
 dependencies = [
  "aarch64-cpu",
  "arm_gic",
@@ -475,6 +478,7 @@ dependencies = [
 [[package]]
 name = "axmem"
 version = "0.1.0"
+source = "git+https://github.com/Starry-OS/axmem.git#2e66a8ad1a4f14f629d2a07e67abcf21f5216012"
 dependencies = [
  "axalloc",
  "axconfig",
@@ -540,6 +544,7 @@ dependencies = [
 [[package]]
 name = "axruntime"
 version = "0.1.0"
+source = "git+https://github.com/Starry-OS/axruntime.git#0a8b576c156767eeff3ee43a3dab3a1548ffe3ee"
 dependencies = [
  "axalloc",
  "axconfig",
@@ -1279,6 +1284,7 @@ source = "git+https://github.com/mexus/numeric-enum-macro#20aef288b2ecd2381ab662
 [[package]]
 name = "of"
 version = "0.1.0"
+source = "git+https://github.com/Starry-OS/of.git#ae6dc82903a23f2ad7d959beccb7651efe21e935"
 dependencies = [
  "fdt",
  "lazy_static",
