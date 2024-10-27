@@ -1,4 +1,20 @@
-[patch]
+[patch."https://github.com/Starry-OS/arch_boot.git".arch_boot]
+path = "crates/arch_boot"
+
+[patch."https://github.com/Starry-OS/axconfig.git".axconfig]
+path = "crates/axconfig"
+
+[patch."https://github.com/Starry-OS/axhal.git".axhal]
+path = "crates/axhal"
+
+[patch."https://github.com/Starry-OS/axmem.git".axmem]
+path = "crates/axmem"
+
+[patch."https://github.com/Starry-OS/axruntime.git".axruntime]
+path = "crates/axruntime"
+
+[patch."https://github.com/Starry-OS/of.git".of]
+path = "crates/of"
 
 [profile.dev]
 lto = true

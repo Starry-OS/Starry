@@ -1,0 +1,71 @@
+# Architecture identifier.
+arch = "aarch64"
+# Platform identifier.
+platform = "aarch64-phytiumpi"
+# Platform family.
+family = "aarch64-phytiumpi"
+
+# Base address of the whole physical memory.
+phys-memory-base = "0x8000_0000"
+# Size of the whole physical memory.
+phys-memory-size = "0x8000_0000" # 2G
+# Base physical address of the kernel image.
+kernel-base-paddr = "0x9010_0000"
+# Base virtual address of the kernel image.
+kernel-base-vaddr = "0xffff_0000_9010_0000"
+# kernel-base-vaddr = "0x9010_0000"
+# Linear mapping offset, for quick conversions between physical and virtual
+# addresses.
+ phys-virt-offset = "0xffff_0000_0000_0000"
+#phys-virt-offset = "0x0000_0000_0000_0000"
+# MMIO regions with format (`base_paddr`, `size`).
+mmio-regions = [
+  # ["0xFE00_B000", "0x1000"],      # mailbox
+  # ["0xFE20_1000", "0x1000"],      # PL011 UART
+  # ["0xFF84_1000", "0x8000"],      # GICv2    
+  #["0x40000000", "0xfff_ffff"],      # pcie ecam
+
+
+  # ["0x6_0000_0000", "0x4000_0000"] # pcie control
+
+
+  ["0x2800_C000", "0x1000"],      # UART 0
+  ["0x2800_D000", "0x1000"],      # UART 1
+  ["0x2800_E000", "0x1000"],      # UART 2
+  ["0x2800_F000", "0x1000"],      # UART 3
+  # ["0x32a0_0000", "0x2_0000"],      # usb0
+  # ["0x32a2_0000", "0x2_0000"],      # usb0
+  # ["0x3200_C000", "0x2000"],      #Ethernet1
+  # ["0x3200_E000", "0x2000"],      #Ethernet2
+  # ["0x3080_0000", "0x8000"],      # GICv2    
+  ["0x3000_0000","0x800_0000"],     #other devices
+  ["0x4000_0000","0x4000_0000"],   # pcie 
+  ["0x10_0000_0000", "0x20_0000_0000"], # pcie mmio 64
+
+  # ["0x6_0000_0000", "0x6_3fff_ffff"] # pcie control
+]
+virtio-mmio-regions = []
+# UART Address
+uart-paddr = "0x2800_D000"
+uart-irq = "24"
+
+# GIC Address
+gicc-paddr = "0xFF84_2000"
+gicd-paddr = "0xFF84_1000"
+
+# Base physical address of the PCIe ECAM space.
+pci-ecam-base = "0x4000_0000"
+# End PCI bus number.
+pci-bus-end = "0x100"
+# PCI device memory ranges.
+pci-ranges = [
+  ["0x58000000", "0x27ffffff"],   # pcie mmio 32
+  ["0x10_0000_0000", "0x30_0000_0000"], # pcie mmio 64
+  # ["0x5800_0000", "0x7fff_ffff"],
+
+  # ["0x6_0000_0000", "0x6_3fff_ffff"]
+]
+
+# Size of the nocache memory region
+# nocache-memory-size = "0x70_0000"
+nocache-memory-size = "0x1000_0000"
