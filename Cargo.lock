@@ -8,7 +8,7 @@ version = "9.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ac42a04a61c19fc8196dd728022a784baecc5d63d7e256c01ad1b3fbfab26287"
 dependencies = [
- "tock-registers",
+ "tock-registers 0.8.1",
 ]
 
 [[package]]
@@ -121,7 +121,7 @@ dependencies = [
  "axfs_ramfs",
  "axfs_vfs",
  "axstd",
- "crate_interface",
+ "crate_interface 0.1.1",
 ]
 
 [[package]]
@@ -214,7 +214,7 @@ dependencies = [
  "raw-cpuid 11.1.0",
  "riscv 0.10.1",
  "sbi-rt 0.0.2",
- "tock-registers",
+ "tock-registers 0.8.1",
  "x86",
  "x86_64 0.14.12",
 ]
@@ -227,7 +227,7 @@ dependencies = [
  "aarch64-cpu",
  "bitflags 2.6.0",
  "cfg-if",
- "tock-registers",
+ "tock-registers 0.8.1",
 ]
 
 [[package]]
@@ -235,7 +235,16 @@ name = "arm_pl011"
 version = "0.1.0"
 source = "git+https://github.com/Starry-OS/arm_pl011.git#cba8ce63e6e2248829ae340219e90e6df43cda48"
 dependencies = [
- "tock-registers",
+ "tock-registers 0.8.1",
+]
+
+[[package]]
+name = "atomic-polyfill"
+version = "1.0.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8cf2bce30dfe09ef0bfaef228b9d414faaf7e563035494d7fe092dba54b300f4"
+dependencies = [
+ "critical-section",
 ]
 
 [[package]]
@@ -271,7 +280,7 @@ name = "axdisplay"
 version = "0.1.0"
 source = "git+https://github.com/Starry-OS/axdisplay.git#ada3928ed2f9303cc0bbf75758c53716447ac730"
 dependencies = [
- "axdriver",
+ "axdriver 0.1.0 (git+https://github.com/qclic/axdriver.git?branch=dev_intel_i219)",
  "axsync",
  "driver_display",
  "lazy_init",
@@ -281,7 +290,6 @@ dependencies = [
 [[package]]
 name = "axdriver"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/axdriver.git#a23bd2759c396edd9dbae5c25ff858ec516e3579"
 dependencies = [
  "axalloc",
  "axconfig",
@@ -293,7 +301,30 @@ dependencies = [
  "driver_net",
  "driver_pci",
  "driver_virtio",
+ "e1000-driver",
+ "kspin",
  "log",
+ "pcie",
+]
+
+[[package]]
+name = "axdriver"
+version = "0.1.0"
+source = "git+https://github.com/qclic/axdriver.git?branch=dev_intel_i219#3c359c6624cfe9e39da28d5c3be3d799644383ee"
+dependencies = [
+ "axalloc",
+ "axconfig",
+ "axhal",
+ "cfg-if",
+ "driver_block",
+ "driver_common",
+ "driver_display",
+ "driver_net",
+ "driver_pci",
+ "driver_virtio",
+ "kspin",
+ "log",
+ "pcie",
 ]
 
 [[package]]
@@ -307,11 +338,11 @@ dependencies = [
 [[package]]
 name = "axfeat"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/axfeat.git#d3aa838e286f0e029fcd0aec7bac7bf6932dba8a"
+source = "git+https://github.com/Starry-OS/axfeat.git#a0d5a4813397aae6ce84a749a1c16955f4e9a874"
 dependencies = [
  "axalloc",
  "axdisplay",
- "axdriver",
+ "axdriver 0.1.0 (git+https://github.com/qclic/axdriver.git?branch=dev_intel_i219)",
  "axfs",
  "axhal",
  "axlog",
@@ -330,7 +361,7 @@ version = "0.1.0"
 source = "git+https://github.com/Starry-OS/axfs.git#74ba6295c0113d2305d0037ffbae558fa237e846"
 dependencies = [
  "axconfig",
- "axdriver",
+ "axdriver 0.1.0 (git+https://github.com/qclic/axdriver.git?branch=dev_intel_i219)",
  "axerrno",
  "axfs_devfs",
  "axfs_ramfs",
@@ -340,7 +371,7 @@ dependencies = [
  "bitflags 2.6.0",
  "capability",
  "cfg-if",
- "crate_interface",
+ "crate_interface 0.1.1",
  "driver_block",
  "fatfs",
  "lazy_init",
@@ -410,11 +441,11 @@ dependencies = [
  "axlog",
  "bitflags 2.6.0",
  "cfg-if",
- "crate_interface",
+ "crate_interface 0.1.1",
  "dw_apb_uart",
  "either",
  "handler_table",
- "kernel_guard",
+ "kernel_guard 0.1.0",
  "lazy_init",
  "log",
  "memory_addr",
@@ -429,7 +460,7 @@ dependencies = [
  "spinlock",
  "static_assertions",
  "taskctx",
- "tock-registers",
+ "tock-registers 0.8.1",
  "x2apic",
  "x86",
  "x86_64 0.15.1",
@@ -461,7 +492,7 @@ version = "0.1.0"
 source = "git+https://github.com/Starry-OS/axlog.git#5b28a4c6ae14342c725722ef62311ecc0480699c"
 dependencies = [
  "cfg-if",
- "crate_interface",
+ "crate_interface 0.1.1",
  "log",
  "spinlock",
 ]
@@ -489,9 +520,9 @@ dependencies = [
 [[package]]
 name = "axnet"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/axnet.git#aef12b88809570901cedca1a996594ab009169da"
+source = "git+https://github.com/Starry-OS/axnet.git#48d68eb8c32bfb1bb89977fbe19ca42a0d1fb7a9"
 dependencies = [
- "axdriver",
+ "axdriver 0.1.0 (git+https://github.com/qclic/axdriver.git?branch=dev_intel_i219)",
  "axerrno",
  "axhal",
  "axio",
@@ -502,14 +533,14 @@ dependencies = [
  "driver_net",
  "lazy_init",
  "log",
- "smoltcp",
+ "smoltcp 0.11.0",
  "spin",
 ]
 
 [[package]]
 name = "axprocess"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/axprocess.git#8590f91900011f097ee636804166ecba4586ede7"
+source = "git+https://github.com/Starry-OS/axprocess.git#6ab9c7a7d41f43ecebcd6ee329bd9fa7edc763b8"
 dependencies = [
  "axalloc",
  "axconfig",
@@ -540,7 +571,7 @@ dependencies = [
  "axalloc",
  "axconfig",
  "axdisplay",
- "axdriver",
+ "axdriver 0.1.0 (git+https://github.com/qclic/axdriver.git?branch=dev_intel_i219)",
  "axfs",
  "axhal",
  "axlog",
@@ -549,8 +580,8 @@ dependencies = [
  "axprocess",
  "axtask",
  "cfg-if",
- "crate_interface",
- "kernel_guard",
+ "crate_interface 0.1.1",
+ "kernel_guard 0.1.0",
  "lazy_init",
  "percpu",
 ]
@@ -569,7 +600,7 @@ dependencies = [
 [[package]]
 name = "axstarry"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/axstarry.git#7c109e729ceacbc72d456d76b1536751ff806328"
+source = "git+https://github.com/Starry-OS/axstarry.git#a60752d10eb805a820436b86c429d621a95384ce"
 dependencies = [
  "arch_boot",
  "axfeat",
@@ -612,7 +643,7 @@ dependencies = [
  "axlog",
  "axsignal",
  "cfg-if",
- "kernel_guard",
+ "kernel_guard 0.1.0",
  "lazy_init",
  "linked_list",
  "log",
@@ -636,13 +667,13 @@ dependencies = [
  "axtask",
  "cfg-if",
  "handler_table",
- "kernel_guard",
+ "kernel_guard 0.1.0",
  "lazy_init",
  "linux_syscall_api",
  "log",
  "percpu",
  "riscv 0.10.1",
- "tock-registers",
+ "tock-registers 0.8.1",
  "x86",
  "x86_64 0.15.1",
 ]
@@ -658,6 +689,17 @@ name = "base64"
 version = "0.13.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9e1b586273c5702936fe7b7d6896644d8be71e6314cfe09d3167c95f712589e8"
+
+[[package]]
+name = "bcm2835-sdhci"
+version = "0.1.0"
+source = "git+https://github.com/lhw2002426/bcm2835-sdhci.git?rev=e974f16#e974f168efa72b470a01f61bdef32240c66f54fc"
+dependencies = [
+ "aarch64-cpu",
+ "log",
+ "tock-registers 0.8.1",
+ "volatile 0.2.7",
+]
 
 [[package]]
 name = "bindgen"
@@ -768,9 +810,26 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0b396d1f76d455557e1218ec8066ae14bba60b4b36ecd55577ba979f5db7ecaa"
 
 [[package]]
+name = "core_detect"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7f8f80099a98041a3d1622845c271458a2d73e688351bf3cb999266764b81d48"
+
+[[package]]
 name = "crate_interface"
 version = "0.1.1"
 source = "git+https://github.com/Starry-OS/crate_interface.git#d27dd9608dbf04b3138cf4386c19f939352b50b0"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.72",
+]
+
+[[package]]
+name = "crate_interface"
+version = "0.1.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6af24c4862260a825484470f5526a91ad1031e04ab899be62478241231f62b46"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -820,6 +879,7 @@ name = "driver_block"
 version = "0.1.0"
 source = "git+https://github.com/Starry-OS/driver_block.git#47e771d7d312ad7090d452a0ac95e1d617f13aca"
 dependencies = [
+ "bcm2835-sdhci",
  "driver_common",
  "log",
 ]
@@ -840,9 +900,10 @@ dependencies = [
 [[package]]
 name = "driver_net"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/driver_net.git#942a7f6a44420aa01c8bff6e56924949f7acf805"
+source = "git+https://github.com/Starry-OS/driver_net.git#5d16bf2fe6eae2aa3b7d4f929162c07d949a6955"
 dependencies = [
  "driver_common",
+ "ixgbe-driver",
  "log",
  "spin",
 ]
@@ -872,7 +933,16 @@ name = "dw_apb_uart"
 version = "0.1.0"
 source = "git+https://github.com/Starry-OS/dw_apb_uart.git#15d6fb0fe127794598565f2a1188c9dc864ec110"
 dependencies = [
- "tock-registers",
+ "tock-registers 0.8.1",
+]
+
+[[package]]
+name = "e1000-driver"
+version = "0.2.3"
+source = "git+https://gitee.com/zr233/e1000-rust.git?tag=v0.2.5#f84666a35c573e22578c55f705e03ea20f2b0afe"
+dependencies = [
+ "log",
+ "volatile 0.6.1",
 ]
 
 [[package]]
@@ -1016,6 +1086,15 @@ source = "git+https://github.com/Starry-OS/handler_table.git#d6495e7d835cbc99987
 
 [[package]]
 name = "hash32"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b0c35f58762feb77d74ebe43bdbc3210f09be9fe6742234d573bacc26ed92b67"
+dependencies = [
+ "byteorder",
+]
+
+[[package]]
+name = "hash32"
 version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "47d60b12902ba28e2730cd37e95b8c9223af2808df9e902d4df49588d1470606"
@@ -1040,11 +1119,24 @@ checksum = "e5274423e17b7c9fc20b6e7e208532f9b19825d82dfd615708b70edd83df41f1"
 
 [[package]]
 name = "heapless"
+version = "0.7.17"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cdc6457c0eb62c71aac4bc17216026d8410337c4126773b9c5daba343f17964f"
+dependencies = [
+ "atomic-polyfill",
+ "hash32 0.2.1",
+ "rustc_version",
+ "spin",
+ "stable_deref_trait",
+]
+
+[[package]]
+name = "heapless"
 version = "0.8.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0bfb9eb618601c89945a70e254898da93b13be0388091d42117462b265bb3fad"
 dependencies = [
- "hash32",
+ "hash32 0.3.1",
  "stable_deref_trait",
 ]
 
@@ -1077,12 +1169,44 @@ dependencies = [
 ]
 
 [[package]]
+name = "ixgbe-driver"
+version = "0.1.0"
+source = "git+https://github.com/KuangjuX/ixgbe-driver.git?rev=8e5eb74#8e5eb741299d7d95c373ec745e39a1473fe84563"
+dependencies = [
+ "bit_field",
+ "core_detect",
+ "log",
+ "smoltcp 0.10.0",
+ "volatile 0.3.0",
+]
+
+[[package]]
 name = "kernel_guard"
 version = "0.1.0"
 source = "git+https://github.com/Starry-OS/kernel_guard.git#72e006721a017db12ce7731fe30f56a83f330216"
 dependencies = [
  "cfg-if",
  "taskctx",
+]
+
+[[package]]
+name = "kernel_guard"
+version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "36172feaa47f9967efd3bc5fc77462899286e821de3de68c5fe88176a24d3a1f"
+dependencies = [
+ "cfg-if",
+ "crate_interface 0.1.3",
+]
+
+[[package]]
+name = "kspin"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "51954c939251c5899b6e953aa0ed8903c5c0d1140fc7ce3a8fd60c931d694f6e"
+dependencies = [
+ "cfg-if",
+ "kernel_guard 0.1.1",
 ]
 
 [[package]]
@@ -1135,7 +1259,7 @@ checksum = "78b3ae25bc7c8c38cec158d1f2757ee79e9b3740fbc7ccf0e59e4b08d793fa89"
 [[package]]
 name = "linux_syscall_api"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/linux_syscall_api.git#98d50d86df87c3d09f4b8115d1ae6c127a1e8701"
+source = "git+https://github.com/Starry-OS/linux_syscall_api.git#bc828f3316e6b4560f5e79602b679c7d9d31d5ff"
 dependencies = [
  "axconfig",
  "axerrno",
@@ -1314,12 +1438,34 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "57c0d7b74b563b49d38dae00a0c37d4d6de9b432382b2892f0574ddcae73fd0a"
 
 [[package]]
+name = "pci_types"
+version = "0.10.0"
+source = "git+https://github.com/ZR233/pci_types.git?branch=set_bus#bd81923619d9a8aecbd52efb96266ff9765cc23e"
+dependencies = [
+ "bit_field",
+ "bitflags 2.6.0",
+]
+
+[[package]]
+name = "pcie"
+version = "0.1.0"
+source = "git+https://gitee.com/zr233/pcie#6a04a2388b8d5afe819d231806f55a429fac0b0b"
+dependencies = [
+ "bit_field",
+ "embedded-hal 1.0.0",
+ "log",
+ "pci_types",
+ "tock-registers 0.9.0",
+ "volatile 0.6.1",
+]
+
+[[package]]
 name = "percpu"
 version = "0.1.0"
 source = "git+https://github.com/Starry-OS/percpu.git#85e6d8a74f19ac54004e64d42cda07d14042e3ee"
 dependencies = [
  "cfg-if",
- "kernel_guard",
+ "kernel_guard 0.1.0",
  "percpu_macros",
  "spin",
  "x86",
@@ -1494,6 +1640,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "08d43f7aa6b08d49f382cde6a7982047c3426db949b1424bc4b7ec9ae12c6ce2"
 
 [[package]]
+name = "rustc_version"
+version = "0.4.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cfcb3a22ef46e85b45de6ee7e79d063319ebb6594faafcf1c225ea92ab6e9b92"
+dependencies = [
+ "semver",
+]
+
+[[package]]
 name = "rustix"
 version = "0.38.34"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1560,6 +1715,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "94143f37725109f92c262ed2cf5e59bce7498c01bcc1502d7b9afe439a4e9f49"
 
 [[package]]
+name = "semver"
+version = "1.0.23"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "61697e0a1c7e512e84a621326239844a24d8207b4669b41bc18b32ea5cbf988b"
+
+[[package]]
 name = "serde"
 version = "1.0.204"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1587,6 +1748,20 @@ checksum = "0fda2ff0d084019ba4d7c6f371c95d8fd75ce3524c3cb8fb653a3023f6323e64"
 
 [[package]]
 name = "smoltcp"
+version = "0.10.0"
+source = "git+https://github.com/rcore-os/smoltcp.git?rev=2ade274#2ade2747abc4d779d0836154b0413d13ce16cd5b"
+dependencies = [
+ "bitflags 1.3.2",
+ "byteorder",
+ "cfg-if",
+ "defmt",
+ "heapless 0.7.17",
+ "log",
+ "managed",
+]
+
+[[package]]
+name = "smoltcp"
 version = "0.11.0"
 source = "git+https://github.com/rcore-os/smoltcp.git?rev=b7134a3#b7134a31442db149c2398b27f95a5d2b54414a4d"
 dependencies = [
@@ -1594,7 +1769,7 @@ dependencies = [
  "byteorder",
  "cfg-if",
  "defmt",
- "heapless",
+ "heapless 0.8.0",
  "log",
  "managed",
 ]
@@ -1614,7 +1789,7 @@ version = "0.1.0"
 source = "git+https://github.com/Starry-OS/spinlock.git#0149e52d3e4f21ea7bf9bb85f6fe7fc3702d4f1f"
 dependencies = [
  "cfg-if",
- "kernel_guard",
+ "kernel_guard 0.1.0",
 ]
 
 [[package]]
@@ -1667,7 +1842,7 @@ dependencies = [
 [[package]]
 name = "taskctx"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/taskctx.git#86561d9659f294328350d0235e8f5d285fd6e766"
+source = "git+https://github.com/Starry-OS/taskctx.git#d7d646ca1f4cc2bd0466563b0563b2c321fb0929"
 dependencies = [
  "aarch64-cpu",
  "cfg-if",
@@ -1675,7 +1850,7 @@ dependencies = [
  "memory_addr",
  "numeric-enum-macro",
  "static_assertions",
- "tock-registers",
+ "tock-registers 0.8.1",
  "x86",
 ]
 
@@ -1709,6 +1884,12 @@ name = "tock-registers"
 version = "0.8.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "696941a0aee7e276a165a978b37918fd5d22c55c3d6bda197813070ca9c0f21c"
+
+[[package]]
+name = "tock-registers"
+version = "0.9.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2b9e2fdb3a1e862c0661768b7ed25390811df1947a8acbfbefe09b47078d93c4"
 
 [[package]]
 name = "toml_datetime"
@@ -1765,9 +1946,27 @@ checksum = "6a02e4885ed3bc0f2de90ea6dd45ebcbb66dacffe03547fadbb0eeae2770887d"
 
 [[package]]
 name = "volatile"
+version = "0.2.7"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f6b06ad3ed06fef1713569d547cdbdb439eafed76341820fb0e0344f29a41945"
+
+[[package]]
+name = "volatile"
+version = "0.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f8e76fae08f03f96e166d2dfda232190638c10e0383841252416f9cfe2ae60e6"
+
+[[package]]
+name = "volatile"
 version = "0.4.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "442887c63f2c839b346c192d047a7c87e73d0689c9157b00b53dcc27dd5ea793"
+
+[[package]]
+name = "volatile"
+version = "0.6.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "af8ca9a5d4debca0633e697c88269395493cebf2e10db21ca2dbde37c1356452"
 
 [[package]]
 name = "wasi"
@@ -1902,7 +2101,7 @@ dependencies = [
  "bit_field",
  "bitflags 2.6.0",
  "rustversion",
- "volatile",
+ "volatile 0.4.6",
 ]
 
 [[package]]
@@ -1914,7 +2113,7 @@ dependencies = [
  "bit_field",
  "bitflags 2.6.0",
  "rustversion",
- "volatile",
+ "volatile 0.4.6",
 ]
 
 [[package]]
@@ -1952,3 +2151,13 @@ dependencies = [
  "quote",
  "syn 2.0.72",
 ]
+
+[[patch.unused]]
+name = "axhal"
+version = "0.1.0"
+source = "git+https://github.com/Starry-OS/axhal.git?branch=support_intel_i219#9b2b06a77239f39639348a08cd69c11bc20cf859"
+
+[[patch.unused]]
+name = "arch_boot"
+version = "0.1.0"
+source = "git+https://github.com/Starry-OS/arch_boot.git?branch=support_intel_i219#99b266955ff46d291345268b49f69cf44cd8debe"
