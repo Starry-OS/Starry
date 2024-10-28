@@ -8,7 +8,7 @@ family = "x86-pc"
 # Base address of the whole physical memory.
 phys-memory-base = "0"
 # Size of the whole physical memory.
-phys-memory-size = "0x8000_0000"    # 2G
+phys-memory-size = "0x8000_0000" # 2G
 # Base physical address of the kernel image.
 kernel-base-paddr = "0x20_0000"
 # Base virtual address of the kernel image.
@@ -23,6 +23,7 @@ mmio-regions = [
     ["0xfee0_0000", "0x1000"],      # Local APIC
     ["0xc000_0000", "0x0100_0000"], # PCI config space
     ["0x4f90_0000", "0x1_0000"],    # e1000 driver
+    ["0x8070_0000", "0x2_0000"],    # e1000 qcl i219 driver
 ]
 # VirtIO MMIO regions with format (`base_paddr`, `size`).
 virtio-mmio-regions = []
@@ -34,7 +35,7 @@ pci-bus-end = "0x01"
 pci-ranges = []
 
 # Timer interrupt frequencyin Hz.
-timer-frequency = "4_000_000_000"   # 4.0GHz
+timer-frequency = "4_000_000_000" # 4.0GHz
 
 # Testcase memory start address.
 testcase-memory-start = "0x1_8000_0000"
