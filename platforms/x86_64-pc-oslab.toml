@@ -22,7 +22,7 @@ mmio-regions = [
     ["0xfed0_0000", "0x1000"],      # HPET
     ["0xfee0_0000", "0x1000"],      # Local APIC
     ["0xc000_0000", "0x0100_0000"], # PCI config space
-    ["0x4f90_0000", "0x1_0000"],    # e1000 driver
+    # ["0x4f90_0000", "0x1_0000"],    # e1000 driver
     ["0x8070_0000", "0x2_0000"],    # e1000 qcl i219 driver
 ]
 # VirtIO MMIO regions with format (`base_paddr`, `size`).
