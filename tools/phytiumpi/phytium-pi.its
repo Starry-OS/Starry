@@ -1,0 +1,50 @@
+/*
+ * U-Boot uImage source file with multiple kernels, ramdisks and FDT blobs
+ */
+
+/dts-v1/;
+
+/ {
+	description = "Various kernels, ramdisks and FDT blobs";
+	#address-cells = <1>;
+
+	images {
+		kernel {
+			description = "ArceOS for Phytium Pi";
+			data = /incbin/("../../arceos-phytiumpi.bin.gz");
+			type = "kernel";
+			arch = "arm64";
+			os = "linux";
+			compression = "gzip";
+			load = <0x90100000>;
+			entry = <0x90100000>;
+			hash-1 {
+				algo = "md5";
+			};
+			hash-2 {
+				algo = "sha1";
+			};
+		};
+
+		fdt-phytium {
+			description = "phytiumpi fdt";
+			data = /incbin/("./phytiumpi-board.dtb");
+			type = "flat_dt";
+			arch = "arm64";
+			compression = "none";
+			hash-1 {
+				algo = "crc32";
+			};
+		};
+	};
+
+	configurations {
+		default = "config-phytiumpi";
+
+		config-phytiumpi {
+			description = "phytiumpi configuration";
+			kernel = "kernel";
+			fdt = "fdt-phytium";
+		};
+	};
+};

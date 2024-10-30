@@ -199,7 +199,7 @@ dependencies = [
 [[package]]
 name = "arch_boot"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/arch_boot.git#af6f02387de6fe6544e40d5ff254d899314b035c"
+source = "git+https://github.com/Starry-OS/arch_boot.git#03cb86283f3bbc3d85c88e37dfc561fe80d24210"
 dependencies = [
  "aarch64-cpu",
  "axconfig",
@@ -255,6 +255,15 @@ dependencies = [
  "log",
  "memory_addr",
  "spinlock",
+]
+
+[[package]]
+name = "axbacktrace"
+version = "0.1.0"
+source = "git+https://github.com/kern-crates/axbacktrace.git#c0371ca8ef4a06ff2e21428b33aab51bcbdc16fa"
+dependencies = [
+ "cfg-if",
+ "log",
 ]
 
 [[package]]
@@ -535,7 +544,7 @@ dependencies = [
 [[package]]
 name = "axruntime"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/axruntime.git#3ff4e76febe8b92ef6f502b1260d05f3fdc498a4"
+source = "git+https://github.com/Starry-OS/axruntime.git#0a8b576c156767eeff3ee43a3dab3a1548ffe3ee"
 dependencies = [
  "axalloc",
  "axconfig",
@@ -605,8 +614,9 @@ dependencies = [
 [[package]]
 name = "axtask"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/axtask.git#4ae6b15a574b5351ac3843d6ef97843164298341"
+source = "git+https://github.com/Starry-OS/axtask.git#5c7f4e485a4ab08d51b3118828e3ee1552d54dc6"
 dependencies = [
+ "axbacktrace",
  "axconfig",
  "axhal",
  "axlog",
@@ -1274,7 +1284,7 @@ source = "git+https://github.com/mexus/numeric-enum-macro#20aef288b2ecd2381ab662
 [[package]]
 name = "of"
 version = "0.1.0"
-source = "git+https://github.com/Starry-OS/of.git#f54b1eeb959605978aa3cdccb014be7ddeba5bb8"
+source = "git+https://github.com/Starry-OS/of.git#ae6dc82903a23f2ad7d959beccb7651efe21e935"
 dependencies = [
  "fdt",
  "lazy_static",

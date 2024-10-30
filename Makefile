@@ -163,6 +163,8 @@ include scripts/make/qemu.mk
 include scripts/make/test.mk
 ifeq ($(PLATFORM_NAME), aarch64-raspi4)
   include scripts/make/raspi4.mk
+else ifeq ($(PLATFORM_NAME), aarch64-phytiumpi)
+  include scripts/make/phytiumpi.mk
 else ifeq ($(PLATFORM_NAME), aarch64-bsta1000b)
   include scripts/make/bsta1000b-fada.mk
 else ifeq ($(PLATFORM_NAME), aarch64-rk3588j)
