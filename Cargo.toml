@@ -2,14 +2,16 @@
 branch = "support_intel_i219"
 git = "https://github.com/Starry-OS/arch_boot.git"
 
-[patch."https://github.com/Starry-OS//axdriver.git".axdriver]
-branch = "support_intel_i219"
-git = "https://github.com/Starry-OS/axdriver.git"
+[patch."https://github.com/Starry-OS/axdriver.git".axdriver]
+branch = "dev_intel_i219"
+git = "https://github.com/qclic/axdriver.git"
 
 [patch."https://github.com/Starry-OS//axhal.git".axhal]
 branch = "support_intel_i219"
 git = "https://github.com/Starry-OS/axhal.git"
 
+# [patch."https://github.com/Starry-OS/axdriver.git".axdriver]
+# path = "crates/axdriver"
 
 [profile.dev]
 lto = true
@@ -18,5 +20,25 @@ lto = true
 lto = true
 
 [workspace]
-members = ["apps/display", "apps/exception", "apps/helloworld", "apps/memtest", "apps/fs/shell", "apps/net/echoserver", "apps/net/httpclient", "apps/net/httpserver", "apps/net/udpserver", "apps/net/bwbench", "apps/task/parallel", "apps/task/sleep", "apps/task/yield", "apps/task/priority", "apps/task/tls", "apps/monolithic_userboot", "tools/axlibc"]
+members = [
+    "apps/display",
+    "apps/exception",
+    "apps/helloworld",
+    "apps/memtest",
+    "apps/fs/shell",
+    "apps/net/echoserver",
+    "apps/net/httpclient",
+    "apps/net/httpserver",
+    "apps/net/udpserver",
+    "apps/net/bwbench",
+    "apps/task/parallel",
+    "apps/task/sleep",
+    "apps/task/yield",
+    "apps/task/priority",
+    "apps/task/tls",
+    "apps/monolithic_userboot",
+    "tools/axlibc",
+
+    # "crates/axdriver"
+]
 resolver = "2"

@@ -34,7 +34,7 @@ qemu_args-$(BLK) += \
 # 如果 FEATURES 包括 e1000_net，则添加 -device e1000,netdev=net0 -netdev user,id=net0,hostfwd=tcp::5555-:5555,hostfwd=udp::5555-:5555
 ifeq ($(findstring e1000_net,$(FEATURES)),e1000_net)
   qemu_args-$(NET) += \
-  -device e1000,netdev=net0 -object filter-dump,id=net0,netdev=net0,file=packets.pcap
+  -device e1000e,netdev=net0 -object filter-dump,id=net0,netdev=net0,file=packets.pcap
 else
   qemu_args-$(NET) += \
   -device virtio-net-$(vdev-suffix),netdev=net0
