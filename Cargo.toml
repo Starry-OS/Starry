@@ -39,6 +39,6 @@ members = [
     "apps/monolithic_userboot",
     "tools/axlibc",
 
-    "crates/axdriver"
+    # "crates/axdriver"
 ]
 resolver = "2"
