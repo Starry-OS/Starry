@@ -3,8 +3,8 @@ branch = "support_intel_i219"
 git = "https://github.com/Starry-OS/arch_boot.git"
 
 [patch."https://github.com/Starry-OS/axdriver.git".axdriver]
-branch = "dev_intel_i219"
 git = "https://github.com/qclic/axdriver.git"
+tag = "fix_pcie"
 
 [patch."https://github.com/Starry-OS//axhal.git".axhal]
 branch = "support_intel_i219"
