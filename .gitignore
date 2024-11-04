@@ -15,4 +15,3 @@ linker_*
 crates/
 minicom_output.log
 .errorviz*
-tools/axlibc
