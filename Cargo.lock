@@ -290,7 +290,7 @@ dependencies = [
 [[package]]
 name = "axdriver"
 version = "0.1.0"
-source = "git+https://github.com/qclic/axdriver.git?branch=dev_intel_i219#51b3bc15ea54f31f1c51d1da019baaeea75290e4"
+source = "git+https://github.com/qclic/axdriver.git?tag=fix_pcie#5777c7f4e1fb846ff05aa8ba5d47d4d4c2b8752a"
 dependencies = [
  "axalloc",
  "axconfig",
@@ -2033,11 +2033,11 @@ dependencies = [
 ]
 
 [[patch.unused]]
-name = "arch_boot"
-version = "0.1.0"
-source = "git+https://github.com/Starry-OS/arch_boot.git?branch=support_intel_i219#99b266955ff46d291345268b49f69cf44cd8debe"
-
-[[patch.unused]]
 name = "axhal"
 version = "0.1.0"
 source = "git+https://github.com/Starry-OS/axhal.git?branch=support_intel_i219#9b2b06a77239f39639348a08cd69c11bc20cf859"
+
+[[patch.unused]]
+name = "arch_boot"
+version = "0.1.0"
+source = "git+https://github.com/Starry-OS/arch_boot.git?branch=support_intel_i219#99b266955ff46d291345268b49f69cf44cd8debe"
