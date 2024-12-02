@@ -1,6 +1,6 @@
 //! Init some files and links in the filesystem for the apps
 
-use alloc::{format, vec::*, string::ToString};
+use alloc::{format, string::ToString, vec::*};
 use linux_syscall_api::{create_link, new_file, FileFlags, FilePath};
 
 fn meminfo() -> &'static str {

@@ -119,4 +119,3 @@ impl Disk {
         Ok(buf.len())
     }
 }
-

@@ -11,9 +11,9 @@ use either::{Either, Left, Right};
 /// Returns platform-specific memory regions.
 pub(crate) fn platform_regions() -> impl Iterator<Item = MemRegion> {
     // Feature, should registerd by user, should'n use hard coding
-    let iterator: Either<_, _> = if of::machin_name().is_some_and(|name| {
-        name.contains("raspi") || name.contains("phytiumpi")
-    }) {
+    let iterator: Either<_, _> = if of::machin_name()
+        .is_some_and(|name| name.contains("raspi") || name.contains("phytiumpi"))
+    {
         Left(
             core::iter::once(MemRegion {
                 paddr: 0x0.into(),

@@ -230,7 +230,10 @@ pub fn syscall_sched_getscheduler_max(args: [usize; 6]) -> SyscallResult {
     let policy: usize = args[0];
     match SchedPolicy::from(policy) {
         SchedPolicy::SCHED_FIFO | SchedPolicy::SCHED_RR => Ok(MAX_RT_PRIO as isize),
-        SchedPolicy::SCHED_OTHER | SchedPolicy::SCHED_DEADLINE |  SchedPolicy::SCHED_BATCH | SchedPolicy::SCHED_IDLE => Ok(0),
+        SchedPolicy::SCHED_OTHER
+        | SchedPolicy::SCHED_DEADLINE
+        | SchedPolicy::SCHED_BATCH
+        | SchedPolicy::SCHED_IDLE => Ok(0),
         _ => Err(SyscallError::EINVAL),
     }
 }
@@ -241,7 +244,10 @@ pub fn syscall_sched_getscheduler_min(args: [usize; 6]) -> SyscallResult {
     let policy: usize = args[0];
     match SchedPolicy::from(policy) {
         SchedPolicy::SCHED_FIFO | SchedPolicy::SCHED_RR => Ok(1),
-        SchedPolicy::SCHED_OTHER | SchedPolicy::SCHED_DEADLINE |  SchedPolicy::SCHED_BATCH | SchedPolicy::SCHED_IDLE => Ok(0),
+        SchedPolicy::SCHED_OTHER
+        | SchedPolicy::SCHED_DEADLINE
+        | SchedPolicy::SCHED_BATCH
+        | SchedPolicy::SCHED_IDLE => Ok(0),
         _ => Err(SyscallError::EINVAL),
     }
 }

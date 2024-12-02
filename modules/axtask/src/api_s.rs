@@ -27,19 +27,20 @@ extern "C" {
 }
 
 pub fn global_unique_ts() -> (usize, usize) {
-    let boot_stack = unsafe {
-        current_boot_stack() as usize
-    };
+    let boot_stack = unsafe { current_boot_stack() as usize };
     (boot_stack, boot_stack + axconfig::TASK_STACK_SIZE)
 }
 
 pub fn dump_curr_backtrace() {
     //Init Unwind instance from current context
-    use axbacktrace::{dump_backtrace, Unwind, UnwindIf, StackInfo};
+    use axbacktrace::{dump_backtrace, StackInfo, Unwind, UnwindIf};
     let stack = global_unique_ts();
     let stack_info = StackInfo::new(stack.0, stack.1);
-    axlog::info!("dump task stack range: {:#016x}: {:#016x}", 
-        stack.0, stack.1);
+    axlog::info!(
+        "dump task stack range: {:#016x}: {:#016x}",
+        stack.0,
+        stack.1
+    );
     let mut unwind = Unwind::new_from_cur_ctx(stack_info);
     // dump current task trace
     dump_backtrace(&mut unwind);

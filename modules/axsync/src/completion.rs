@@ -1,4 +1,4 @@
-//! completion 
+//! completion
 //! If you have one or more threads that must wait for some kernel activity
 //! to have reached a point or a specific state, completions can provide a
 //! race-free solution to this problem. Semantically they are somewhat like a
@@ -10,18 +10,18 @@
 //! you probably want to look into using one of the wait_for_completion*()
 //! calls and complete() instead.
 //!
-//! Completions are built on top of the waitqueue and wakeup infrastructure of 
+//! Completions are built on top of the waitqueue and wakeup infrastructure of
 //! scheduler(axtask). The event the threads on the waitqueue are waiting for
 //! is reduced to a simple flag in 'struct completion', appropriately called "done".
 //!
 use alloc::sync::Arc;
-use axtask::{WaitTaskList, WaitTaskNode};
-use spinlock::SpinNoIrq;
 use axtask::schedule;
 #[cfg(feature = "irq")]
 use axtask::schedule_timeout;
+use axtask::{WaitTaskList, WaitTaskNode};
 #[cfg(feature = "irq")]
 use core::time::Duration;
+use spinlock::SpinNoIrq;
 
 use axtask::declare_wait;
 
@@ -43,10 +43,10 @@ impl Inner {
 
 /// Cpmpletion struct, it protect by done
 pub struct Completion {
-    inner: SpinNoIrq<Inner>
+    inner: SpinNoIrq<Inner>,
 }
 
-// SAFETY: have it's own SpinNoIrq protect  
+// SAFETY: have it's own SpinNoIrq protect
 unsafe impl Sync for Completion {}
 unsafe impl Send for Completion {}
 
@@ -64,13 +64,13 @@ impl Completion {
     pub fn reinit(&self) {
         self.inner.lock().done = 0;
     }
-    
+
     /// waits for completion of a task
     pub fn wait_for_completion(&self) {
         declare_wait!(waiter);
         loop {
             let mut inner = self.inner.lock();
-            assert!(inner.done >=0);
+            assert!(inner.done >= 0);
             if inner.done == 0 {
                 inner.queue.prepare_to_wait(waiter.clone());
                 drop(inner);
@@ -83,13 +83,13 @@ impl Completion {
     }
 
     #[cfg(feature = "irq")]
-    /// waits for completion of a task (w/timeout secs) 
+    /// waits for completion of a task (w/timeout secs)
     pub fn wait_for_completion_timeout(&self, secs: u64) -> bool {
         declare_wait!(waiter);
         let deadline = axhal::time::current_time() + Duration::from_secs(secs);
         let timeout = loop {
             let mut inner = self.inner.lock();
-            assert!(inner.done >=0);
+            assert!(inner.done >= 0);
             if inner.done == 0 {
                 inner.queue.prepare_to_wait(waiter.clone());
                 drop(inner);
@@ -108,7 +108,7 @@ impl Completion {
     /// signals a single thread waiting on this completion
     pub fn complete(&self) {
         let mut inner = self.inner.lock();
-        inner.done+=1;
+        inner.done += 1;
         inner.queue.notify_one();
     }
 
