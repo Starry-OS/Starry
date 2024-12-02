@@ -3,48 +3,8 @@ name: Build CI
 on: 
   push:
   pull_request:
-  workflow_call:
-    inputs:
-      TopTestDirectory:
-        description: 'The directory where the main repository will be placed'
-        required: true
-        type: string
-      CallerPackage:
-        description: 'The package to call the workflow'
-        required: true
-        type: string
-      CallerRepository:
-        description: 'The repository to call the workflow'
-        required: true
-        type: string
-      CallerCommit:
-        description: 'The commit of the repository to call the workflow'
-        required: true
-        type: string
-      TopBranch:
-        description: 'The branch of the main repository'
-        required: false
-        type: string
-        default: 'main'
-
 jobs:
-  prepare_for_external_test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - id: step1
-        if: github.repository != 'Starry-OS/Starry'
-        # 输出的值可以在后续的job中使用
-        run: echo "TopTestDirectory=${{ inputs.TopTestDirectory }}" >> $GITHUB_OUTPUT
-      - id: step2
-        if: github.repository == 'Starry-OS/Starry'
-        # 工作目录为当前目录
-        run: echo "TopTestDirectory=." >> $GITHUB_OUTPUT
-    outputs:
-      TopTestDirectory: ${{ steps.step1.outputs.TopTestDirectory || steps.step2.outputs.TopTestDirectory }}
-
   clippy:
-    needs: prepare_for_external_test
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -52,7 +12,6 @@ jobs:
         rust-toolchain: [nightly, nightly-2024-05-02]
     env:
       RUSTUP_TOOLCHAIN: ${{ matrix.rust-toolchain }}
-      WORKING_DIRECTORY: ${{ needs.prepare_for_external_test.outputs.TopTestDirectory }}
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
@@ -60,38 +19,29 @@ jobs:
         toolchain: ${{ matrix.rust-toolchain }}
         components: rust-src, clippy, rustfmt
         targets: x86_64-unknown-none, riscv64gc-unknown-none-elf, aarch64-unknown-none, aarch64-unknown-none-softfloat
-    - name: Clone Top Repository
-      if: github.repository != 'Starry-OS/Starry'
-      run: git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }} && cd ${{ env.WORKING_DIRECTORY }} && git checkout ${{ inputs.TopBranch }}
-    - name: Update Top Repository
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      run: make pre_update
+    - uses: ./.github/workflows/actions/setup-musl
+      with:
+        arch: x86_64
+    - uses: ./.github/workflows/actions/setup-musl
+      with:
+        arch: riscv64
+    - uses: ./.github/workflows/actions/setup-musl
+      with:
+        arch: aarch64
     - name: Check rust version
-      working-directory: ${{ env.WORKING_DIRECTORY }}
       run: rustc --version --verbose      
     - name: Clippy for the default target
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: make clippy
     - name: Clippy for x86_64
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: make clippy ARCH=x86_64
     - name: Clippy for riscv64
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: make clippy ARCH=riscv64
     - name: Clippy for aarch64
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: make clippy ARCH=aarch64
     - name: Check code format
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: cargo fmt --all -- --check
 
   build-apps-for-unikernel:
-    needs: prepare_for_external_test
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -101,7 +51,6 @@ jobs:
         rust-toolchain: [nightly, nightly-2024-05-02]
     env:
       RUSTUP_TOOLCHAIN: ${{ matrix.rust-toolchain }}
-      WORKING_DIRECTORY: ${{ needs.prepare_for_external_test.outputs.TopTestDirectory }}
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
@@ -111,109 +60,56 @@ jobs:
         targets: x86_64-unknown-none, riscv64gc-unknown-none-elf, aarch64-unknown-none, aarch64-unknown-none-softfloat
     - uses: Swatinem/rust-cache@v2
     - run: cargo install cargo-binutils
-    - name: Clone Top Repository
-      if: github.repository != 'Starry-OS/Starry'
-      run: |
-        git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }} && cd ${{ env.WORKING_DIRECTORY }} && git checkout ${{ inputs.TopBranch }} && cd ..
-        sh ${{ env.WORKING_DIRECTORY }}/scripts/test/external_test.sh ${{ env.WORKING_DIRECTORY }} ${{ inputs.CallerPackage }} ${{ inputs.CallerRepository }} ${{ inputs.CallerCommit }}
-    - name: Update Top Repository
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      run: make pre_update
     - name: Build helloworld
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: make ARCH=${{ matrix.arch }} A=apps/helloworld
     - name: Build memtest
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: make ARCH=${{ matrix.arch }} A=apps/memtest
     - name: Build exception
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: make ARCH=${{ matrix.arch }} A=apps/exception
     - name: Build display
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: make ARCH=${{ matrix.arch }} A=apps/display
     - name: Build task/yield
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: make ARCH=${{ matrix.arch }} A=apps/task/yield
     - name: Build task/parallel
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: make ARCH=${{ matrix.arch }} A=apps/task/parallel
     - name: Build task/sleep
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: make ARCH=${{ matrix.arch }} A=apps/task/sleep
     - name: Build task/priority
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: make ARCH=${{ matrix.arch }} A=apps/task/priority
     - name: Build task/tls
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: make ARCH=${{ matrix.arch }} A=apps/task/tls
     - name: Build fs/shell
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: make ARCH=${{ matrix.arch }} A=apps/fs/shell
     - name: Build net/echoserver
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: make ARCH=${{ matrix.arch }} A=apps/net/echoserver
     - name: Build net/httpclient
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: make ARCH=${{ matrix.arch }} A=apps/net/httpclient
     - name: Build net/httpserver
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: make ARCH=${{ matrix.arch }} A=apps/net/httpserver
     - name: Build net/udpserver
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: make ARCH=${{ matrix.arch }} A=apps/net/udpserver
 
     - uses: ./.github/workflows/actions/setup-musl
       with:
         arch: ${{ matrix.arch }}
     - name: Build c/helloworld
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: make ARCH=${{ matrix.arch }} A=apps/c/helloworld
     - name: Build c/memtest
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: make ARCH=${{ matrix.arch }} A=apps/c/memtest
     - name: Build c/sqlite3
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: make ARCH=${{ matrix.arch }} A=apps/c/sqlite3
     - name: Build c/httpclient
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: make ARCH=${{ matrix.arch }} A=apps/c/httpclient
     - name: Build c/httpserver
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: make ARCH=${{ matrix.arch }} A=apps/c/httpserver
     - name: Build c/udpserver
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: make ARCH=${{ matrix.arch }} A=apps/c/udpserver
     - name: Build c/iperf
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: make ARCH=${{ matrix.arch }} A=apps/c/iperf
     - name: Build c/redis
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: make ARCH=${{ matrix.arch }} A=apps/c/redis SMP=4
 
   build-apps-for-other-platforms:
-    needs: prepare_for_external_test
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -222,7 +118,6 @@ jobs:
         rust-toolchain: [nightly, nightly-2024-05-02]
     env:
       RUSTUP_TOOLCHAIN: ${{ matrix.rust-toolchain }}
-      WORKING_DIRECTORY: ${{ needs.prepare_for_external_test.outputs.TopTestDirectory }}
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
@@ -233,50 +128,27 @@ jobs:
     - uses: Swatinem/rust-cache@v2
     - run: cargo install cargo-binutils
 
-    - name: Clone Top Repository
-      if: github.repository != 'Starry-OS/Starry'
-      run: |
-        git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }} && cd ${{ env.WORKING_DIRECTORY }} && git checkout ${{ inputs.TopBranch }} && cd ..
-        sh ${{ env.WORKING_DIRECTORY }}/scripts/test/external_test.sh ${{ env.WORKING_DIRECTORY }} ${{ inputs.CallerPackage }} ${{ inputs.CallerRepository }} ${{ inputs.CallerCommit }}
-    - name: Update Top Repository
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      run: make pre_update
     - uses: ./.github/workflows/actions/setup-musl
       with:
         arch: x86_64
     - name: Build helloworld for x86_64-pc-oslab
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: make PLATFORM=x86_64-pc-oslab A=apps/helloworld
     - name: Build net/httpserver for x86_64-pc-oslab
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: make PLATFORM=x86_64-pc-oslab A=apps/net/httpserver FEATURES=driver-ixgbe
     - name: Build c/iperf for x86_64-pc-oslab
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: make PLATFORM=x86_64-pc-oslab A=apps/c/iperf FEATURES=driver-ixgbe,driver-ramdisk
     - name: Build c/redis for x86_64-pc-oslab
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: make PLATFORM=x86_64-pc-oslab A=apps/c/redis FEATURES=driver-ixgbe,driver-ramdisk SMP=4
 
     - name: Build helloworld for aarch64-raspi4
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: make PLATFORM=aarch64-raspi4 A=apps/helloworld
     - name: Build fs/shell for aarch64-raspi4
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: make PLATFORM=aarch64-raspi4 A=apps/fs/shell FEATURES=driver-bcm2835-sdhci
 
     - name: Build helloworld for aarch64-bsta1000b
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: make PLATFORM=aarch64-bsta1000b A=apps/helloworld
 
   build-apps-for-std:
-    needs: prepare_for_external_test
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -286,75 +158,39 @@ jobs:
         rust-toolchain: [nightly-2024-05-02]
     env:
       RUSTUP_TOOLCHAIN: ${{ matrix.rust-toolchain }}
-      WORKING_DIRECTORY: ${{ needs.prepare_for_external_test.outputs.TopTestDirectory }}
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
       with:
         toolchain: ${{ matrix.rust-toolchain }}
-    - name: Clone Top Repository
-      if: github.repository != 'Starry-OS/Starry'
-      run: |
-        git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }} && cd ${{ env.WORKING_DIRECTORY }} && git checkout ${{ inputs.TopBranch }} && cd ..
-        sh ${{ env.WORKING_DIRECTORY }}/scripts/test/external_test.sh ${{ env.WORKING_DIRECTORY }} ${{ inputs.CallerPackage }} ${{ inputs.CallerRepository }} ${{ inputs.CallerCommit }}
-    - name: Update Top Repository
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      run: make pre_update
     - name: Build helloworld
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: cargo build -p arceos-helloworld
     - name: Build memtest
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: cargo build -p arceos-memtest
     - name: Build exception
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: cargo build -p arceos-exception
     - name: Build task/yield
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: cargo build -p arceos-yield
     - name: Build task/parallel
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: cargo build -p arceos-parallel
     - name: Build task/sleep
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: cargo build -p arceos-sleep
     - name: Build task/priority
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: cargo build -p arceos-priority
     - name: Build task/tls
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: cargo build -p arceos-tls
     - name: Build fs/shell
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: cargo build -p arceos-shell
     - name: Build net/echoserver
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: cargo build -p arceos-echoserver
     - name: Build net/httpclient
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: cargo build -p arceos-httpclient
     - name: Build net/httpserver
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: cargo build -p arceos-httpserver
     - name: Build net/udpserver
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: cargo build -p arceos-udpserver
 
   build-apps-for-monolithic:
-    needs: prepare_for_external_test
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -364,7 +200,6 @@ jobs:
         rust-toolchain: [nightly, nightly-2024-05-02]
     env:
       RUSTUP_TOOLCHAIN: ${{ matrix.rust-toolchain }}
-      WORKING_DIRECTORY: ${{ needs.prepare_for_external_test.outputs.TopTestDirectory }}
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
@@ -374,17 +209,7 @@ jobs:
         targets: x86_64-unknown-none, riscv64gc-unknown-none-elf, aarch64-unknown-none, aarch64-unknown-none-softfloat
     - uses: Swatinem/rust-cache@v2
     - run: cargo install cargo-binutils
-    - name: Clone Top Repository
-      if: github.repository != 'Starry-OS/Starry'
-      run: |
-        git clone https://github.com/Starry-OS/Starry.git ${{ env.WORKING_DIRECTORY }} && cd ${{ env.WORKING_DIRECTORY }} && git checkout ${{ inputs.TopBranch }} && cd ..
-        sh ${{ env.WORKING_DIRECTORY }}/scripts/test/external_test.sh ${{ env.WORKING_DIRECTORY }} ${{ inputs.CallerPackage }} ${{ inputs.CallerRepository }} ${{ inputs.CallerCommit }}
-    - name: Update Top Repository
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      run: make pre_update
     - name: Bulld monolithic-userboot
-      working-directory: ${{ env.WORKING_DIRECTORY }}
-      continue-on-error: ${{ matrix.rust-toolchain == 'nightly' }}
       run: |
         sh ./build_img.sh -a ${{ matrix.arch }}
         make ARCH=${{ matrix.arch }} A=apps/monolithic_userboot

@@ -1,0 +1,54 @@
+[package]
+name = "axtask"
+version = "0.1.0"
+edition = "2021"
+authors = ["Yuekai Jia <equation618@gmail.com>"]
+description = "ArceOS task management module"
+license = "GPL-3.0-or-later OR Apache-2.0"
+homepage = "https://github.com/rcore-os/arceos"
+repository = "https://github.com/rcore-os/arceos/tree/main/modules/axtask"
+documentation = "https://rcore-os.github.io/arceos/axtask/index.html"
+keywords = ["Starry"]
+
+[features]
+default = []
+
+multitask = [
+    "dep:percpu", "dep:spinlock", "dep:lazy_init", "dep:memory_addr",
+    "dep:scheduler", "dep:timer_list", "kernel_guard","taskctx/multitask"
+]
+irq = []
+tls = ["axhal/tls", "taskctx/tls"]
+preempt = ["irq", "percpu?/preempt", "kernel_guard/preempt", "taskctx/preempt"]
+
+sched_fifo = ["multitask"]
+sched_rr = ["multitask", "preempt"]
+sched_cfs = ["multitask", "preempt"]
+
+test = ["percpu?/sp-naive"]
+
+monolithic = ["multitask", "axhal/monolithic", "taskctx/monolithic"]
+
+[dependencies]
+cfg-if = "1.0"
+log = "0.4"
+numeric-enum-macro = { git = "https://github.com/mexus/numeric-enum-macro" }
+axhal = { workspace = true }
+axsignal = { workspace = true }
+axconfig = { workspace = true }
+percpu = { git = "https://github.com/Starry-OS/percpu.git", optional = true }
+spinlock = { git = "https://github.com/Starry-OS/spinlock.git", optional = true }
+lazy_init = { git = "https://github.com/Starry-OS/lazy_init.git", optional = true }
+memory_addr = { git = "https://github.com/Starry-OS/memory_addr.git", optional = true }
+scheduler = { git = "https://github.com/Starry-OS/scheduler.git", optional = true }
+timer_list = { git = "https://github.com/Starry-OS/timer_list.git", optional = true }
+kernel_guard = { git = "https://github.com/Starry-OS/kernel_guard.git", optional = true }
+taskctx = { git = "https://github.com/Starry-OS/taskctx.git" }
+axlog = { workspace = true }
+linked_list = { git = "https://github.com/Starry-OS/linked_list.git" }
+axbacktrace = { git = "https://github.com/kern-crates/axbacktrace.git" }
+
+[dev-dependencies]
+rand = "0.8"
+axhal = { workspace = true, features = ["fp_simd"] }
+axtask = { workspace = true, features = ["test"] }

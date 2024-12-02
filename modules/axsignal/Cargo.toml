@@ -1,0 +1,18 @@
+[package]
+name = "axsignal"
+version = "0.1.0"
+edition = "2021"
+keywords = ["Starry", "signal"]
+authors = ["Youjie Zheng <zyj578335934@gmail.com>"]
+description = "Module with linux signal definitions"
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[features]
+
+default = []
+
+[dependencies]
+numeric-enum-macro = { git = "https://github.com/mexus/numeric-enum-macro" }
+bitflags = "2.6"
+axhal = { workspace = true }
+cfg-if = "1.0"

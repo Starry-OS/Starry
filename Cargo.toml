@@ -1,11 +1,89 @@
-[patch]
+[workspace]
+resolver = "2"
 
-[profile.dev]
-lto = true
+members = [
+    "modules/arch_boot",
+    "modules/axalloc",
+    "modules/axconfig",
+    "modules/axdisplay",
+    "modules/axdriver",
+    "modules/axfs",
+    "modules/axfutex", 
+    "modules/axhal",
+    "modules/axlog",
+    "modules/axmem",
+    "modules/axnet",
+    "modules/axprocess",
+    "modules/axruntime",
+    "modules/axsignal",
+    "modules/axsync",
+    "modules/axtask",
+    "modules/axtrap",
+
+    "api/axfeat",
+    "api/arceos_api",
+    "api/arceos_posix_api",
+    "api/linux_syscall_api",
+
+    "ulib/axstd",
+    "ulib/axlibc",
+    "ulib/axstarry",
+
+    "apps/display",
+    "apps/exception",
+    "apps/helloworld",
+    "apps/memtest",
+    "apps/fs/shell",
+    "apps/net/echoserver",
+    "apps/net/httpclient",
+    "apps/net/httpserver",
+    "apps/net/udpserver",
+    "apps/net/bwbench",
+    "apps/task/parallel",
+    "apps/task/sleep",
+    "apps/task/yield",
+    "apps/task/priority",
+    "apps/task/tls",
+    "apps/monolithic_userboot",
+]
+
+[workspace.package]
+version = "0.1.0"
+authors = ["Yuekai Jia <equation618@gmail.com>"]
+license = "GPL-3.0-or-later OR Apache-2.0 OR MulanPSL-2.0"
+homepage = "https://github.com/arceos-org/arceos"
+documentation = "https://arceos-org.github.io/arceos"
+repository = "https://github.com/arceos-org/arceos"
+keywords = ["arceos", "kernel"]
+categories = ["os", "no-std"]
+
+[workspace.dependencies]
+axstd = { path = "ulib/axstd" }
+axlibc = { path = "ulib/axlibc" }
+axstarry = { path = "ulib/axstarry" }
+
+arceos_api = { path = "api/arceos_api" }
+arceos_posix_api = { path = "api/arceos_posix_api" }
+axfeat = { path = "api/axfeat" }
+linux_syscall_api = { path = "api/linux_syscall_api" }
+
+arch_boot = { path = "modules/arch_boot" }
+axalloc = { path = "modules/axalloc" }
+axconfig = { path = "modules/axconfig" }
+axdisplay = { path = "modules/axdisplay" }
+axdriver = { path = "modules/axdriver" }
+axfs = { path = "modules/axfs" }
+axfutex = { path = "modules/axfutex" }
+axhal = { path = "modules/axhal" }
+axlog = { path = "modules/axlog" }
+axmem = { path = "modules/axmem" }
+axnet = { path = "modules/axnet" }
+axprocess = { path = "modules/axprocess" }
+axruntime = { path = "modules/axruntime" }
+axsignal = { path = "modules/axsignal" }
+axsync = { path = "modules/axsync" }
+axtask = { path = "modules/axtask" }
+axtrap = { path = "modules/axtrap" }
 
 [profile.release]
 lto = true
-
-[workspace]
-members = ["apps/display", "apps/exception", "apps/helloworld", "apps/memtest", "apps/fs/shell", "apps/net/echoserver", "apps/net/httpclient", "apps/net/httpserver", "apps/net/udpserver", "apps/net/bwbench", "apps/task/parallel", "apps/task/sleep", "apps/task/yield", "apps/task/priority", "apps/task/tls", "apps/monolithic_userboot", "tools/axlibc"]
-resolver = "2"

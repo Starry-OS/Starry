@@ -1,0 +1,29 @@
+[package]
+name = "axmem"
+version = "0.1.0"
+edition = "2021"
+authors = ["Youjie Zheng <zyj578335934@gmail.com>"]
+keywords = ["Starry", "address-space"]
+description = "Crates to implement multiple address space abstraction"
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[features]
+
+monolithic = ["axfs/monolithic"]
+
+default = []
+
+[dependencies]
+log = "0.4"
+axhal = { workspace = true, features = ["paging"] }
+axalloc = { workspace = true }
+axconfig = { workspace = true }
+axerrno = { git = "https://github.com/Starry-OS/axerrno.git" }
+axfs = { workspace = true }
+axio = { git = "https://github.com/Starry-OS/axio.git" }
+axsync = { workspace = true }
+spinlock = { git = "https://github.com/Starry-OS/spinlock.git" }
+xmas-elf = "0.9.0"
+riscv = "0.10"
+page_table_entry = { git = "https://github.com/Starry-OS/page_table_entry.git" }
+elf_parser = { git = "https://github.com/Starry-OS/elf_parser.git" }

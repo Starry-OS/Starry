@@ -1,0 +1,27 @@
+[package]
+name = "axsync"
+version = "0.1.0"
+edition = "2021"
+authors = ["Yuekai Jia <equation618@gmail.com>"]
+description = "ArceOS synchronization primitives"
+license = "GPL-3.0-or-later OR Apache-2.0"
+homepage = "https://github.com/rcore-os/arceos"
+repository = "https://github.com/rcore-os/arceos/tree/main/modules/axsync"
+documentation = "https://rcore-os.github.io/arceos/axsync/index.html"
+keywords = ["Starry"]
+
+[features]
+multitask = ["axtask/multitask"]
+irq = ["axtask/irq"]
+default = []
+
+[dependencies]
+cfg-if = "1.0"
+spinlock = { git = "https://github.com/Starry-OS/spinlock.git" }
+axtask = { workspace = true }
+axhal = {workspace = true}
+
+[dev-dependencies]
+rand = "0.8"
+axsync = { workspace = true, features = ["multitask"] }
+axtask = { workspace = true, features = ["test"] }

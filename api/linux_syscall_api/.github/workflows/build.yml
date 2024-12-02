@@ -1,0 +1,14 @@
+name: Build CI
+
+on: [push, pull_request]
+
+jobs:
+  build-external:
+    uses: Starry-OS/Starry/.github/workflows/build.yml@main
+    with:
+      # The directory to Top test, which need to be empty or not exist in this repository
+      TopTestDirectory: StarryTest
+      CallerPackage: linux_syscall_api
+      CallerRepository: ${{ github.repository }}
+      CallerCommit: ${{ github.sha }}
+      TopBranch: main

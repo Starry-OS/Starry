@@ -1,0 +1,38 @@
+[package]
+name = "axprocess"
+version = "0.1.0"
+edition = "2021"
+keywords = ["Starry", "process"]
+description = "A process management library for Starry OS."
+authors = ["Youjie Zheng <zyj578335934@gmail.com>"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[features]
+
+fs = ["axfs"]
+
+monolithic = ["fs", "axfs/monolithic", "axhal/monolithic", "axtask/monolithic"]
+
+default = ["monolithic"]
+
+[dependencies]
+cfg-if = "1.0"
+spinlock = { git = "https://github.com/Starry-OS/spinlock.git" }
+axtask = { workspace = true }
+axsync = { workspace = true }
+axmem = { workspace = true }
+axalloc = { workspace = true }
+axio = { git = "https://github.com/Starry-OS/axio.git", features = ["alloc"] }
+axhal = { workspace = true }
+axlog = { workspace = true }
+axerrno = { git = "https://github.com/Starry-OS/axerrno.git" }
+axconfig = { workspace = true }
+axfs = { workspace = true, optional = true }
+axsignal = { workspace = true }
+axfutex = { workspace = true }
+riscv = "0.10"
+bitflags = "2.0"
+lazy_static = { version = "1.4", features = ["spin_no_std"] }
+xmas-elf = "0.9.0"
+elf_parser = { git = "https://github.com/Starry-OS/elf_parser.git" }

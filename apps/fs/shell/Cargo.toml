@@ -14,4 +14,4 @@ default = []
 axfs_vfs = { git = "https://github.com/Starry-OS/axfs_vfs.git", optional = true }
 axfs_ramfs = { git = "https://github.com/Starry-OS/axfs_ramfs.git", optional = true }
 crate_interface = { git = "https://github.com/Starry-OS/crate_interface.git", optional = true  }
-axstd = { git = "https://github.com/Starry-OS/axstd.git", features = ["alloc", "fs"], optional = true }
+axstd = { workspace = true, features = ["alloc", "fs"], optional = true }

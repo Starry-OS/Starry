@@ -7,5 +7,5 @@ authors = ["Yuekai Jia <equation618@gmail.com>"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-axstd = { git = "https://github.com/Starry-OS/axstd.git", features = ["tls", "alloc", "multitask"], optional = true }
-axhal = { git = "https://github.com/Starry-OS/axhal.git", features = ["tls"] }
+axstd = { workspace = true, features = ["tls", "alloc", "multitask"], optional = true }
+axhal = { workspace = true, features = ["tls"] }

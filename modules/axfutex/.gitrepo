@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/ingydotnet/git-subrepo#readme
+;
+[subrepo]
+	remote = git@github.com:Starry-OS/axfutex.git
+	branch = main
+	commit = 5eee19d07e750720c1b540dc8990dbf96c565433
+	parent = e65ad8dacb25ad048e06ba7d10b1ddc081fbab7b
+	method = merge
+	cmdver = 0.4.9

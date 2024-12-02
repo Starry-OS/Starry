@@ -5,4 +5,4 @@ edition = "2021"
 authors = ["Dashuai Wu <wudashuaijss@foxmail.com>"]
 
 [dependencies]
-axstd = { git = "https://github.com/Starry-OS/axstd.git", features = ["net"], optional = true }
+axstd = { workspace = true, features = ["net"], optional = true }

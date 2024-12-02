@@ -1,0 +1,44 @@
+[package]
+name = "arch_boot"
+version = "0.1.0"
+edition = "2021"
+authors = ["Youjie Zheng <zyj578335934@gmail.com>"]
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+keywords = ["Starry"]
+
+[features]
+monolithic = ["dep:linux_syscall_api", "axtrap/monolithic"]
+preempt = ["axtrap/preempt", "irq"]
+smp = ["axruntime/smp"]
+irq = ["axtrap/irq"]
+fp_simd = []
+
+default = []
+
+[dependencies]
+cfg-if = "1.0"
+log = "0.4"
+linux_syscall_api = { workspace = true, optional = true }
+axhal = { workspace = true }
+axtrap = { workspace = true }
+axruntime = { workspace = true }
+axconfig = { workspace = true }
+axalloc = { workspace = true, optional = true }
+axlog = { workspace = true }
+
+[build-dependencies]
+axconfig = { workspace = true }
+
+[target.'cfg(target_arch = "x86_64")'.dependencies]
+x86 = "0.52"
+x86_64 = "0.15"
+raw-cpuid = "11.0"
+
+[target.'cfg(any(target_arch = "riscv32", target_arch = "riscv64"))'.dependencies]
+riscv = "0.10"
+sbi-rt = { version = "0.0.2", features = ["legacy"] }
+
+[target.'cfg(target_arch = "aarch64")'.dependencies]
+aarch64-cpu = "9.3"
+of = { git = "https://github.com/Starry-OS/of.git"}
+tock-registers = "0.8"

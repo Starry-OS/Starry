@@ -1,7 +1,7 @@
 rust_lib_name := axlibc
 rust_lib := target/$(TARGET)/$(MODE)/lib$(rust_lib_name).a
 
-ulib_dir := tools/axlibc
+ulib_dir := ulib/axlibc
 src_dir := $(ulib_dir)/c
 obj_dir := $(ulib_dir)/build_$(ARCH)
 inc_dir := $(ulib_dir)/include

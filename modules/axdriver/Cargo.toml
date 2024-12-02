@@ -1,0 +1,48 @@
+[package]
+name = "axdriver"
+version = "0.1.0"
+edition = "2021"
+authors = ["Yuekai Jia <equation618@gmail.com>", "ChengXiang Qi <kuangjux@outlook.com>"]
+description = "ArceOS device drivers"
+license = "GPL-3.0-or-later OR Apache-2.0"
+homepage = "https://github.com/rcore-os/arceos"
+repository = "https://github.com/rcore-os/arceos/tree/main/modules/axdriver"
+documentation = "https://rcore-os.github.io/arceos/axdriver/index.html"
+keywords = ["Starry"]
+
+[features]
+dyn = []
+bus-mmio = []
+bus-pci = ["dep:driver_pci", "dep:axhal", "dep:axconfig"]
+net = ["driver_net"]
+block = ["driver_block"]
+display = ["driver_display"]
+
+# Enabled by features `virtio-*`
+virtio = ["driver_virtio", "dep:axalloc", "dep:axhal", "dep:axconfig"]
+
+# various types of drivers
+virtio-blk = ["block", "virtio", "driver_virtio/block"]
+virtio-net = ["net", "virtio", "driver_virtio/net"]
+virtio-gpu = ["display", "virtio", "driver_virtio/gpu"]
+ramdisk = ["block", "driver_block/ramdisk"]
+bcm2835-sdhci = ["block", "driver_block/bcm2835-sdhci"]
+ixgbe = ["net", "driver_net/ixgbe", "dep:axalloc", "dep:axhal"]
+e1000 = ["net", "driver_net/e1000", "dep:axalloc", "dep:axhal"]
+
+img = ["ramdisk", "dep:axconfig"]
+
+default = ["bus-pci"]
+
+[dependencies]
+log = "0.4"
+cfg-if = "1.0"
+driver_common = { git = "https://github.com/Starry-OS/driver_common.git" }
+driver_block = { git = "https://github.com/Starry-OS/driver_block.git", optional = true }
+driver_net = { git = "https://github.com/Starry-OS/driver_net.git", optional = true }
+driver_display = { git = "https://github.com/Starry-OS/driver_display.git", optional = true }
+driver_pci = { git = "https://github.com/Starry-OS/driver_pci.git", optional = true }
+driver_virtio = { git = "https://github.com/Starry-OS/driver_virtio.git", optional = true }
+axalloc = { workspace = true, optional = true }
+axhal = { workspace = true, optional = true }
+axconfig = { workspace = true, optional = true }

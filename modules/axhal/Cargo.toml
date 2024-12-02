@@ -1,0 +1,64 @@
+[package]
+name = "axhal"
+version = "0.1.0"
+edition = "2021"
+authors = ["Yuekai Jia <equation618@gmail.com>"]
+description = "ArceOS hardware abstraction layer, provides unified APIs for platform-specific operations"
+license = "GPL-3.0-or-later OR Apache-2.0"
+homepage = "https://github.com/rcore-os/arceos"
+repository = "https://github.com/rcore-os/arceos/tree/main/modules/axhal"
+documentation = "https://rcore-os.github.io/arceos/axhal/index.html"
+keywords = ["Starry"]
+
+[features]
+smp = []
+alloc = []
+fp_simd = ["taskctx/fp_simd"]
+paging = ["axalloc", "page_table"]
+irq = []
+tls = ["alloc"]
+monolithic = ["paging", "dep:axfs_ramfs"]
+default = []
+
+[dependencies]
+log = "0.4"
+cfg-if = "1.0"
+bitflags = "2.6"
+static_assertions = "1.1.0"
+axlog = { workspace = true }
+axconfig = { workspace = true }
+axalloc = { workspace = true, optional = true }
+kernel_guard = { git = "https://github.com/Starry-OS/kernel_guard.git" }
+spinlock = { git = "https://github.com/Starry-OS/spinlock.git" }
+ratio = { git = "https://github.com/Starry-OS/ratio.git" }
+lazy_init = { git = "https://github.com/Starry-OS/lazy_init.git" }
+page_table = { git = "https://github.com/Starry-OS/page_table.git", optional = true }
+page_table_entry = { git = "https://github.com/Starry-OS/page_table_entry.git" }
+percpu = { git = "https://github.com/Starry-OS/percpu.git" }
+memory_addr = { git = "https://github.com/Starry-OS/memory_addr.git" }
+handler_table = { git = "https://github.com/Starry-OS/handler_table.git" }
+crate_interface = { git = "https://github.com/Starry-OS/crate_interface.git" }
+axfs_ramfs = { git = "https://github.com/Starry-OS/axfs_ramfs.git", optional = true }
+taskctx = { git = "https://github.com/Starry-OS/taskctx.git" }
+of = { git = "https://github.com/Starry-OS/of.git"}
+
+[target.'cfg(target_arch = "x86_64")'.dependencies]
+x86 = "0.52"
+x86_64 = "0.15"
+x2apic = "0.4"
+raw-cpuid = "11.0"
+
+[target.'cfg(any(target_arch = "riscv32", target_arch = "riscv64"))'.dependencies]
+riscv = "0.11"
+sbi-rt = { version = "0.0.3", features = ["legacy"] }
+
+[target.'cfg(target_arch = "aarch64")'.dependencies]
+aarch64-cpu = "9.4"
+tock-registers = "0.8"
+either = {version = "1.6", default-features = false}
+arm_gic = { git = "https://github.com/Starry-OS/arm_gic.git" }
+arm_pl011 = { git = "https://github.com/Starry-OS/arm_pl011.git" }
+dw_apb_uart = { git = "https://github.com/Starry-OS/dw_apb_uart.git" }
+
+[build-dependencies]
+axconfig = { workspace = true }

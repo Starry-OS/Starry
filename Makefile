@@ -34,7 +34,7 @@ SMP ?= 1
 MODE ?= release
 LOG ?= off
 V ?=
-LIBC_DIR = tools/axlibc
+LIBC_DIR = ulib/axlibc
 # App options
 A ?= apps/monolithic_userboot
 APP ?= $(A)
@@ -133,6 +133,7 @@ export AX_LOG=$(LOG)
 export AX_TARGET=$(TARGET)
 export AX_IP=$(IP)
 export AX_GW=$(GW)
+export AX_WORK_DIR=$(CURDIR)
 
 # Binutils
 CROSS_COMPILE ?= $(ARCH)-linux-musl-
@@ -210,7 +211,7 @@ fmt:
 	cargo fmt --all
 
 fmt_c:
-	@clang-format --style=file -i $(shell find tools/axlibc -iname '*.c' -o -iname '*.h')
+	@clang-format --style=file -i $(shell find ulib/axlibc -iname '*.c' -o -iname '*.h')
 
 test:
 	$(call app_test)
@@ -230,7 +231,7 @@ clean: clean_c
 	cargo clean
 
 clean_c::
-	rm -rf tools/axlibc/build_*
+	rm -rf ulib/axlibc/build_*
 	rm -rf $(app-objs)
 
 .PHONY: all build disasm run justrun debug clippy fmt fmt_c test test_no_fail_fast clean clean_c doc disk_image make_bin

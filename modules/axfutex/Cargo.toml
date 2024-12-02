@@ -1,0 +1,27 @@
+[package]
+name = "axfutex"
+version = "0.1.0"
+edition = "2021"
+authors = ["XinHao Li <3253290158@qq.com>"]
+description = "A compatibility layer for futex on Starry"
+
+[features]
+
+fs = ["axfs"]
+
+monolithic = ["fs" ,"axfs/monolithic", "axhal/monolithic", "axtask/monolithic"]
+
+default = ["monolithic"]
+
+[dependencies]
+axfs = { path = "../axfs", optional = true }
+axhal = { path = "../axhal" }
+log = "0.4.21"
+axlog = { git = "https://github.com/Starry-OS/axlog.git" }
+axtask = { path = "../axtask" }
+axerrno = { git = "https://github.com/Starry-OS/axerrno.git" }
+axsync = { path = "../axsync" }
+hashbrown = "0.11"
+lazy_static = "1.5.0"
+bitflags = "2.6"
+numeric-enum-macro = { git = "https://github.com/mexus/numeric-enum-macro" }

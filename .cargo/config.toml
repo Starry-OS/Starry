@@ -1,4 +1,0 @@
-
-[env]
-AX_WORK_DIR = { value = ".", relative = true }
-AX_LIBC_DIR = { value = "tools/axlibc", relative = true }

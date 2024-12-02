@@ -1,0 +1,45 @@
+[package]
+name = "axruntime"
+version = "0.1.0"
+edition = "2021"
+authors = ["Yuekai Jia <equation618@gmail.com>"]
+description = "Runtime library of ArceOS"
+license = "GPL-3.0-or-later OR Apache-2.0"
+homepage = "https://github.com/rcore-os/arceos"
+repository = "https://github.com/rcore-os/arceos/tree/main/modules/axruntime"
+documentation = "https://rcore-os.github.io/arceos/axruntime/index.html"
+keywords = ["Starry"]
+
+[features]
+default = []
+
+smp = ["axhal/smp"]
+irq = ["axhal/irq", "axtask/irq", "percpu", "kernel_guard"]
+tls = ["axhal/tls", "axtask/tls"]
+alloc = ["axalloc"]
+paging = ["axhal/paging", "lazy_init"]
+
+multitask = ["axtask/multitask"]
+fs = ["axdriver", "axfs"]
+net = ["axdriver", "axnet"]
+display = ["axdriver", "axdisplay"]
+img = ["axdriver/img", "paging"]
+monolithic = ["axprocess/monolithic", "axhal/monolithic", "axtask/monolithic", "axmem/monolithic"]
+
+[dependencies]
+cfg-if = "1.0"
+axhal = { workspace = true }
+axlog = { workspace = true }
+axconfig = { workspace = true }
+axalloc = { workspace = true, optional = true }
+axdriver = { workspace = true, optional = true }
+axfs = { workspace = true, optional = true }
+axnet = { workspace = true, optional = true }
+axdisplay = { workspace = true, optional = true }
+axtask = { workspace = true}
+axprocess = { workspace = true, optional = true }
+axmem = { workspace = true, optional = true }
+crate_interface = { git = "https://github.com/Starry-OS/crate_interface.git" }
+percpu = { git = "https://github.com/Starry-OS/percpu.git", optional = true }
+kernel_guard = { git = "https://github.com/Starry-OS/kernel_guard.git", optional = true }
+lazy_init = { git = "https://github.com/Starry-OS/lazy_init.git", optional = true }

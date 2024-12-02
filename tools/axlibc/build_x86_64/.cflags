@@ -1,0 +1,1 @@
+-DAX_CONFIG_FP_SIMD -DAX_LOG_OFF -nostdinc -fno-builtin -ffreestanding -Wall -I/home/zyj/OS/StarryOrg/Starry-New/tools/axlibc/include -O3

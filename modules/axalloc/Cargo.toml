@@ -1,0 +1,25 @@
+[package]
+name = "axalloc"
+version = "0.1.0"
+edition = "2021"
+authors = ["Yuekai Jia <equation618@gmail.com>"]
+description = "ArceOS global memory allocator"
+license = "GPL-3.0-or-later OR Apache-2.0"
+homepage = "https://github.com/rcore-os/arceos"
+repository = "https://github.com/rcore-os/arceos/tree/main/modules/axalloc"
+documentation = "https://rcore-os.github.io/arceos/axalloc/index.html"
+keywords = ["Starry"]
+
+[features]
+default = ["tlsf"]
+tlsf = ["allocator/tlsf"]
+slab = ["allocator/slab"]
+buddy = ["allocator/buddy"]
+
+[dependencies]
+log = "0.4"
+cfg-if = "1.0"
+spinlock = { git = "https://github.com/Starry-OS/spinlock.git" }
+memory_addr = { git = "https://github.com/Starry-OS/memory_addr.git" }
+allocator = { git = "https://github.com/Starry-OS/allocator.git", features = ["bitmap"] }
+axerrno = { git = "https://github.com/Starry-OS/axerrno.git" }

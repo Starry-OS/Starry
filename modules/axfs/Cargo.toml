@@ -1,0 +1,66 @@
+[package]
+name = "axfs"
+version = "0.1.0"
+edition = "2021"
+authors = ["Yuekai Jia <equation618@gmail.com>"]
+description = "ArceOS filesystem module"
+license = "GPL-3.0-or-later OR Apache-2.0"
+homepage = "https://github.com/rcore-os/arceos"
+repository = "https://github.com/rcore-os/arceos/tree/main/modules/axfs"
+documentation = "https://rcore-os.github.io/arceos/axfs/index.html"
+keywords = ["Starry"]
+
+[features]
+devfs = ["dep:axfs_devfs"]
+ramfs = ["dep:axfs_ramfs"]
+procfs = ["dep:axfs_ramfs"]
+sysfs = ["dep:axfs_ramfs", "dep:axconfig"]
+myfs = ["dep:crate_interface"]
+use-ramdisk = []
+monolithic = []
+fatfs = ["dep:fatfs"]
+# Use lwext4fs as the default filesystem
+lwext4_rust = ["dep:lwext4_rust", "devfs", "ramfs", "procfs", "sysfs"]
+# Use ext4rs as the default filesystem
+ext4_rs = ["dep:ext4_rs", "devfs", "ramfs", "procfs", "sysfs"]
+# Use another_ext4 as the default filesystem
+another_ext4 = ["dep:another_ext4", "devfs", "ramfs", "procfs", "sysfs"]
+default = ["devfs", "ramfs", "fatfs", "procfs", "sysfs"]
+
+[dependencies]
+log = "0.4"
+cfg-if = "1.0"
+lazy_init = { git = "https://github.com/Starry-OS/lazy_init.git" }
+capability = { git = "https://github.com/Starry-OS/capability.git" }
+driver_block = { git = "https://github.com/Starry-OS/driver_block.git" }
+axio = { git = "https://github.com/Starry-OS/axio.git", features = ["alloc"] }
+axerrno = { git = "https://github.com/Starry-OS/axerrno.git" }
+axconfig = { workspace = true, optional = true }
+axfs_vfs = { git = "https://github.com/Starry-OS/axfs_vfs.git" }
+axfs_devfs = { git = "https://github.com/Starry-OS/axfs_devfs.git", optional = true }
+axfs_ramfs = { git = "https://github.com/Starry-OS/axfs_ramfs.git", optional = true }
+ext4_rs = { git = "https://github.com/yuoo655/ext4_rs.git", rev= "6bcc7f5", optional = true }
+lwext4_rust = { git = "https://github.com/elliott10/lwext4_rust.git", optional = true }
+another_ext4 = { git = "https://github.com/Starry-OS/ljx_ext4.git", branch = "main", features = ["block_cache"], optional = true }
+axdriver = { workspace = true, features = ["block"] }
+axsync = { workspace = true }
+crate_interface = { git = "https://github.com/Starry-OS/crate_interface.git", optional = true }
+bitflags = "2.6"
+
+[dependencies.fatfs]
+git = "https://github.com/rafalh/rust-fatfs"
+rev = "85f06e0"
+optional = true
+default-features = false
+features = [ # no std
+    "alloc",
+    "lfn",
+    "log_level_trace",
+    "unicode",
+]
+
+[dev-dependencies]
+axdriver = { workspace = true, features = ["block", "ramdisk"] }
+driver_block = { git = "https://github.com/Starry-OS/driver_block.git", features = ["ramdisk"] }
+axsync = { workspace = true, features = ["multitask"] }
+axtask = { workspace = true, features = ["test"] }

@@ -1,0 +1,38 @@
+[package]
+name = "axtrap"
+version = "0.1.0"
+edition = "2021"
+keywords = ["Starry", "trap", "arch"]
+description = "Trap handling module over different architectures"
+authors = ["Youjie Zheng <zyj578335934@gmail.com>"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[features]
+default = []
+monolithic = ["dep:linux_syscall_api"]
+irq = []
+preempt = ["axtask/preempt", "percpu/preempt", "kernel_guard/preempt"]
+
+[dependencies]
+axlog = { workspace = true }
+cfg-if = "1.0"
+log = "0.4"
+linux_syscall_api = { workspace = true, optional = true }
+handler_table = { git = "https://github.com/Starry-OS/handler_table.git" }
+lazy_init = { git = "https://github.com/Starry-OS/lazy_init.git" }
+axhal = { workspace = true }
+axtask = { workspace = true, optional = true }
+kernel_guard = { git = "https://github.com/Starry-OS/kernel_guard.git" }
+percpu = { git = "https://github.com/Starry-OS/percpu.git" }
+
+[target.'cfg(target_arch = "x86_64")'.dependencies]
+x86 = "0.52"
+x86_64 = "0.15"
+
+[target.'cfg(any(target_arch = "riscv32", target_arch = "riscv64"))'.dependencies]
+riscv = "0.10"
+
+[target.'cfg(target_arch = "aarch64")'.dependencies]
+aarch64-cpu = "9.3"
+tock-registers = "0.8"
