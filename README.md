@@ -31,12 +31,11 @@ $ make A=apps/helloworld ARCH=x86_64 run
 
 $ ./build_img.sh -a x86_64
 
-$ make A=apps/monolithic_userboot ARCH=x86_64 run
-
+$ make A=apps/monolithic_userboot FEATURES=img ARCH=x86_64 run
 
 # Run the testcases in the monolithic architecture
 
-$ make A=apps/monolithic_userboot APP_FEATURES=batch ARCH=x86_64 NET=y BLK=y run
+$ make A=apps/monolithic_userboot APP_FEATURES=batch FEATURES=img,sched_rr ARCH=x86_64 NET=y BLK=y run
 ```
 
 ## Build and run testcases with ext4fs

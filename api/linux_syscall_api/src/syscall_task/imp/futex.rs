@@ -4,7 +4,7 @@ extern crate alloc;
 
 use core::time::Duration;
 
-use axlog::{debug, error};
+use axlog::{debug, info};
 use axprocess::{current_process, current_task, futex::FutexRobustList};
 
 use crate::{RobustList, SyscallError, SyscallResult, TimeSecs};
@@ -68,17 +68,17 @@ pub fn syscall_futex(args: [usize; 6]) -> SyscallResult {
         Ok(FutexOp::WAKE_BITSET) => futex_wake_bitset(uaddr.into(), flags, val, val3),
         Ok(FutexOp::REQUEUE) => futex_requeue(uaddr.into(), flags, val, uaddr2.into(), val2 as u32),
         Ok(FutexOp::CMP_REQUEUE) => {
-            error!("[linux_syscall_api] futex: unsupported futex operation: FUTEX_CMP_REQUEUE");
+            info!("[linux_syscall_api] futex: unsupported futex operation: FUTEX_CMP_REQUEUE");
             Err(SyscallError::ENOSYS)
         }
         Ok(FutexOp::WAKE_OP) => {
             // futex_wake(uaddr, flags, uaddr2, val, val2, val3)
-            error!("[linux_syscall_api] futex: unsupported futex operation: FUTEX_WAKE_OP");
+            info!("[linux_syscall_api] futex: unsupported futex operation: FUTEX_WAKE_OP");
             Err(SyscallError::ENOSYS)
         }
         // TODO: priority-inheritance futex
         _ => {
-            error!(
+            info!(
                 "[linux_syscall_api] futex: unsupported futex operation: {}",
                 futex_op
             );
