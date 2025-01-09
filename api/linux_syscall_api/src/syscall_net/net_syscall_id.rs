@@ -28,6 +28,7 @@ pub enum NetSyscallId {
     SHUTDOWN = 210,
     SENDMSG = 211,
     ACCEPT4 = 242,
+    SENDMMSG = 269,
 }
 }
 

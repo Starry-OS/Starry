@@ -4,7 +4,7 @@ use alloc::sync::Arc;
 use axconfig::SMP;
 use axhal::mem::VirtAddr;
 use axprocess::{current_process, current_task, PID2PC, TID2TASK};
-use axtask::{SchedPolicy, SchedStatus, MAX_RT_PRIO};
+use axtask::{SchedPolicy, SchedStatus};
 
 use crate::{SchedParam, SyscallError, SyscallResult};
 /// 获取对应任务的CPU适配集
@@ -226,7 +226,10 @@ pub fn syscall_sched_getscheduler(args: [usize; 6]) -> SyscallResult {
 
 /// # Arguments
 /// * `policy` - usize
+#[cfg(target_arch = "x86_64")]
 pub fn syscall_sched_getscheduler_max(args: [usize; 6]) -> SyscallResult {
+    use axtask::MAX_RT_PRIO;
+
     let policy: usize = args[0];
     match SchedPolicy::from(policy) {
         SchedPolicy::SCHED_FIFO | SchedPolicy::SCHED_RR => Ok(MAX_RT_PRIO as isize),
@@ -240,6 +243,7 @@ pub fn syscall_sched_getscheduler_max(args: [usize; 6]) -> SyscallResult {
 
 /// # Arguments
 /// * `policy` - usize
+#[cfg(target_arch = "x86_64")]
 pub fn syscall_sched_getscheduler_min(args: [usize; 6]) -> SyscallResult {
     let policy: usize = args[0];
     match SchedPolicy::from(policy) {
