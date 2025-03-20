@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["create_link","init_current_dir","new_file","read_file","recycle_user_process","run_testcase"],"mod":["trap"],"struct":["File","FilePath","OpenFlags"],"type":["FileFlags","SyscallError","SyscallResult"]};

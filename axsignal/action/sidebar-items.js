@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["SIG_DFL","SIG_IGN"],"enum":["SignalDefault"],"struct":["SigAction","SigActionFlags"]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["MAX_IRQ_COUNT","TIMER_IRQ_NUM"],"fn":["dispatch_irq","local_apic","raw_apic_id","register_handler","set_enable"]};

@@ -1,0 +1,1 @@
+searchState.loadedDescShard("axruntime", 0, "Runtime library of ArceOS.\nThe kernel page table.\nThe number of CPUs that have entered the runtime.\nexit the main task\nWhether all CPUs has been initialized.\nThe main entry point of the ArceOS runtime.\nThe main entry point of the ArceOS runtime for secondary …")

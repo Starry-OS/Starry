@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["AT_FDCWD"],"fn":["create_link","deal_with_path","get_link_count","get_str_len","raw_ptr_to_ref_str","real_path","remove_link"],"static":["LINK_COUNT_MAP"],"struct":["FilePath"]};

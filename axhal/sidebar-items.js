@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["KERNEL_PROCESS_ID"],"mod":["arch","console","cpu","irq","mem","misc","paging","platform","time","tls"]};

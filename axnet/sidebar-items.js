@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["IpAddr"],"fn":["add_membership","bench_receive","bench_transmit","dns_query","from_core_sockaddr","init_network","into_core_sockaddr","poll_interfaces"],"struct":["Duration","Ipv4Addr","Ipv6Addr","SocketAddr","TcpSocket","UdpSocket"]};

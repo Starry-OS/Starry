@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["entered_cpus_num","exit_main","is_init_ok","rust_main","rust_main_secondary"],"static":["KERNEL_PAGE_TABLE"]};
