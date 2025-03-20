@@ -141,7 +141,6 @@ impl VfsNodeOps for FileWrapper {
     }
 
     fn create(&self, path: &str, ty: VfsNodeType) -> VfsResult {
-        info!("create {:?} on Ext4fs: {}", ty, path);
         let fpath = self.path_deal_with(path);
         let fpath = fpath.as_str();
         if fpath.is_empty() {
@@ -177,7 +176,6 @@ impl VfsNodeOps for FileWrapper {
     }
 
     fn remove(&self, path: &str) -> VfsResult {
-        info!("remove ext4fs: {}", path);
         let fpath = self.path_deal_with(path);
         let fpath = fpath.as_str();
 
@@ -203,7 +201,6 @@ impl VfsNodeOps for FileWrapper {
         if file.get_type() == InodeTypes::EXT4_DE_DIR {
             let path = file.get_path();
             let path = path.to_str().unwrap();
-            info!("Get the parent dir of {}", path);
             let path = path.trim_end_matches('/').trim_end_matches(|c| c != '/');
             if !path.is_empty() {
                 return Some(Arc::new(Self::new(path, InodeTypes::EXT4_DE_DIR)));
@@ -272,7 +269,6 @@ impl VfsNodeOps for FileWrapper {
     }
 
     fn read_at(&self, offset: u64, buf: &mut [u8]) -> VfsResult<usize> {
-        info!("To read_at {}, buf len={}", offset, buf.len());
         let mut file = self.0.lock();
         let path = file.get_path();
         let path = path.to_str().unwrap();
@@ -288,7 +284,6 @@ impl VfsNodeOps for FileWrapper {
     }
 
     fn write_at(&self, offset: u64, buf: &[u8]) -> VfsResult<usize> {
-        info!("To write_at {}, buf len={}", offset, buf.len());
         let mut file = self.0.lock();
         let path = file.get_path();
         let path = path.to_str().unwrap();
@@ -304,7 +299,6 @@ impl VfsNodeOps for FileWrapper {
     }
 
     fn truncate(&self, size: u64) -> VfsResult {
-        info!("truncate file to size={}", size);
         let mut file = self.0.lock();
         let path = file.get_path();
         let path = path.to_str().unwrap();
@@ -318,7 +312,6 @@ impl VfsNodeOps for FileWrapper {
     }
 
     fn rename(&self, src_path: &str, dst_path: &str) -> VfsResult {
-        info!("rename from {} to {}", src_path, dst_path);
         let mut file = self.0.lock();
         file.file_rename(src_path, dst_path)
             .map(|_v| ())
